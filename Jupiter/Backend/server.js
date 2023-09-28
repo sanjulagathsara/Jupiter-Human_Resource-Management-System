@@ -1,34 +1,44 @@
-// const express = require('express')
-// const mysql = require('mysql')
-// const cors = require('cors')    
+const express = require("express");
+const mysql = require("mysql2");
+const cors = require("cors");
 
-// const app = express()
-// app.use(cors())
-// const db = mysql.createConnection({
-//     host : 'localhost',
-//     user : 'root',
-//     password : 'root',
-//     database : 'posts'})
-
-// app.post('/Employee', (req, res) => {
-//     const sql = "select * from Employee Where username = req.body.username and password = req.body.password"})
-//     db.query(sql,[values] ,(err, result) => {
-//         if(err) return res.json("Login Failed");
-//         return res.json(data);
-//     })
-
-// app.listen(4000, () => {
-//     console.log('Go to http://localhost:4000/posts to see posts')
-// })
-
-const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
+app.use(cors());
+app.use(express.json());
+const port = 5000;
+
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "root",
+  database: "jupiter",
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+db.connect((err) => {
+  if (err) {
+    console.error("Error connecting to MySQL:", err);
+  } else {
+    console.log("Connected to MySQL");
+  }
+});
+
+app.get("/api/users", (req, res) => {
+  db.query(
+    "SELECT e.Employee_ID, o.Organization_Name, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name FROM employee e natural join organization o natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = 'E002'",
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(rows);
+        res.json(rows);
+      }
+    }
+  );
+});
+
+app.listen(5000, () => {
+  console.log("Server is running on port 5000");
 });
