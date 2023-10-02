@@ -51,16 +51,20 @@ app.get("/api/employeeInfo/employee", (req, res) => {
 
 //Get all employee informations
 app.get("/api/employeeInfo", (req, res) => {
-  db.query("SELECT Employee_ID, Name FROM employee ", (err, rows, fields) => {
-    if (err) {
-      console.error("Error querying MySQL:", err);
-      res.status(500).json({ error: "Internal server error" });
-      return;
-    } else {
-      console.log(rows);
-      res.json(rows);
+  db.query(
+    "SELECT Employee_ID, Name FROM employee where Employee_ID != ?",
+    [token],
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(rows);
+        res.json(rows);
+      }
     }
-  });
+  );
 });
 //get Added employee details
 app.post("/api/employee/addEmployee", (req, res) => {
