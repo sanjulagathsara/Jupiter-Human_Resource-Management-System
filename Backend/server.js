@@ -119,7 +119,7 @@ app.post("/api/send-variable", (req, res) => {
 //View personal Information
 app.get("/api/personalInfo", (req, res) => {
   db.query(
-    `SELECT e.Employee_ID, o.Organization_Name, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name FROM employee e natural join organization o natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
+    `SELECT e.Employee_ID, o.Organization_Name, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name, py.Pay_Grade as Pay_Grade  FROM employee e natural join employee_pay_grade py natural join organization o natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
     [token],
     (err, rows, fields) => {
       if (err) {

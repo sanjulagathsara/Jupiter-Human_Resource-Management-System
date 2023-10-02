@@ -55,7 +55,8 @@ const PersonalInfo = () => {
               <h5>Name : {record.Name}</h5>
               <h5>Organization Name :{record.Organization_Name}</h5>
               <h5>
-                Birthdate : {new Date(record.Birthdate).toLocaleDateString()}
+                Birthdate :{" "}
+                {new Date(firstRecord.Birthdate).toLocaleDateString()}
               </h5>
               <h5>Marital Status : {record.Marital_status}</h5>
               <h5>
