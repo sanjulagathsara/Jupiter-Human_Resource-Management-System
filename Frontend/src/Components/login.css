@@ -1,0 +1,23 @@
+.sparkle-button{
+    margin: 10px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sparkle-button button:hover {
+    background-color: #0056b3;
+  }
+
+  .sparkle-button .sparkle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #007BFF;
+    border-radius: 50%;
+    animation: sparkle 2s ease-in-out infinite;
+  }
