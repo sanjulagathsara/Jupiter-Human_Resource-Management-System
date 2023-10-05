@@ -24,6 +24,140 @@ db.connect((err) => {
     console.log("Connected to MySQL");
   }
 });
+
+//post edited data
+app.post("/api/ManUI/EditPI/edited", (req, res) => {
+  console.log("Edited data fetch from server:");
+  console.log(req.body);
+
+  db.query(
+    "select Job_Title_ID from employee_job_title where Job_Title = ?",
+    [req.body.jobTitle],
+    (err, rows) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        db.query("Update employee SET Job_Title_ID = ? where Employee_ID = ?", [
+          rows[0].Job_Title_ID,
+          req.body.employeeId,
+        ]);
+      }
+    }
+  );
+
+  db.query(
+    "select Status_ID from employee_status where Status_Type = ?",
+    [req.body.status],
+    (err, rows) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        db.query("Update employee SET Status_ID = ? where Employee_ID = ?", [
+          rows[0].Status_ID,
+          req.body.employeeId,
+        ]);
+      }
+    }
+  );
+
+  db.query(
+    "select Pay_Grade_ID from employee_pay_grade where Pay_Grade = ?",
+    [req.body.payGrade],
+    (err, rows) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        db.query("update employee SET Pay_Grade_ID = ? where Employee_ID = ?", [
+          rows[0].Pay_Grade_ID,
+          req.body.employeeId,
+        ]);
+      }
+    }
+  );
+
+  db.query(
+    "select Employee_ID from employee where Name = ?",
+    [req.body.supervisorId],
+    (err, rows) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        db.query(
+          "update employee SET Supervisor_ID = ? where Employee_ID = ?",
+          [rows[0].Employee_ID, req.body.employeeId]
+        );
+      }
+    }
+  );
+
+  db.query(
+    "UPDATE employee SET Name = ? , Emergency_contact_Number = ? , Marital_status = ?    WHERE Employee_ID = ?",
+    [
+      req.body.name,
+      req.body.contactNumber,
+      req.body.maritalStatus,
+
+      req.body.employeeId,
+    ],
+    (err, rows) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log("Edited data fetch from server:", {});
+
+        res.json(rows);
+      }
+    }
+  );
+});
+
+// db.query(
+//   "UPDATE employee SET Name = ? , Emergency_contact_Number = ? , Marital_status = ?,Organization_Registration_Number = ?, Status_ID = ?, Job_Title_ID = ? ,Pay_Grade_ID = ?, Supervisor_ID = ?   WHERE Employee_ID = ?",
+//   [
+//     req.body.name,
+//     req.body.contactNumber,
+//     req.body.maritalStatus,
+//     req.body.organizationId,
+//     req.body.statusID,
+//     req.body.jobTitleId,
+//     req.body.payGradeId,
+//     req.body.supervisorId,
+//     req.body.employeeId,
+//   ],
+//   (err, rows) => {
+//     if (err) {
+//       console.error("Error querying MySQL:", err);
+//       res.status(500).json({ error: "Internal server error" });
+//       return;
+//     } else {
+//       console.log("Edited data fetch from server:", {
+//         employeeId: req.body.employeeId,
+//         organizationId: req.body.organizationId,
+//         name: req.body.name,
+//         birthday: req.body.birthday,
+//         payGradeId: req.body.payGradeId,
+//         statusID: req.body.statusID,
+//         jobTitleId: req.body.jobTitleId,
+//         supervisorId: req.body.supervisorId,
+//         maritalStatus: req.body.maritalStatus,
+//         contactNumber: req.body.contactNumber,
+//       });
+
+//     res.json(rows);
+//   }
+// }
+//);
+
 //post relavent employees ID
 app.post("/api/send-employee-id", (req, res) => {
   employeeId = req.body.Employee_ID;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
+//import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
 const ManUI = () => {
@@ -77,25 +77,13 @@ const ManUI = () => {
       </nav>
       <h1>Manager UI</h1>
 
-      <button
-        type="button"
-        class="button-with-icon"
-        onClick={handleViewPersonalInfo}
-      >
+      <button type="button" onClick={handleViewPersonalInfo}>
         View My Details
       </button>
-      <button
-        type="button"
-        class="button-with-icon"
-        onClick={handleAddEmployee}
-      >
+      <button type="button" onClick={handleAddEmployee}>
         Add Employee
       </button>
-      <button
-        type="button"
-        class="button-with-icon"
-        onClick={handleEmployeeInfo}
-      >
+      <button type="button" onClick={handleEmployeeInfo}>
         View Employees
       </button>
     </div>
