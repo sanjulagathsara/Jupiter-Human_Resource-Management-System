@@ -25,6 +25,48 @@ db.connect((err) => {
   }
 });
 
+//get job title list
+app.get("/api/jobTitle", (req, res) => {
+  db.query("SELECT Job_Title FROM employee_job_title", (err, rows, fields) => {
+    if (err) {
+      console.error("Error fetching data:", err);
+      res.status(500).json({ error: "Internal server error" });
+      return;
+    } else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
+
+//get pay grade list
+app.get("/api/payGrade", (req, res) => {
+  db.query("SELECT Pay_Grade FROM employee_pay_grade", (err, rows, fields) => {
+    if (err) {
+      console.error("Error fetching data:", err);
+      res.status(500).json({ error: "Internal server error" });
+      return;
+    } else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
+
+//get status list
+app.get("/api/status", (req, res) => {
+  db.query("SELECT Status_Type FROM employee_status", (err, rows, fields) => {
+    if (err) {
+      console.error("Error fetching data:", err);
+      res.status(500).json({ error: "Internal server error" });
+      return;
+    } else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
+
 //post edited data
 app.post("/api/ManUI/EditPI/edited", (req, res) => {
   console.log("Edited data fetch from server:");
@@ -121,43 +163,6 @@ app.post("/api/ManUI/EditPI/edited", (req, res) => {
   );
 });
 
-// db.query(
-//   "UPDATE employee SET Name = ? , Emergency_contact_Number = ? , Marital_status = ?,Organization_Registration_Number = ?, Status_ID = ?, Job_Title_ID = ? ,Pay_Grade_ID = ?, Supervisor_ID = ?   WHERE Employee_ID = ?",
-//   [
-//     req.body.name,
-//     req.body.contactNumber,
-//     req.body.maritalStatus,
-//     req.body.organizationId,
-//     req.body.statusID,
-//     req.body.jobTitleId,
-//     req.body.payGradeId,
-//     req.body.supervisorId,
-//     req.body.employeeId,
-//   ],
-//   (err, rows) => {
-//     if (err) {
-//       console.error("Error querying MySQL:", err);
-//       res.status(500).json({ error: "Internal server error" });
-//       return;
-//     } else {
-//       console.log("Edited data fetch from server:", {
-//         employeeId: req.body.employeeId,
-//         organizationId: req.body.organizationId,
-//         name: req.body.name,
-//         birthday: req.body.birthday,
-//         payGradeId: req.body.payGradeId,
-//         statusID: req.body.statusID,
-//         jobTitleId: req.body.jobTitleId,
-//         supervisorId: req.body.supervisorId,
-//         maritalStatus: req.body.maritalStatus,
-//         contactNumber: req.body.contactNumber,
-//       });
-
-//     res.json(rows);
-//   }
-// }
-//);
-
 //post relavent employees ID
 app.post("/api/send-employee-id", (req, res) => {
   employeeId = req.body.Employee_ID;
@@ -168,7 +173,7 @@ app.post("/api/send-employee-id", (req, res) => {
 //get relavent employee Informations
 app.get("/api/employeeInfo/employee", (req, res) => {
   db.query(
-    `SELECT e.Employee_ID, o.Organization_Name, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name FROM employee e natural join organization o natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
+    `SELECT e.Employee_ID, p.Pay_Grade, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name FROM employee e natural join employee_pay_grade p natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
     [employeeId],
     (err, rows, fields) => {
       if (err) {
@@ -253,7 +258,7 @@ app.post("/api/send-variable", (req, res) => {
 //View personal Information
 app.get("/api/personalInfo", (req, res) => {
   db.query(
-    `SELECT e.Employee_ID, o.Organization_Name, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name, py.Pay_Grade as Pay_Grade  FROM employee e natural join employee_pay_grade py natural join organization o natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
+    `SELECT e.Employee_ID, p.Pay_Grade, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name, py.Pay_Grade as Pay_Grade  FROM employee e natural join employee_pay_grade py natural join employee_pay_grade p natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
     [token],
     (err, rows, fields) => {
       if (err) {

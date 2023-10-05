@@ -52,12 +52,12 @@ const PersonalInfo = () => {
         >
           <h5>Employee ID : {record.Employee_ID}</h5>
           <h5>Name : {record.Name}</h5>
-          <h5>Organization Name :{record.Organization_Name}</h5>
           <h5>Birthdate : {new Date(record.Birthdate).toLocaleDateString()}</h5>
           <h5>Marital Status : {record.Marital_status}</h5>
           <h5>Emergency Contact Number : {record.Emergency_contact_Number}</h5>
           <h5>Status Type : {record.Status_Type}</h5>
           <h5>Job Title : {record.Job_Title}</h5>
+          <h5>Pay Grade : {record.Pay_Grade}</h5>
           {record.Supervisor_Name !== null && (
             <h5>Supervisor_Name: {record.Supervisor_Name}</h5>
           )}
