@@ -1,98 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const EditPI = () => {
+  const [jobTitleList, setJobTitleList] = useState([]);
+  const [payGradeList, setPayGradeList] = useState([]);
+  const [statusList, setStatusList] = useState([]);
+  const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
+  const supervisors = ["Kavindu Dasun", "Yasantha Jayalath"];
   const navigate = useNavigate();
-  const [record, setRecord] = useState([]);
   const goBack = () => {
     navigate(-1);
   };
 
-  const [PI, setPI] = useState({
-    employeeId: "",
-    name: "",
-    birthday: "",
-    contactNumber: "",
-    maritalStatus: "",
-    supervisorId: "",
-    status: "",
-    jobTitle: "",
-    payGrade: "",
-  });
-
-  const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
-  const supervisors = ["Kavindu Dasun", "Yasantha Jayalath"];
-  const statusList = [
-    "Intern-fulltime",
-    "Intern-Parttime",
-    "Contract-fulltime",
-    "Contract-parttime",
-    "Permanent",
-    "Freelance",
-  ];
-
-  const jobTitleList = [
-    "HR_Manager",
-    "Supervisor",
-    "Accountant",
-    "Software Engineer",
-    "QA Engineer",
-  ];
-
-  const payGradeList = ["Level 1", "Level 2", "Level 3"];
-
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  function formatDate(inputDate) {
-    const date = new Date(inputDate);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear().toString().slice(-2);
-
-    return `${day}/${month}/${year}`;
-  }
-  const fetchdata = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/personalInfo");
-      const data = await response.json();
-      console.log(data);
-      console.log("Data fetched from server");
-      setRecord(data[0]);
-
-      setPI({
-        employeeId: data[0].Employee_ID,
-
-        name: data[0].Name,
-        //birthday: formatDate(data[0].record.Birthdate),
-        contactNumber: data[0].Emergency_contact_Number,
-        maritalStatus: data[0].Marital_status,
-        supervisorId: data[0].Supervisor_Name,
-        status: data[0].Status_Type,
-        jobTitle: data[0].Job_Title,
-        payGrade: data[0].Pay_Grade,
-      });
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
   useEffect(() => {
+    const fetchJobTitleList = async () => {
+      const response = await axios.get("http://localhost:5000/api/jobTitle");
+      console.log(response.data);
+      setJobTitleList(response.data.map((item) => item.Job_Title));
+    };
+    fetchJobTitleList();
+
+    const fetchStatusList = async () => {
+      const response2 = await axios.get("http://localhost:5000/api/status");
+      console.log(response2.data);
+      setStatusList(response2.data.map((item) => item.Status_Type));
+    };
+    fetchStatusList();
+
+    const fetchPayGradeList = async () => {
+      const response1 = await axios.get("http://localhost:5000/api/payGrade");
+      console.log(response1.data);
+      setPayGradeList(response1.data.map((item) => item.Pay_Grade));
+    };
+    fetchPayGradeList();
+  }, []);
+
+  //get informations of login employee
+  const [record, setRecord] = useState([]);
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/personalInfo");
+        const data = await response.json();
+        console.log(data);
+        console.log("Data fetched from server");
+        setRecord(data[0]);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
     fetchdata();
   }, []);
 
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
 
     console.log("Form submitted:", {
-      employeeId: PI.employeeId,
-
-      name: PI.name,
-      birthday: PI.birthday,
-      contactNumber: PI.contactNumber,
-      maritalStatus: PI.maritalStatus,
-      supervisorId: PI.supervisorId,
-      status: PI.status,
-      jobTitle: PI.jobTitle,
-      payGrade: PI.payGrade,
+      employeeId: record.Employee_ID,
     });
   };
 
@@ -108,24 +76,25 @@ const EditPI = () => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                employeeId: PI.employeeId,
-
-                name: PI.name,
-                birthday: PI.birthday,
-                contactNumber: PI.contactNumber,
-                maritalStatus: PI.maritalStatus,
-                supervisorId: PI.supervisorId,
-                status: PI.status,
-                jobTitle: PI.jobTitle,
-                payGrade: PI.payGrade,
+                employeeId: record.Employee_ID,
+                name: record.Name,
+                birthday: record.Birthdate,
+                contactNumber: record.Emergency_contact_Number,
+                maritalStatus: record.Marital_status,
+                supervisorId: record.Supervisor_Name,
+                status: record.Status_Type,
+                jobTitle: record.Job_Title,
+                payGrade: record.Pay_Grade,
               }),
             }
           );
 
           if (response.ok) {
             console.log("Edited Data sent to server:");
+            alert("Data Edited Successfully");
           } else {
             console.log("Data not sent to server");
+            alert("Data not Edited");
           }
 
           setFormSubmitted(false);
@@ -148,8 +117,8 @@ const EditPI = () => {
           Name:
           <input
             type="text"
-            value={PI.name}
-            onChange={(e) => setPI({ ...PI, name: e.target.value })}
+            value={record.Name}
+            onChange={(e) => setRecord({ ...record, Name: e.target.value })}
             style={{ marginLeft: "10px" }}
           />
         </label>
@@ -159,8 +128,10 @@ const EditPI = () => {
           Birthday:
           <input
             type="date"
-            value={PI.birthday}
-            onChange={(e) => setPI({ ...PI, birthday: e.target.value })}
+            value={record.Birthdate}
+            onChange={(e) =>
+              setRecord({ ...record, Birthdate: e.target.value })
+            }
             style={{ marginLeft: "10px" }}
           />
         </label>
@@ -169,8 +140,10 @@ const EditPI = () => {
           Contact Number:
           <input
             type="tel"
-            value={PI.contactNumber}
-            onChange={(e) => setPI({ ...PI, contactNumber: e.target.value })}
+            value={record.Emergency_contact_Number}
+            onChange={(e) =>
+              setRecord({ ...record, Emergency_contact_Number: e.target.value })
+            }
             style={{ marginLeft: "10px" }}
           />
         </label>
@@ -179,11 +152,13 @@ const EditPI = () => {
         <label className="mb-3">
           Marital Status:
           <select
-            value={PI.maritalStatus}
-            onChange={(e) => setPI({ ...PI, maritalStatus: e.target.value })}
+            value={record.Marital_status}
+            onChange={(e) =>
+              setRecord({ ...record, Marital_status: e.target.value })
+            }
             style={{ marginLeft: "10px" }}
           >
-            <option value="">{PI.maritalStatus}</option>
+            <option value="">{record.Marital_status}</option>
             {maritalStatusOptions.map((status, index) => (
               <option key={index} value={status}>
                 {status}
@@ -196,11 +171,13 @@ const EditPI = () => {
         <label className="mb-3">
           Job Title:
           <select
-            value={PI.jobTitle}
-            onChange={(e) => setPI({ ...PI, jobTitle: e.target.value })}
+            value={record.Job_Title}
+            onChange={(e) =>
+              setRecord({ ...record, Job_Title: e.target.value })
+            }
             style={{ marginLeft: "10px" }}
           >
-            <option value="">{PI.jobTitle}</option>
+            <option value="">{record.Job_Title}</option>
             {jobTitleList.map((jobTitle, index) => (
               <option key={index} value={jobTitle}>
                 {jobTitle}
@@ -213,11 +190,13 @@ const EditPI = () => {
         <label className="mb-3">
           Status:
           <select
-            value={PI.status}
-            onChange={(e) => setPI({ ...PI, status: e.target.value })}
+            value={record.Status_Type}
+            onChange={(e) =>
+              setRecord({ ...record, Status_Type: e.target.value })
+            }
             style={{ marginLeft: "10px" }}
           >
-            <option value="">{PI.status}</option>
+            <option value="">{record.Status_Type}</option>
             {statusList.map((status, index) => (
               <option key={index} value={status}>
                 {status}
@@ -230,11 +209,13 @@ const EditPI = () => {
         <label className="mb-3">
           Pay Grade:
           <select
-            value={PI.payGrade}
-            onChange={(e) => setPI({ ...PI, payGrade: e.target.value })}
+            value={record.Pay_Grade}
+            onChange={(e) =>
+              setRecord({ ...record, Pay_Grade: e.target.value })
+            }
             style={{ marginLeft: "10px" }}
           >
-            <option value="">{PI.payGrade}</option>
+            <option value="">{record.Pay_Grade}</option>
             {payGradeList.map((payGrade, index) => (
               <option key={index} value={payGrade}>
                 {payGrade}
@@ -243,15 +224,17 @@ const EditPI = () => {
           </select>
         </label>
         <br />
-        {PI.jobTitle !== "HR_Manager" && (
+        {record.Job_Title !== "HR_Manager" && (
           <label className="mb-3">
-            Supervisor ID:
+            Supervisor:
             <select
-              value={PI.supervisorId}
-              onChange={(e) => setPI({ ...PI, supervisorId: e.target.value })}
+              value={record.Supervisor_Name}
+              onChange={(e) =>
+                setRecord({ ...record, Supervisor_Name: e.target.value })
+              }
               style={{ marginLeft: "10px" }}
             >
-              <option value="">{PI.supervisorId}</option>
+              <option value="">{record.Supervisor_Name}</option>
               {supervisors.map((supervisor, index) => (
                 <option key={index} value={supervisor}>
                   {supervisor}

@@ -25,15 +25,14 @@ const EditEmployee = () => {
     const fetchStatusList = async () => {
       const response2 = await axios.get("http://localhost:5000/api/status");
       console.log(response2.data);
-      setStatusList(response2.data.map((item) => item.Pay_Grade));
+      setStatusList(response2.data.map((item) => item.Status_Type));
     };
     fetchStatusList();
-  }, []);
-  useEffect(() => {
+
     const fetchPayGradeList = async () => {
       const response1 = await axios.get("http://localhost:5000/api/payGrade");
       console.log(response1.data);
-      setPayGradeList(response1.data.map((item) => item.Status_Type));
+      setPayGradeList(response1.data.map((item) => item.Pay_Grade));
     };
     fetchPayGradeList();
   }, []);
