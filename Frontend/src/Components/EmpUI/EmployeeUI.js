@@ -54,7 +54,7 @@ const EmployeeUI = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/login/Employee" className="nav-link">
+                <Link to="/login" className="nav-link">
                   Log Out
                 </Link>
               </li>

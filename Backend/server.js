@@ -67,6 +67,44 @@ app.get("/api/status", (req, res) => {
   });
 });
 
+//post details of leaveRequest
+app.post("/api/leaveRequest", (req, res) => {
+  console.log("Leave details received from frontend");
+  console.log(req.body);
+});
+
+//get leave Types
+app.get("/api/leaveTypes", (req, res) => {
+  db.query("SELECT LeaveType FROM leave_application", (err, rows) => {
+    if (err) {
+      console.error("Error querying MySQL:", err);
+      res.status(500).json({ error: "Internal server error" });
+      return;
+    } else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
+
+//get employee leave details
+app.get("/api/leaveRequest", (req, res) => {
+  db.query(
+    "SELECT * FROM employee_leave_details where Employee_ID = ?",
+    [token],
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(rows);
+        res.json(rows);
+      }
+    }
+  );
+});
+
 //post edited data
 app.post("/api/ManUI/EditPI/edited", (req, res) => {
   console.log("Edited data fetch from server:");
