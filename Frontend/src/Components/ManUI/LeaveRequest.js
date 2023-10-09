@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 const LeaveRequest = () => {
   const [record, setRecord] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/api/leaveRequest").then((res) => {
+    axios.get("http://localhost:5001/api/leaveRequest").then((res) => {
       console.log("success");
       console.log(res);
       setRecord(res.data[0]);
@@ -18,7 +18,7 @@ const LeaveRequest = () => {
   const [submit, setSubmit] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/leaveTypes").then((res) => {
+    axios.get("http://localhost:5001/api/leaveTypes").then((res) => {
       console.log("success");
       console.log(res);
       setLeaveType(res.data.map((item) => item.LeaveType));
@@ -29,7 +29,7 @@ const LeaveRequest = () => {
     const sendLeaveRequest = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/leaveRequest",
+          "http://localhost:5001/api/leaveRequest",
           {
             LeaveType: selectedOption,
           }

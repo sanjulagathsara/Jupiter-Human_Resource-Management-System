@@ -11,7 +11,7 @@ const Employee = () => {
   const [record, setRecord] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/userLogin")
+    fetch("http://localhost:5001/api/userLogin")
       .then((response) => response.json())
       .then((data) => {
         setRecord(data);
@@ -28,7 +28,7 @@ const Employee = () => {
   }
 
   function sendToken() {
-    fetch("http://localhost:5000/api/send-variable", {
+    fetch("http://localhost:5001/api/send-variable", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

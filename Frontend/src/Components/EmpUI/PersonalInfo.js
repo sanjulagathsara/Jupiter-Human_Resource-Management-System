@@ -12,7 +12,7 @@ const PersonalInfo = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/personalInfo")
+    fetch("http://localhost:5001/api/personalInfo")
       .then((response) => response.json())
       .then((data) => {
         setColumn(Object.keys(data[0]));
