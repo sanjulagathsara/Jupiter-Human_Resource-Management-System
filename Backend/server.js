@@ -8,12 +8,12 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-const port = 5000;
+const port = 5001;
 
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "sanjulaJ",
   database: "jupiter",
 });
 
@@ -152,6 +152,6 @@ app.get("/api/userLogin", (req, res) => {
   );
 });
 
-app.listen(5000, () => {
-  console.log("Server is running on port 5000");
+app.listen(port, () => {
+  console.log("Server is running on port 5001");
 });

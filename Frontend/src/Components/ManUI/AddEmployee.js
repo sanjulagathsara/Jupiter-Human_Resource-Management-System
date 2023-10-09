@@ -99,7 +99,7 @@ const AddEmployee = () => {
 
   useEffect(() => {
     if (formSubmitted) {
-      fetch("http://localhost:5000/api/employee/addEmployee", {
+      fetch("http://localhost:5001/api/employee/addEmployee", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
