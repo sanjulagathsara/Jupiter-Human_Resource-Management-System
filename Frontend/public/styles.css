@@ -1,0 +1,26 @@
+footer{
+    text-align: center;
+    font-family: 'Times New Roman';
+    font-size: 15px;
+    background-color: orange;
+    color: black;
+    padding: 3px;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    font-weight: bold;
+}
+header{
+    text-align: center;
+    font-family: 'Times New Roman';
+    font-size: 15px;
+    background-color: orange;
+    color: black;
+    padding: 3px;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    font-weight: bold;
+}
