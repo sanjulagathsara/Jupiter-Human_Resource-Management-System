@@ -2,11 +2,30 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-var token;
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 var employeeId;
 const app = express();
+var personalID;
+const session = require("express-session");
 
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false, maxAge: 60000 * 60 },
+  })
+);
+
 app.use(express.json());
 const port = 5000;
 
@@ -88,10 +107,10 @@ app.get("/api/leaveTypes", (req, res) => {
 });
 
 //get employee leave details
-app.get("/api/leaveRequest", (req, res) => {
+app.get("/api/leaveDetails", (req, res) => {
   db.query(
     "SELECT * FROM employee_leave_details where Employee_ID = ?",
-    [token],
+    [personalID],
     (err, rows, fields) => {
       if (err) {
         console.error("Error querying MySQL:", err);
@@ -230,7 +249,7 @@ app.get("/api/employeeInfo/employee", (req, res) => {
 app.get("/api/employeeInfo", (req, res) => {
   db.query(
     "SELECT Employee_ID, Name FROM employee where Employee_ID != ?",
-    [token],
+    [personalID],
     (err, rows, fields) => {
       if (err) {
         console.error("Error querying MySQL:", err);
@@ -286,18 +305,11 @@ app.post("/api/employee/addEmployee", (req, res) => {
   );
 });
 
-//Get the token from the frontend and send it to the backend
-app.post("/api/send-variable", (req, res) => {
-  token = req.body.username;
-  console.log(token);
-  res.send(token);
-});
-
 //View personal Information
 app.get("/api/personalInfo", (req, res) => {
   db.query(
-    `SELECT e.Employee_ID, p.Pay_Grade, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name, py.Pay_Grade as Pay_Grade  FROM employee e natural join employee_pay_grade py natural join employee_pay_grade p natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
-    [token],
+    `SELECT e.Employee_ID, p.Pay_Grade, e.Name,e.Birthdate,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title,ej.Job_Title_ID, s.Name as Supervisor_Name, py.Pay_Grade as Pay_Grade  FROM employee e natural join employee_pay_grade py natural join employee_pay_grade p natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
+    [personalID],
     (err, rows, fields) => {
       if (err) {
         console.error("Error querying MySQL:", err);
@@ -305,7 +317,48 @@ app.get("/api/personalInfo", (req, res) => {
         return;
       } else {
         console.log(rows);
+
         res.json(rows);
+      }
+    }
+  );
+});
+
+//Token verify
+const verifyUser = (req, res, next) => {
+  const token = req.cookies.token;
+  console.log("Token:", token);
+
+  if (token) {
+    jwt.verify(token, "Seceret key token", (err, decodedToken) => {
+      if (err) {
+        console.log("Authentication error", err.message);
+      } else {
+        console.log(decodedToken);
+        next();
+      }
+    });
+  } else {
+    console.log("Login token failed");
+  }
+};
+
+app.get("/", verifyUser, (req, res) => {
+  db.query(
+    "select Job_Title_ID from employee where Employee_ID = ?",
+    [personalID],
+    (err, rows) => {
+      if (err) {
+        console.error("Error fetching data:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(rows);
+        if (rows.length > 0) {
+          res.json({ message: "Success", job: rows[0].Job_Title_ID });
+        } else {
+          res.json({ message: "unsuccess", job: null });
+        }
       }
     }
   );
@@ -313,22 +366,59 @@ app.get("/api/personalInfo", (req, res) => {
 
 //User Login
 
-app.get("/api/userLogin", (req, res) => {
+app.post("/api/login", (req, res) => {
   db.query(
-    "SELECT Employee_ID, Password,Job_Title_ID FROM user_account natural join employee ",
-    (err, rows, fields) => {
+    "SELECT Employee_ID,Job_Title_ID FROM user_account natural join employee WHERE Employee_ID = ? AND Password = ?",
+    [req.body.username, req.body.password],
+    (err, rows) => {
       if (err) {
-        console.error("Error querying MySQL:", err);
+        console.error("Error fetching data:", err);
         res.status(500).json({ error: "Internal server error" });
         return;
       } else {
-        console.log(rows);
-        res.json(rows);
+        if (rows.length > 0) {
+          const id = req.body.username;
+          personalID = id;
+          const token = jwt.sign({ id }, "Seceret key token", {
+            expiresIn: "1d",
+          });
+          req.session.role = rows[0].Job_Title_ID;
+          res.cookie("token", token);
+          res.json({
+            status: "success",
+            body: rows,
+          });
+        } else {
+          res.json({
+            status: "failed",
+          });
+          console.log("Login failed");
+        }
       }
     }
   );
 });
+//clear cookies
+app.get("/api/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logout success" });
+  req.session.destroy();
+});
 
-app.listen(5000, () => {
+//check session
+app.get("/api/check", (req, res) => {
+  if (req.session.role) {
+    return res.json({
+      valid: true,
+      role: req.session.role,
+    });
+  } else {
+    return res.json({
+      valid: false,
+    });
+  }
+});
+
+app.listen(port, () => {
   console.log("Server is running on port 5000");
 });

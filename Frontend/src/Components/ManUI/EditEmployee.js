@@ -128,7 +128,11 @@ const EditEmployee = () => {
           Birthday:
           <input
             type="date"
-            value={record.Birthdate}
+            value={
+              record.Birthdate
+                ? new Date(record.Birthdate).toISOString().split("T")[0]
+                : ""
+            }
             onChange={(e) =>
               setRecord({ ...record, Birthdate: e.target.value })
             }

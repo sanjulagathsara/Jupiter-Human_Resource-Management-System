@@ -5,11 +5,10 @@ import { useState, useEffect } from "react";
 const LeaveRequest = () => {
   const [record, setRecord] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/api/leaveRequest").then((res) => {
+    axios.get("http://localhost:5000/api/leaveDetails").then((res) => {
       console.log("success");
       console.log(res);
       setRecord(res.data[0]);
-      console.log(record.Employee_ID);
     });
   }, []);
 
@@ -25,22 +24,22 @@ const LeaveRequest = () => {
     });
   }, []);
 
-  useEffect(() => {
-    const sendLeaveRequest = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/api/leaveRequest",
-          {
-            LeaveType: selectedOption,
-          }
-        );
-        console.log("Leave details sent from frontend", response.data);
-      } catch (error) {
-        console.error("Error sending leave request", error);
-      }
-    };
-    if (submit) sendLeaveRequest();
-  }, [submit]);
+  // useEffect(() => {
+  //   const sendLeaveRequest = async () => {
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:5000/api/leaveRequest",
+  //         {
+  //           LeaveType: selectedOption,
+  //         }
+  //       );
+  //       console.log("Leave details sent from frontend", response.data);
+  //     } catch (error) {
+  //       console.error("Error sending leave request", error);
+  //     }
+  //   };
+  //   if (submit) sendLeaveRequest();
+  // }, [submit]);
 
   const handleDropdownChange = (event) => {
     setSelectedOption(event.target.value);

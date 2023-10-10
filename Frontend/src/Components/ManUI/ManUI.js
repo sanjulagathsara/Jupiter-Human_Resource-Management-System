@@ -1,7 +1,8 @@
-import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 //import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const ManUI = () => {
   const navigate = useNavigate();
@@ -14,6 +15,27 @@ const ManUI = () => {
   const handleEmployeeInfo = () => {
     navigate("/login/Employee/ManUI/EmployeeInfo");
   };
+  const handleLogOut = () => {
+    axios.get("http://localhost:5000/api/logout");
+  };
+  const [role, setRole] = useState("");
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/check")
+      .then((response) => {
+        if (response.data.valid && response.data.role === "JT001") {
+          setRole(response.data.role);
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -67,7 +89,7 @@ const ManUI = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/login/" className="nav-link">
+                <Link to="/" onClick={handleLogOut} className="nav-link">
                   Log Out
                 </Link>
               </li>
