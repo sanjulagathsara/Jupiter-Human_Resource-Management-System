@@ -15,7 +15,7 @@ import AddEmployee from "./Components/ManUI/AddEmployee";
 import EmployeeInfo from "./Components/ManUI/EmployeeInfo";
 import ViewEmployee from "./Components/ManUI/ViewEmployee";
 import EditEmployee from "./Components/ManUI/EditEmployee";
-import LeaveRequest from "./Components/ManUI/LeaveRequest";
+import LeaveRequest from "./Components/EmpUI/LeaveRequest";
 import LoginUI from "./Components/login";
 
 import EditPI from "./Components/ManUI/EditPI";

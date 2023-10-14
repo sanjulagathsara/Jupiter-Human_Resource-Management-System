@@ -99,7 +99,7 @@ const AddEmployee = () => {
 
   useEffect(() => {
     if (formSubmitted) {
-      fetch("http://localhost:5000/api/employee/addEmployee", {
+      fetch("http://localhost:5001/api/employee/addEmployee", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -129,6 +129,36 @@ const AddEmployee = () => {
       setFormSubmitted(false);
     }
   }, [formSubmitted]);
+  const [statusType, setStatusType] = useState([]);
+  const dependancyStatus = [
+    "Student",
+    "Under graduate",
+    "Post graduate",
+    "Other",
+  ];
+  const relationship = ["Son", "Daughter"];
+  const [value, setValue] = useState([]);
+
+  const handleAdd = () => {
+    const dependant = {
+      name: "",
+      relationship: "",
+      birthday: "",
+      statusType: "",
+    };
+    setValue([...value, dependant]);
+  };
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...value];
+    list[index][name] = value;
+    setValue(list);
+  };
+  const deleteHandle = (index) => {
+    const list = [...value];
+    list.splice(index, 1);
+    setValue(list);
+  };
 
   return (
     <div>
@@ -287,6 +317,87 @@ const AddEmployee = () => {
               </label>
             </tr>
           )}
+
+          <button
+            onClick={() => handleAdd()}
+            type="button"
+            className="btn btn-primary"
+            style={{
+              color: "white",
+              fontSize: "16px",
+              marginRight: "50px",
+              marginTop: "20px",
+            }}
+          >
+            Add Dependants Details
+          </button>
+          {value.map((val, idx) => {
+            return (
+              <div key={idx} style={{ marginTop: "20px" }}>
+                <label>
+                  Name:
+                  <input
+                    type="text"
+                    value={val.name}
+                    onChange={(e) => handleInputChange(e, idx)}
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />
+                </label>
+                <label styles={{ marginLeft: "10px" }}>
+                  Relationship:
+                  <select
+                    value={relationship}
+                    onChange={(e) => handleInputChange(e, idx)}
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  >
+                    <option value="">Select a Relationship</option>
+                    {relationship.map((relationship, index) => (
+                      <option key={index} value={relationship}>
+                        {relationship}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Age:
+                  <input
+                    type="text"
+                    value={val.birthday}
+                    onChange={(e) => handleInputChange(e, idx)}
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />
+                </label>
+                <label>
+                  Status:
+                  <select
+                    value={statusType}
+                    onChange={(e) => handleInputChange(e, idx)}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    <option value="">Select a Status</option>
+                    {dependancyStatus.map((dependancyStatus, index) => (
+                      <option key={index} value={dependancyStatus}>
+                        {dependancyStatus}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => deleteHandle()}
+                  style={{
+                    marginBottom: "10px",
+                    marginTop: "10px",
+                    marginLeft: "20px",
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            );
+          })}
+
           <button
             onClick={goBack}
             type="button"

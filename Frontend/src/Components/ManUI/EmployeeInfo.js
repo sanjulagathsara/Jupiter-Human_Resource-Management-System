@@ -10,7 +10,7 @@ const EmployeeInfo = () => {
     navigate(-1);
   };
   useEffect(() => {
-    fetch("http://localhost:5000/api/employeeInfo")
+    fetch("http://localhost:5001/api/employeeInfo")
       .then((response) => response.json())
       .then((data) => {
         setColumn(Object.keys(data[0]));
@@ -50,7 +50,7 @@ const EmployeeInfo = () => {
                 <button
                   className="btn btn-success"
                   onClick={() => {
-                    fetch("http://localhost:5000/api/send-employee-id", {
+                    fetch("http://localhost:5001/api/send-employee-id", {
                       method: "POST",
                       headers: {
                         "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const EmployeeInfo = () => {
                 <button
                   className="btn btn-warning"
                   onClick={() => {
-                    fetch("http://localhost:5000/api/send-employee-id", {
+                    fetch("http://localhost:5001/api/send-employee-id", {
                       method: "POST",
                       headers: {
                         "Content-Type": "application/json",

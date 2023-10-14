@@ -16,21 +16,21 @@ const EditEmployee = () => {
 
   useEffect(() => {
     const fetchJobTitleList = async () => {
-      const response = await axios.get("http://localhost:5000/api/jobTitle");
+      const response = await axios.get("http://localhost:5001/api/jobTitle");
       console.log(response.data);
       setJobTitleList(response.data.map((item) => item.Job_Title));
     };
     fetchJobTitleList();
 
     const fetchStatusList = async () => {
-      const response2 = await axios.get("http://localhost:5000/api/status");
+      const response2 = await axios.get("http://localhost:5001/api/status");
       console.log(response2.data);
       setStatusList(response2.data.map((item) => item.Status_Type));
     };
     fetchStatusList();
 
     const fetchPayGradeList = async () => {
-      const response1 = await axios.get("http://localhost:5000/api/payGrade");
+      const response1 = await axios.get("http://localhost:5001/api/payGrade");
       console.log(response1.data);
       setPayGradeList(response1.data.map((item) => item.Pay_Grade));
     };
@@ -43,7 +43,7 @@ const EditEmployee = () => {
     const fetchdata = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/employeeInfo/employee"
+          "http://localhost:5001/api/employeeInfo/employee"
         );
         const data = await response.json();
         console.log(data);
@@ -71,7 +71,7 @@ const EditEmployee = () => {
       try {
         if (formSubmitted) {
           const response = await fetch(
-            "http://localhost:5000/api/ManUI/EditPI/edited",
+            "http://localhost:5001/api/ManUI/EditPI/edited",
             {
               method: "POST",
               headers: {

@@ -12,7 +12,7 @@ const Employee = () => {
   const [record, setRecord] = useState();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/", username).then((response) => {
+    axios.get("http://localhost:5001/", username).then((response) => {
       if (response.data.message === "Success") {
         setAuth(true);
         setRecord(response.data.job);
@@ -27,7 +27,7 @@ const Employee = () => {
 
   const fetchdata = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/login", {
+      const response = await axios.post("http://localhost:5001/api/login", {
         username: username,
         password: password,
       });

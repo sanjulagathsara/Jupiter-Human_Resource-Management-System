@@ -14,7 +14,7 @@ const SupervisorUI = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/check")
+      .get("http://localhost:5001/api/check")
       .then((response) => {
         if (response.data.valid && response.data.role == "JT002") {
           setRole(response.data.role);
@@ -27,7 +27,7 @@ const SupervisorUI = () => {
       });
   }, []);
   const handleLogOut = () => {
-    axios.get("http://localhost:5000/api/logout");
+    axios.get("http://localhost:5001/api/logout");
   };
 
   return (

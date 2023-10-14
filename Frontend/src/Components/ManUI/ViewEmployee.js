@@ -7,7 +7,7 @@ const ViewEmployee = () => {
   };
   const [record, setRecord] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/employeeInfo/employee")
+    fetch("http://localhost:5001/api/employeeInfo/employee")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

@@ -27,7 +27,7 @@ app.use(
 );
 
 app.use(express.json());
-const port = 5000;
+const port = 5001;
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -420,5 +420,5 @@ app.get("/api/check", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Server is running on port 5000");
+  console.log("Server is running on port5001");
 });

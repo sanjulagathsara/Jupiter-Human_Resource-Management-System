@@ -18,7 +18,7 @@ const EmployeeUI = () => {
     navigate("/login/Employee");
   };
   const handleLogOut = () => {
-    axios.get("http://localhost:5000/api/logout");
+    axios.get("http://localhost:5001/api/logout");
   };
 
   return (

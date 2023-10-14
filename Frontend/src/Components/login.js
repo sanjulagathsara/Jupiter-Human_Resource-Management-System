@@ -10,7 +10,7 @@ const LoginUI = () => {
   axios.defaults.withCredentials = true;
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/check")
+      .get("http://localhost:5001/api/check")
       .then((response) => {
         if (response.data.valid) {
           setRole(response.data.role);

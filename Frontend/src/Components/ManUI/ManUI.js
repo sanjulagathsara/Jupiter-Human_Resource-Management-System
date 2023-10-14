@@ -16,14 +16,14 @@ const ManUI = () => {
     navigate("/login/Employee/ManUI/EmployeeInfo");
   };
   const handleLogOut = () => {
-    axios.get("http://localhost:5000/api/logout");
+    axios.get("http://localhost:5001/api/logout");
   };
   const [role, setRole] = useState("");
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/check")
+      .get("http://localhost:5001/api/check")
       .then((response) => {
         if (response.data.valid && response.data.role === "JT001") {
           setRole(response.data.role);
