@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./EmpUI.css";
 import axios from "axios";
-
+import { useEffect } from "react";
 const EmployeeUI = () => {
   const navigate = useNavigate();
   const handleViewPersonalInfo = () => {
@@ -17,10 +17,25 @@ const EmployeeUI = () => {
   const handleBack = () => {
     navigate("/login/Employee");
   };
+
+  axios.defaults.withCredentials = true;
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (response.data.valid) {
+          navigate(`/login/Employee:${response.data.role}`);
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const handleLogOut = () => {
     axios.get("http://localhost:5001/api/logout");
   };
-
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

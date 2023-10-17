@@ -47,16 +47,19 @@ db.connect((err) => {
 
 //get job title list
 app.get("/api/jobTitle", (req, res) => {
-  db.query("SELECT Job_Title FROM employee_job_title", (err, rows, fields) => {
-    if (err) {
-      console.error("Error fetching data:", err);
-      res.status(500).json({ error: "Internal server error" });
-      return;
-    } else {
-      console.log(rows);
-      res.json(rows);
+  db.query(
+    "SELECT Job_Title FROM employee_job_title where Job_Title_ID != 'JT001' and Job_Title_ID != 'JT002'",
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error fetching data:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(rows);
+        res.json(rows);
+      }
     }
-  });
+  );
 });
 
 //get Branches

@@ -16,6 +16,7 @@ import ViewEmployee from "./Components/ManUI/ViewEmployee";
 import EditEmployee from "./Components/ManUI/EditEmployee";
 import LeaveRequest from "./Components/EmpUI/LeaveRequest";
 import LoginUI from "./Components/login";
+import AddHRManager from "./Components/Admin/AddHrManager";
 
 import EditPI from "./Components/ManUI/EditPI";
 function App() {
@@ -86,6 +87,10 @@ function App() {
             <Route
               path="/login/Employee/EmployeeUI/request-leave"
               element={<LeaveRequest />}
+            ></Route>
+            <Route
+              path="/login/Admin/AddHrManager"
+              element={<AddHRManager />}
             ></Route>
             <Route path="/login/home" element={<LoginUI />}></Route>
             <Route path="*" element={<h1>Not Found</h1>}></Route>
