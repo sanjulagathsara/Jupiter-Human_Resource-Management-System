@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./Components/login";
 import About from "./Components/about";
 import Dashboard from "./Components/dashboard";
 import Employee from "./Components/Employee/Employee";
@@ -16,6 +15,7 @@ import AddEmployee from "./Components/ManUI/AddEmployee";
 import EmployeeInfo from "./Components/ManUI/EmployeeInfo";
 import ViewEmployee from "./Components/ManUI/ViewEmployee";
 import EditEmployee from "./Components/ManUI/EditEmployee";
+import LeaveRequest from "./Components/ManUI/LeaveRequest";
 
 import EditPI from "./Components/ManUI/EditPI";
 function App() {
@@ -25,9 +25,8 @@ function App() {
         <div>
           <Routes>
             <Route exact path="/" element={<Dashboard />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route path="/login" element={<Employee />}></Route>
             <Route path="/about" element={<About />}></Route>
-            <Route path="/login/Employee" element={<Employee />}></Route>
             <Route path="/login/Admin" element={<Admin />}></Route>
             <Route path="/login/Employee:JT001" element={<ManUI />}></Route>
             <Route
@@ -71,6 +70,10 @@ function App() {
             <Route
               path="/login/Employee/ManUI/EditEmployee"
               element={<EditEmployee />}
+            ></Route>
+            <Route
+              path="/login/Employee/EmployeeUI/request-leave"
+              element={<LeaveRequest />}
             ></Route>
             <Route path="*" element={<h1>Not Found</h1>}></Route>
           </Routes>
