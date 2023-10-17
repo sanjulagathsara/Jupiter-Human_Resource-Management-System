@@ -9,15 +9,15 @@ const SupervisorUI = () => {
   const handleViewPersonalInfo = () => {
     navigate("/login/Employee/EmployeeUI/PersonalInfo");
   };
-  const [role, setRole] = useState("");
+
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
     axios
       .get("http://localhost:5001/api/check")
       .then((response) => {
-        if (response.data.valid && response.data.role == "JT002") {
-          setRole(response.data.role);
+        if (response.data.valid) {
+          navigate(`/login/Employee:${response.data.role}`);
         } else {
           navigate("/login");
         }

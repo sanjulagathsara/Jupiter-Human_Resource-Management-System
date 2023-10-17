@@ -25,7 +25,7 @@ const EmployeeInfo = () => {
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
           Employee Informations
         </h1>
-        {record.map((record, i) => (
+        {record.map((record) => (
           <div
             style={{
               border: "2px solid black",
@@ -40,7 +40,7 @@ const EmployeeInfo = () => {
               // Center children horizontally
             }}
           >
-            <tr key={i}>
+            <div>
               <h5>Employee ID : {record.Employee_ID}</h5>
               <h5>Name : {record.Name}</h5>
               <Link
@@ -94,7 +94,7 @@ const EmployeeInfo = () => {
                   Edit
                 </button>
               </Link>
-            </tr>
+            </div>
           </div>
         ))}
         <div style={{ display: "flex", justifyContent: "center" }}>

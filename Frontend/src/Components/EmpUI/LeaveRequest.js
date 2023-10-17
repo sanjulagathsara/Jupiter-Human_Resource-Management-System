@@ -20,7 +20,7 @@ const LeaveRequest = () => {
     axios.get("http://localhost:5001/api/leaveTypes").then((res) => {
       console.log("success");
       console.log(res);
-      setLeaveType(res.data.map((item) => item.LeaveType));
+      setLeaveType(res.data.map((item) => item));
     });
   }, []);
 

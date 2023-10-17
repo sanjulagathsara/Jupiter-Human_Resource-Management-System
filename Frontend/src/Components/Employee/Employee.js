@@ -8,22 +8,37 @@ const Employee = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [auth, setAuth] = useState(false);
-  const [record, setRecord] = useState();
+  // const [auth, setAuth] = useState(true);
+  // const [record, setRecord] = useState();
 
-  useEffect(() => {
-    axios.get("http://localhost:5001/", username).then((response) => {
-      if (response.data.message === "Success") {
-        setAuth(true);
-        setRecord(response.data.job);
-      } else {
-        setAuth(false);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("http://localhost:5001/", username).then((response) => {
+  //     if (response.data.message === "Success") {
+  //       setAuth(true);
+  //       setRecord(response.data.job);
+  //     } else {
+  //       setAuth(false);
+  //     }
+  //   });
+  // }, []);
 
   //post user name and password to the backend and check whether it is correct
   axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (response.data.valid) {
+          navigate(`/login/Employee:${response.data.role}`);
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const fetchdata = async () => {
     try {
@@ -50,44 +65,36 @@ const Employee = () => {
   }
 
   return (
-    <div>
-      {auth ? (
-        navigate(`/login/Employee:${record}`)
-      ) : (
-        <div className="gradient-bg vh-100">
-          <div className="d-flex justify-content-center align-items-center gradient-bg bg-primary vh-100">
-            <div className="bg-white p-3 rounded w-25">
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="username">Username</label>{" "}
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="username"
-                    className="form-control rounded-0"
-                    onChange={(event) => setUsername(event.target.value)}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="password">Password</label>{" "}
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="password"
-                    className="form-control rounded-0"
-                    onChange={(event) => setPassword(event.target.value)}
-                  />
-                </div>
-                <button className="btn btn-success w-100 rounded-0">
-                  Login
-                </button>
-              </form>
+    <div className="gradient-bg vh-100">
+      <div className="d-flex justify-content-center align-items-center gradient-bg bg-primary vh-100">
+        <div className="bg-white p-3 rounded w-25">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="username">Username</label>{" "}
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="username"
+                className="form-control rounded-0"
+                onChange={(event) => setUsername(event.target.value)}
+              />
             </div>
-          </div>
+            <div className="mb-3">
+              <label htmlFor="password">Password</label>{" "}
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="password"
+                className="form-control rounded-0"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
+            <button className="btn btn-success w-100 rounded-0">Login</button>
+          </form>
         </div>
-      )}
+      </div>
     </div>
   );
 };
