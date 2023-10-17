@@ -22,71 +22,87 @@ const EmployeeInfo = () => {
   }, []);
 
   return (
-    <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-      <h1 className="my-4">Employee Information</h1>
-
-      {records.map((record, i) => (
-        <div
-          key={i}
-          className="card p-3 my-2 mx-auto"
-          style={{ width: "45%" } }
-        >
-          <h5>Employee ID: {record.Employee_ID}</h5>
-          <h5>Name: {record.Name}</h5>
-          <div className="d-flex justify-content-center">
-            <Link
-              to="/login/Employee/ManUI/ViewEmployee"
-              style={{ color: "white" }}
-            >
-              <button
-                className="btn btn-success mx-2"
-                onClick={() => sendEmployeeId(record.Employee_ID)}
-              >
-                View
-              </button>
-            </Link>
-            <Link
-              to="/login/Employee/ManUI/EditEmployee"
-              style={{ color: "white" }}
-            >
-              <button
-                className="btn btn-warning"
-                onClick={() => sendEmployeeId(record.Employee_ID)}
-              >
-                Edit
-              </button>
-            </Link>
-          </div>
+    <div>
+      <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
+        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+          Employee Information
+        </h1>
+        <table className="table table-bordered" style={{ width: "70%" }}>
+          <thead className="thead-dark">
+            <tr>
+              {columns.map((column, index) => (
+                <th key={index}>{column}</th>
+              ))}
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {records.map((record, index) => (
+              <tr key={index}>
+                {columns.map((column, index) => (
+                  <td key={index}>{record[column]}</td>
+                ))}
+                <td>
+                  <Link
+                    to="/login/Employee/ManUI/ViewEmployee"
+                    style={{ color: "white" }}
+                  >
+                    <button
+                      className="btn btn-success"
+                      onClick={() => handleButtonClick(record.Employee_ID)}
+                      style={{ marginRight: "5px" }}
+                    >
+                      View
+                    </button>
+                  </Link>
+                  <Link
+                    to="/login/Employee/ManUI/EditEmployee"
+                    style={{ color: "white" }}
+                  >
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => handleButtonClick(record.Employee_ID)}
+                    >
+                      Edit
+                    </button>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button
+            onClick={goBack}
+            type="button"
+            className="btn btn-primary"
+            style={{
+              color: "white",
+              fontSize: "16px",
+            }}
+          >
+            Back
+          </button>
         </div>
-      ))}
-
-      <div className="d-flex justify-content-center">
-        <button
-          onClick={goBack}
-          type="button"
-          className="btn btn-primary mt-4"
-        >
-          Back
-        </button>
       </div>
     </div>
   );
-};
 
-const sendEmployeeId = (employeeId) => {
-  fetch("http://localhost:5001/api/send-employee-id", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ Employee_ID: employeeId }),
-  })
-    .then((data) => {
-      console.log("Success");
+  function handleButtonClick(employeeId) {
+    fetch("http://localhost:5001/api/send-employee-id", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ Employee_ID: employeeId }),
     })
-    .catch((error) => {
-      console.log("Error");
-    });
+      .then((data) => {
+        console.log("success");
+      })
+      .catch((error) => {
+        console.log("error");
+      });
+  }
 };
 
 export default EmployeeInfo;
