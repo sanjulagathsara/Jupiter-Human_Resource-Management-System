@@ -1,13 +1,10 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
-
-const SupervisorUI = () => {
+const AccountantUI = () => {
   const navigate = useNavigate();
   const handleViewPersonalInfo = () => {
     navigate("/login/Employee/EmployeeUI/PersonalInfo");
   };
-
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -33,7 +30,7 @@ const SupervisorUI = () => {
                   to="/login/Employee/EmployeeUI/PersonalInfo"
                   className="nav-link"
                 >
-                  View Leaves Informations
+                  Add Employee
                 </Link>
               </li>
               <li className="nav-item">
@@ -45,7 +42,10 @@ const SupervisorUI = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/login/Employee/" className="nav-link">
+                <Link
+                  to="/login/Employee/ManUI/request-leave"
+                  className="nav-link"
+                >
                   View My Details
                 </Link>
               </li>
@@ -66,7 +66,7 @@ const SupervisorUI = () => {
           </div>
         </div>
       </nav>
-      <h1>SupervisorUI</h1>
+      <h1>Accountant UI</h1>
       <button
         type="button"
         class="button-with-icon"
@@ -78,4 +78,4 @@ const SupervisorUI = () => {
   );
 };
 
-export default SupervisorUI;
+export default AccountantUI;

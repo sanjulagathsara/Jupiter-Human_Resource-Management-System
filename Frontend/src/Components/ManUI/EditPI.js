@@ -78,7 +78,7 @@ const EditPI = () => {
               body: JSON.stringify({
                 employeeId: record.Employee_ID,
                 name: record.Name,
-                birthday: record.Birthday,
+                birthday: record.Birthdate,
                 contactNumber: record.Emergency_contact_Number,
                 maritalStatus: record.Marital_status,
                 supervisorId: record.Supervisor_Name,
@@ -128,11 +128,7 @@ const EditPI = () => {
           Birthday:
           <input
             type="date"
-            value={
-              record.Birthdate
-                ? new Date(record.Birthday).toISOString().split("T")[0]
-                : ""
-            }
+            value={record.Birthdate}
             onChange={(e) =>
               setRecord({ ...record, Birthdate: e.target.value })
             }

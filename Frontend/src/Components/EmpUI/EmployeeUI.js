@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./EmpUI.css";
-import axios from "axios";
 
 const EmployeeUI = () => {
   const navigate = useNavigate();
@@ -11,14 +10,11 @@ const EmployeeUI = () => {
   };
 
   const handleRequestLeave = () => {
-    navigate("/login/Employee/EmployeeUI/request-leave");
+    navigate("request-leave");
   };
 
   const handleBack = () => {
     navigate("/login/Employee");
-  };
-  const handleLogOut = () => {
-    axios.get("http://localhost:5001/api/logout");
   };
 
   return (
@@ -58,7 +54,7 @@ const EmployeeUI = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/" onClick={handleLogOut} className="nav-link">
+                <Link to="/login" className="nav-link">
                   Log Out
                 </Link>
               </li>
@@ -70,19 +66,19 @@ const EmployeeUI = () => {
       <div className="d-flex flex-column align-items-center justify-content-center gradient-bg bg-primary vh-100 text-center">
         <button
           type="button"
-          className="button-with-icon"
+          class="button-with-icon"
           onClick={handleViewPersonalInfo}
         >
           View Personal Info
         </button>
         <button
           type="button"
-          className="button-with-icon"
+          class="button-with-icon"
           onClick={handleRequestLeave}
         >
           Request Leave
         </button>
-        <button type="button" className="button-with-icon" onClick={handleBack}>
+        <button type="button" class="button-with-icon" onClick={handleBack}>
           Back
         </button>
       </div>

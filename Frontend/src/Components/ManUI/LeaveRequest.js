@@ -5,10 +5,11 @@ import { useState, useEffect } from "react";
 const LeaveRequest = () => {
   const [record, setRecord] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5001/api/leaveDetails").then((res) => {
+    axios.get("http://localhost:5001/api/leaveRequest").then((res) => {
       console.log("success");
       console.log(res);
       setRecord(res.data[0]);
+      console.log(record.Employee_ID);
     });
   }, []);
 
@@ -20,32 +21,26 @@ const LeaveRequest = () => {
     axios.get("http://localhost:5001/api/leaveTypes").then((res) => {
       console.log("success");
       console.log(res);
-      setLeaveType(res.data.map((item) => item));
+      setLeaveType(res.data.map((item) => item.LeaveType));
     });
   }, []);
 
-  useEffect(
-    () => {
-      const sendLeaveRequest = async () => {
-        try {
-          const response = await axios.post(
-            "http://localhost:5001/api/leaveRequest",
-            {
-              LeaveType: selectedOption,
-              StartDate: document.getElementById("start").value,
-              EndDate: document.getElementById("end").value,
-            }
-          );
-          console.log("Leave details sent from frontend", response.data);
-        } catch (error) {
-          console.error("Error sending leave request", error);
-        }
-      };
-      if (submit) sendLeaveRequest();
-    },
-    [submit],
-    [selectedOption]
-  );
+  useEffect(() => {
+    const sendLeaveRequest = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:5001/api/leaveRequest",
+          {
+            LeaveType: selectedOption,
+          }
+        );
+        console.log("Leave details sent from frontend", response.data);
+      } catch (error) {
+        console.error("Error sending leave request", error);
+      }
+    };
+    if (submit) sendLeaveRequest();
+  }, [submit]);
 
   const handleDropdownChange = (event) => {
     setSelectedOption(event.target.value);
