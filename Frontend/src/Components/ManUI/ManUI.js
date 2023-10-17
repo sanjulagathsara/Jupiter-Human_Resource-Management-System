@@ -1,6 +1,7 @@
-import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const ManagerUI = () => {
   const navigate = useNavigate();
@@ -16,6 +17,26 @@ const ManagerUI = () => {
   const handleEmployeeInfo = () => {
     navigate("/login/Employee/ManUI/EmployeeInfo");
   };
+  const handleLogOut = () => {
+    axios.get("http://localhost:5001/api/logout");
+  };
+
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (response.data.valid) {
+          navigate(`/login/Employee:${response.data.role}`);
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div>
@@ -62,7 +83,7 @@ const ManagerUI = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/login/" className="nav-link">
+                <Link to="/" onClick={handleLogOut} className="nav-link">
                   Log Out
                 </Link>
               </li>
