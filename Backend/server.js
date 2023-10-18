@@ -437,12 +437,15 @@ app.get("/api/personalInfo", (req, res) => {
 //   );
 // });
 
+// app.get("/api/login1", (req, res) => {
+//   argon2.hash("E016").then((hash) => {
+//     console.log("Password", hash);
+//   });
+// });
+
 //User Login
 
 app.post("/api/login", (req, res) => {
-  // argon2.hash("E005@Jupiter").then((hash) => {
-  //   console.log("Hash:", hash);
-  // });
   const { username, password } = req.body;
   const sql = "SELECT * FROM loginWithJobTitle WHERE user_name = ?";
   db.query(sql, [username], (err, results) => {

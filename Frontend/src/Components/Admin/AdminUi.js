@@ -6,20 +6,20 @@ import { useNavigate } from "react-router-dom";
 const AdminUI = () => {
   axios.defaults.withCredentials = true;
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5001/api/check")
-  //     .then((response) => {
-  //       if (response.data.valid) {
-  //         navigate(`/login/Employee:${response.data.role}`);
-  //       } else {
-  //         navigate("/login");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (response.data.valid) {
+          navigate(`/login/Employee:${response.data.role}`);
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const handleLogOut = () => {
     navigate("/login");
     axios.get("http://localhost:5001/api/logout");
