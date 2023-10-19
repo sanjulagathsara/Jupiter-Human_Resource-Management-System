@@ -100,7 +100,7 @@ const AddEmployee = () => {
   }, [formSubmitted]);
 
   useEffect(() => {
-    const JobTitleList = async () => {
+    const SupervisorList = async () => {
       const response = await axios.post(
         "http://localhost:5001/api/supervisorList",
         { jobTitle: jobTitle }
@@ -108,7 +108,7 @@ const AddEmployee = () => {
       console.log(response.data);
       setSupervisorList(response.data.map((item) => item.Name));
     };
-    JobTitleList();
+    SupervisorList();
   }, [jobTitle]);
 
   const dependancyStatus = [

@@ -34,7 +34,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root",
-  database: "jupiter_new",
+  database: "jupiter_g9",
 });
 
 db.connect((err) => {

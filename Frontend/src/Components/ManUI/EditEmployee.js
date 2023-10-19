@@ -7,8 +7,10 @@ const EditEmployee = () => {
   const [jobTitleList, setJobTitleList] = useState([]);
   const [payGradeList, setPayGradeList] = useState([]);
   const [statusList, setStatusList] = useState([]);
+  const [supervisorList, setSupervisorList] = useState([]);
+  const [branchList, setBranchList] = useState([]);
+  const [jobTitle, setJobTitle] = useState("");
   const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
-  const supervisors = ["Kavindu Dasun", "Yasantha Jayalath"];
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -35,6 +37,13 @@ const EditEmployee = () => {
       setPayGradeList(response1.data.map((item) => item.Pay_Grade));
     };
     fetchPayGradeList();
+
+    const fetchBranchList = async () => {
+      const response = await axios.get("http://localhost:5001/api/branch");
+      console.log(response.data);
+      setBranchList(response.data.map((item) => item.Branch_Name));
+    };
+    fetchBranchList();
   }, []);
 
   //get informations of relavent employee
@@ -78,15 +87,15 @@ const EditEmployee = () => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                employeeId: record.Employee_ID,
-                name: record.Name,
-                birthday: record.Birthdate,
-                contactNumber: record.Emergency_contact_Number,
-                maritalStatus: record.Marital_status,
-                supervisorId: record.Supervisor_Name,
-                status: record.Status_Type,
-                jobTitle: record.Job_Title,
-                payGrade: record.Pay_Grade,
+                Name: record.Name,
+                Branch_Name: record.Branch_Name,
+                Birthday: record.Birthday,
+                ContactNumber: record.ContactNumber,
+                MaritalStatus: record.MaritalStatus,
+                Job_Title: record.Job_Title,
+                Status: record.Status,
+                PayGrade: record.PayGrade,
+                Supervisor: record.Supervisor,
               }),
             }
           );
@@ -106,6 +115,18 @@ const EditEmployee = () => {
 
     sendEditedDataToServer();
   }, [formSubmitted]);
+
+  useEffect(() => {
+    const SupervisorList = async () => {
+      const response = await axios.post(
+        "http://localhost:5001/api/supervisorList",
+        { jobTitle: jobTitle }
+      );
+      console.log(response.data);
+      setSupervisorList(response.data.map((item) => item.Name));
+    };
+    SupervisorList();
+  }, [jobTitle]);
 
   return (
     <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
@@ -129,13 +150,11 @@ const EditEmployee = () => {
           <input
             type="date"
             value={
-              record.Birthdate
-                ? new Date(record.Birthdate).toISOString().split("T")[0]
+              record.Birthday
+                ? new Date(record.Birthday).toISOString().split("T")[0]
                 : ""
             }
-            onChange={(e) =>
-              setRecord({ ...record, Birthdate: e.target.value })
-            }
+            onChange={(e) => setRecord({ ...record, Birthday: e.target.value })}
             style={{ marginLeft: "10px" }}
           />
         </label>
@@ -176,12 +195,13 @@ const EditEmployee = () => {
           Job Title:
           <select
             value={record.Job_Title}
-            onChange={(e) =>
-              setRecord({ ...record, Job_Title: e.target.value })
-            }
+            onChange={(e) => {
+              setRecord({ ...record, Job_Title: e.target.value });
+              setJobTitle(e.target.value);
+            }}
             style={{ marginLeft: "10px" }}
           >
-            <option value="">{record.Job_Title}</option>
+            <option value="">Select Job Title ID</option>
             {jobTitleList.map((jobTitle, index) => (
               <option key={index} value={jobTitle}>
                 {jobTitle}
@@ -228,25 +248,25 @@ const EditEmployee = () => {
           </select>
         </label>
         <br />
-        {record.Job_Title !== "HR_Manager" && (
-          <label className="mb-3">
-            Supervisor:
-            <select
-              value={record.Supervisor_Name}
-              onChange={(e) =>
-                setRecord({ ...record, Supervisor_Name: e.target.value })
-              }
-              style={{ marginLeft: "10px" }}
-            >
-              <option value="">{record.Supervisor_Name}</option>
-              {supervisors.map((supervisor, index) => (
-                <option key={index} value={supervisor}>
-                  {supervisor}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
+
+        <label className="mb-3">
+          Supervisor:
+          <select
+            value={record.Supervisor}
+            onChange={(e) =>
+              setRecord({ ...record, Supervisor: e.target.value })
+            }
+            style={{ marginLeft: "10px" }}
+          >
+            <option value="">Select a supervisor</option>
+            {supervisorList.map((supervisor, index) => (
+              <option key={index} value={supervisor}>
+                {supervisor}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <br />
         <button
           onClick={goBack}
