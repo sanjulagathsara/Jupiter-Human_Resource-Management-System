@@ -9,6 +9,7 @@ const app = express();
 var personalID;
 const session = require("express-session");
 const argon2 = require("argon2");
+require("dotenv").config();
 
 app.use(cookieParser());
 app.use(
@@ -31,10 +32,10 @@ app.use(express.json());
 const port = 5001;
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "jupiter_new",
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 });
 
 db.connect((err) => {
