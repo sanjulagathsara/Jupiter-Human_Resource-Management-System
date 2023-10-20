@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./EmployeeInfo.css";
+import Pagination from "./pagination";
 const EmployeeInfo = () => {
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage] = useState(8);
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -20,6 +23,14 @@ const EmployeeInfo = () => {
       })
       .catch((error) => console.error("Error fetching data2:", error));
   }, []);
+
+  const indexOfLastRecord = currentPage * rowsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
+  const currentRecords = records.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div>
@@ -37,7 +48,7 @@ const EmployeeInfo = () => {
             </tr>
           </thead>
           <tbody>
-            {records.map((record, index) => (
+            {currentRecords.map((record, index) => (
               <tr key={index}>
                 {columns.map((column, index) => (
                   <td key={index}>{record[column]}</td>
@@ -79,11 +90,18 @@ const EmployeeInfo = () => {
             style={{
               color: "white",
               fontSize: "16px",
+              marginTop: "20px",
+              marginBottom: "20px",
             }}
           >
             Back
           </button>
         </div>
+        <Pagination
+          rowsPerPage={rowsPerPage}
+          totalRecords={records.length}
+          paginate={paginate}
+        />
       </div>
     </div>
   );

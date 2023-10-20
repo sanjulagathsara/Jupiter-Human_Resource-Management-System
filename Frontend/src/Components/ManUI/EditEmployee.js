@@ -9,12 +9,15 @@ const EditEmployee = () => {
   const [statusList, setStatusList] = useState([]);
   const [supervisorList, setSupervisorList] = useState([]);
   const [branchList, setBranchList] = useState([]);
+  const [departmentList, setDepartmentList] = useState([]);
   const [jobTitle, setJobTitle] = useState("");
   const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
+
+  const genderList = ["Male", "Female"];
 
   useEffect(() => {
     const fetchJobTitleList = async () => {
@@ -44,6 +47,13 @@ const EditEmployee = () => {
       setBranchList(response.data.map((item) => item.Branch_Name));
     };
     fetchBranchList();
+
+    const DepartmentList = async () => {
+      const response = await axios.get("http://localhost:5001/api/department");
+      console.log(response.data);
+      setDepartmentList(response.data.map((item) => item.Department_Name));
+    };
+    DepartmentList();
   }, []);
 
   //get informations of relavent employee
@@ -58,6 +68,7 @@ const EditEmployee = () => {
         console.log(data);
         console.log("Data fetched from server");
         setRecord(data[0]);
+        setJobTitle(data[0].Job_Title);
       } catch (err) {
         console.error(err.message);
       }
@@ -87,15 +98,18 @@ const EditEmployee = () => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
+                EmployeeID: record.Employee_ID,
                 Name: record.Name,
                 Branch_Name: record.Branch_Name,
                 Birthday: record.Birthday,
-                ContactNumber: record.ContactNumber,
-                MaritalStatus: record.MaritalStatus,
+                ContactNumber: record.Emergency_contact_Number,
+                MaritalStatus: record.Marital_status,
                 Job_Title: record.Job_Title,
-                Status: record.Status,
-                PayGrade: record.PayGrade,
-                Supervisor: record.Supervisor,
+                Status: record.Status_Type,
+                PayGrade: record.Pay_grade,
+                Supervisor: record.Supervisor_Name,
+                Department: record.Department,
+                Gender: record.Gender,
               }),
             }
           );
@@ -159,6 +173,61 @@ const EditEmployee = () => {
           />
         </label>
         <br />
+
+        <label className="mb-3">
+          Gender:
+          <select
+            value={record.Gender}
+            onChange={(e) => {
+              setRecord({ ...record, Gender: e.target.value });
+            }}
+            style={{ marginLeft: "10px" }}
+          >
+            {genderList.map((gender, index) => (
+              <option key={index} value={gender}>
+                {gender}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br />
+
+        <label className="mb-3">
+          Branch:
+          <select
+            value={record.Branch_Name}
+            onChange={(e) => {
+              setRecord({ ...record, Branch_Name: e.target.value });
+            }}
+            style={{ marginLeft: "10px" }}
+          >
+            {branchList.map((branch, index) => (
+              <option key={index} value={branch}>
+                {branch}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br />
+
+        <label className="mb-3">
+          Department:
+          <select
+            value={record.Department}
+            onChange={(e) => {
+              setRecord({ ...record, Department: e.target.value });
+            }}
+            style={{ marginLeft: "10px" }}
+          >
+            {departmentList.map((department, index) => (
+              <option key={index} value={department}>
+                {department}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br />
+
         <label className="mb-3">
           Contact Number:
           <input
@@ -181,7 +250,6 @@ const EditEmployee = () => {
             }
             style={{ marginLeft: "10px" }}
           >
-            <option value="">{record.Marital_status}</option>
             {maritalStatusOptions.map((status, index) => (
               <option key={index} value={status}>
                 {status}
@@ -193,22 +261,26 @@ const EditEmployee = () => {
 
         <label className="mb-3">
           Job Title:
-          <select
-            value={record.Job_Title}
-            onChange={(e) => {
-              setRecord({ ...record, Job_Title: e.target.value });
-              setJobTitle(e.target.value);
-            }}
-            style={{ marginLeft: "10px" }}
-          >
-            <option value="">Select Job Title ID</option>
-            {jobTitleList.map((jobTitle, index) => (
-              <option key={index} value={jobTitle}>
-                {jobTitle}
-              </option>
-            ))}
-          </select>
+          {record.Job_Title !== "Admin" && record.Job_Title !== "HR Manager" ? (
+            <select
+              value={record.Job_Title}
+              onChange={(e) => {
+                setRecord({ ...record, Job_Title: e.target.value });
+                setJobTitle(e.target.value);
+              }}
+              style={{ marginLeft: "10px" }}
+            >
+              {jobTitleList.map((jobTitle, index) => (
+                <option key={index} value={jobTitle}>
+                  {jobTitle}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <span style={{ marginLeft: "10px" }}>{record.Job_Title}</span>
+          )}
         </label>
+
         <br />
 
         <label className="mb-3">
@@ -220,7 +292,6 @@ const EditEmployee = () => {
             }
             style={{ marginLeft: "10px" }}
           >
-            <option value="">{record.Status_Type}</option>
             {statusList.map((status, index) => (
               <option key={index} value={status}>
                 {status}
@@ -233,13 +304,12 @@ const EditEmployee = () => {
         <label className="mb-3">
           Pay Grade:
           <select
-            value={record.Pay_Grade}
+            value={record.Pay_grade}
             onChange={(e) =>
-              setRecord({ ...record, Pay_Grade: e.target.value })
+              setRecord({ ...record, Pay_grade: e.target.value })
             }
             style={{ marginLeft: "10px" }}
           >
-            <option value="">{record.Pay_Grade}</option>
             {payGradeList.map((payGrade, index) => (
               <option key={index} value={payGrade}>
                 {payGrade}
@@ -248,24 +318,24 @@ const EditEmployee = () => {
           </select>
         </label>
         <br />
-
-        <label className="mb-3">
-          Supervisor:
-          <select
-            value={record.Supervisor}
-            onChange={(e) =>
-              setRecord({ ...record, Supervisor: e.target.value })
-            }
-            style={{ marginLeft: "10px" }}
-          >
-            <option value="">Select a supervisor</option>
-            {supervisorList.map((supervisor, index) => (
-              <option key={index} value={supervisor}>
-                {supervisor}
-              </option>
-            ))}
-          </select>
-        </label>
+        {record.Supervisor_Name !== null && (
+          <label className="mb-3">
+            Supervisor:
+            <select
+              value={record.Supervisor_Name}
+              onChange={(e) =>
+                setRecord({ ...record, Supervisor_Name: e.target.value })
+              }
+              style={{ marginLeft: "10px" }}
+            >
+              {supervisorList.map((supervisor, index) => (
+                <option key={index} value={supervisor}>
+                  {supervisor}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
 
         <br />
         <button

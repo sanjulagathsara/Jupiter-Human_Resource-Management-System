@@ -50,7 +50,7 @@ db.connect((err) => {
 //get job title list
 app.get("/api/jobTitle", (req, res) => {
   db.query(
-    "SELECT Job_Title FROM employee_job_title where Job_Title_ID != 'JT001' and Job_Title_ID != 'JT002'",
+    "SELECT Job_Title FROM employee_job_title where Job_Title_ID != 'JT001' and Job_Title_ID != 'JT002' ",
     (err, rows, fields) => {
       if (err) {
         console.error("Error fetching data:", err);
@@ -67,6 +67,21 @@ app.get("/api/jobTitle", (req, res) => {
 //get Branches
 app.get("/api/branch", (req, res) => {
   db.query("SELECT Branch_Name FROM branch", (err, rows) => {
+    if (err) {
+      console.error("Error fetching data:", err);
+      res.status(500).json({ error: "Internal server error" });
+      return;
+    } else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+});
+
+//get department
+
+app.get("/api/department", (req, res) => {
+  db.query("SELECT Department_Name FROM department", (err, rows) => {
     if (err) {
       console.error("Error fetching data:", err);
       res.status(500).json({ error: "Internal server error" });
@@ -159,82 +174,89 @@ app.post("/api/ManUI/EditPI/edited", (req, res) => {
   console.log("Edited data fetch from server:");
   console.log(req.body);
 
-  db.query(
-    "select Job_Title_ID from employee_job_title where Job_Title = ?",
-    [req.body.jobTitle],
-    (err, rows) => {
-      if (err) {
-        console.error("Error querying MySQL:", err);
-        res.status(500).json({ error: "Internal server error" });
-        return;
-      } else {
-        db.query("Update employee SET Job_Title_ID = ? where Employee_ID = ?", [
-          rows[0].Job_Title_ID,
-          req.body.employeeId,
-        ]);
-      }
-    }
-  );
+  // db.query(
+  //   "select Job_Title_ID from employee_job_title where Job_Title = ?",
+  //   [req.body.jobTitle],
+  //   (err, rows) => {
+  //     if (err) {
+  //       console.error("Error querying MySQL:", err);
+  //       res.status(500).json({ error: "Internal server error" });
+  //       return;
+  //     } else {
+  //       db.query("Update employee SET Job_Title_ID = ? where Employee_ID = ?", [
+  //         rows[0].Job_Title_ID,
+  //         req.body.employeeId,
+  //       ]);
+  //     }
+  //   }
+  // );
+
+  // db.query(
+  //   "select Status_ID from employee_status where Status_Type = ?",
+  //   [req.body.status],
+  //   (err, rows) => {
+  //     if (err) {
+  //       console.error("Error querying MySQL:", err);
+  //       res.status(500).json({ error: "Internal server error" });
+  //       return;
+  //     } else {
+  //       db.query("Update employee SET Status_ID = ? where Employee_ID = ?", [
+  //         rows[0].Status_ID,
+  //         req.body.employeeId,
+  //       ]);
+  //     }
+  //   }
+  // );
+
+  // db.query(
+  //   "select Pay_Grade_ID from employee_pay_grade where Pay_Grade = ?",
+  //   [req.body.payGrade],
+  //   (err, rows) => {
+  //     if (err) {
+  //       console.error("Error querying MySQL:", err);
+  //       res.status(500).json({ error: "Internal server error" });
+  //       return;
+  //     } else {
+  //       db.query("update employee SET Pay_Grade_ID = ? where Employee_ID = ?", [
+  //         rows[0].Pay_Grade_ID,
+  //         req.body.employeeId,
+  //       ]);
+  //     }
+  //   }
+  // );
+
+  // db.query(
+  //   "select Employee_ID from employee where Name = ?",
+  //   [req.body.supervisorId],
+  //   (err, rows) => {
+  //     if (err) {
+  //       console.error("Error querying MySQL:", err);
+  //       res.status(500).json({ error: "Internal server error" });
+  //       return;
+  //     } else {
+  //       db.query(
+  //         "update employee SET Supervisor_ID = ? where Employee_ID = ?",
+  //         [rows[0].Employee_ID, req.body.employeeId]
+  //       );
+  //     }
+  //   }
+  // );
 
   db.query(
-    "select Status_ID from employee_status where Status_Type = ?",
-    [req.body.status],
-    (err, rows) => {
-      if (err) {
-        console.error("Error querying MySQL:", err);
-        res.status(500).json({ error: "Internal server error" });
-        return;
-      } else {
-        db.query("Update employee SET Status_ID = ? where Employee_ID = ?", [
-          rows[0].Status_ID,
-          req.body.employeeId,
-        ]);
-      }
-    }
-  );
-
-  db.query(
-    "select Pay_Grade_ID from employee_pay_grade where Pay_Grade = ?",
-    [req.body.payGrade],
-    (err, rows) => {
-      if (err) {
-        console.error("Error querying MySQL:", err);
-        res.status(500).json({ error: "Internal server error" });
-        return;
-      } else {
-        db.query("update employee SET Pay_Grade_ID = ? where Employee_ID = ?", [
-          rows[0].Pay_Grade_ID,
-          req.body.employeeId,
-        ]);
-      }
-    }
-  );
-
-  db.query(
-    "select Employee_ID from employee where Name = ?",
-    [req.body.supervisorId],
-    (err, rows) => {
-      if (err) {
-        console.error("Error querying MySQL:", err);
-        res.status(500).json({ error: "Internal server error" });
-        return;
-      } else {
-        db.query(
-          "update employee SET Supervisor_ID = ? where Employee_ID = ?",
-          [rows[0].Employee_ID, req.body.employeeId]
-        );
-      }
-    }
-  );
-
-  db.query(
-    "UPDATE employee SET Name = ? , Emergency_contact_Number = ? , Marital_status = ?    WHERE Employee_ID = ?",
+    "CALL UpdateEmployee(?,?,?,?,?,?,?,?,?,?,?,?)",
     [
-      req.body.name,
-      req.body.contactNumber,
-      req.body.maritalStatus,
-
-      req.body.employeeId,
+      req.body.EmployeeID,
+      req.body.Name,
+      req.body.Birthday,
+      req.body.ContactNumber,
+      req.body.MaritalStatus,
+      req.body.Branch_Name,
+      req.body.Status,
+      req.body.Job_Title,
+      req.body.PayGrade,
+      req.body.Supervisor,
+      req.body.Department,
+      req.body.Gender,
     ],
     (err, rows) => {
       if (err) {
@@ -260,7 +282,7 @@ app.post("/api/send-employee-id", (req, res) => {
 //get relavent employee Informations
 app.get("/api/employeeInfo/employee", (req, res) => {
   db.query(
-    `SELECT e.Employee_ID, p.Pay_Grade, e.Name,e.Birthday,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title, s.Name as Supervisor_Name FROM employee e natural join employee_pay_grade p natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
+    "select * from getpersonalinfo where Employee_ID = ?",
     [employeeId],
     (err, rows, fields) => {
       if (err) {
@@ -278,7 +300,7 @@ app.get("/api/employeeInfo/employee", (req, res) => {
 //Get all employee informations
 app.get("/api/employeeInfo", (req, res) => {
   db.query(
-    "SELECT Employee_ID, Name FROM employee where Employee_ID != ?",
+    "SELECT Employee_ID, Name FROM employee where Employee_ID != ? ",
     [personalID],
     (err, rows, fields) => {
       if (err) {
@@ -366,8 +388,8 @@ app.post("/api/supervisorList", (req, res) => {
       break;
   }
   db.query(
-    "SELECT Name FROM employee where Job_Title_ID = ?",
-    [jobTitle],
+    "SELECT Name FROM employee where Job_Title_ID = ? and Employee_ID != ?",
+    [jobTitle, employeeId],
     (err, rows) => {
       if (err) {
         console.error("Error fetching data:", err);
@@ -383,7 +405,7 @@ app.post("/api/supervisorList", (req, res) => {
 //View personal Information
 app.get("/api/personalInfo", (req, res) => {
   db.query(
-    `SELECT e.Employee_ID, p.Pay_Grade, e.Name,e.Birthday,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title,ej.Job_Title_ID, s.Name as Supervisor_Name, py.Pay_Grade as Pay_Grade  FROM employee e natural join employee_pay_grade py natural join employee_pay_grade p natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID  where e.Employee_ID = ?`,
+    "select * from getpersonalinfo where Employee_ID = ?",
     [personalID],
     (err, rows, fields) => {
       if (err) {
