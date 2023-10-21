@@ -46,6 +46,38 @@ db.connect((err) => {
   }
 });
 
+//reset password
+app.post("/api/reset-password", (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const sql = "SELECT password FROM loginWithJobTitle WHERE Employee_ID = ?";
+  db.query(sql, [personalID], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    const hashedPassword = results[0].password;
+    argon2.verify(hashedPassword, currentPassword).then((match) => {
+      if (match) {
+        console.log("Password matched!");
+        argon2.hash(newPassword).then((hash) => {
+          const sql2 = "CALL UpdatePassword(?,?)";
+          db.query(sql2, [personalID, hash], (err, results) => {
+            if (err) {
+              return res.status(500).json({ error: err.message });
+            }
+            res.json({
+              success: true,
+              message: "Password reset successfully",
+            });
+          });
+        });
+      } else {
+        console.log("Password did not match!");
+        return res.json({ message: "Current password is incorrect" });
+      }
+    });
+  });
+});
+
 //get job title list
 app.get("/api/jobTitle", (req, res) => {
   db.query(
@@ -134,11 +166,14 @@ app.post("/api/leaveRequest", (req, res) => {
     (err, rows) => {
       if (err) {
         console.error("Error querying MySQL:", err);
-        res.status(500).json({ error: "Internal server error" });
+        res.json({
+          error: "Internal server error",
+          message: "Error sending leave request",
+        });
         return;
       } else {
         console.log(rows);
-        res.json(rows);
+        res.json({ message: "Leave request sent successfully" });
       }
     }
   );
@@ -191,12 +226,12 @@ app.post("/api/ManUI/EditPI/edited", (req, res) => {
     (err, rows) => {
       if (err) {
         console.error("Error querying MySQL:", err);
-        res.status(500).json({ error: "Internal server error" });
-        return;
+        res.json({
+          Message: "Internal server error",
+          error: "Internal server error",
+        });
       } else {
-        console.log("Edited data fetch from server:", {});
-
-        res.json(rows);
+        return res.json({ message: "Data Updated Successfully" });
       }
     }
   );
@@ -364,7 +399,7 @@ app.post("/api/login", (req, res) => {
 
     if (results.length === 0) {
       console.log("Invalid Password");
-      return res.status(401).json({ message: "Invalid username or password" });
+      return res.json({ message: "Invalid username or password" });
     }
 
     const hashedPassword = results[0].password;
@@ -376,13 +411,12 @@ app.post("/api/login", (req, res) => {
 
         res.json({
           status: "success",
+          message: "Login successfull",
         });
         console.log("Login successfull");
       } else {
         console.log("Password did not match!");
-        return res
-          .status(401)
-          .json({ message: "Invalid username or password" });
+        return res.json({ message: "Invalid username or password" });
       }
     });
   });

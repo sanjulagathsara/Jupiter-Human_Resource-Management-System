@@ -180,6 +180,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Name:
             <input
+              required
               type="text"
               value={record.Name}
               onChange={(e) => setRecord({ ...record, Name: e.target.value })}
@@ -191,6 +192,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Branch Name:
             <select
+              required
               value={record.Branch_Name}
               onChange={(e) =>
                 setRecord({ ...record, Branch_Name: e.target.value })
@@ -210,6 +212,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Birthday:
             <input
+              required
               type="date"
               value={
                 record.Birthday
@@ -227,6 +230,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Contact Number:
             <input
+              required
               type="tel"
               value={record.ContactNumber}
               onChange={(e) =>
@@ -240,6 +244,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Gender:
             <select
+              required
               value={record.Gender}
               onChange={(e) => setRecord({ ...record, Gender: e.target.value })}
               style={{ marginLeft: "10px" }}
@@ -256,6 +261,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Department :
             <select
+              required
               value={record.Department}
               onChange={(e) =>
                 setRecord({ ...record, Department: e.target.value })
@@ -293,6 +299,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Job Title:
             <select
+              required
               value={record.Job_Title}
               onChange={(e) => {
                 setRecord({ ...record, Job_Title: e.target.value });
@@ -312,6 +319,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Status:
             <select
+              required
               value={record.Status}
               onChange={(e) => setRecord({ ...record, Status: e.target.value })}
               style={{ marginLeft: "10px" }}
@@ -328,6 +336,7 @@ const AddEmployee = () => {
           <label className="mb-3">
             Pay Grade:
             <select
+              required
               value={record.PayGrade}
               onChange={(e) =>
                 setRecord({ ...record, PayGrade: e.target.value })

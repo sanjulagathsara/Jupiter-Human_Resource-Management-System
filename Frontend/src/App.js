@@ -17,6 +17,7 @@ import LeaveRequest from "./Components/EmpUI/LeaveRequest";
 import LoginUI from "./Components/login";
 import AddHRManager from "./Components/Admin/AddHrManager";
 import EditPI from "./Components/ManUI/EditPI";
+import ResetPassword from "./Components/resetPassword";
 function App() {
   return (
     <div className="App">
@@ -91,6 +92,10 @@ function App() {
               element={<AddHRManager />}
             ></Route>
             <Route path="/login/home" element={<LoginUI />}></Route>
+            <Route
+              path="/login/Employee/reset-password"
+              element={<ResetPassword />}
+            ></Route>
             <Route path="*" element={<h1>Not Found</h1>}></Route>
           </Routes>
         </div>

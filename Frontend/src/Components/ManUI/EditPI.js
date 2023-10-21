@@ -7,7 +7,7 @@ const EditPI = () => {
   const [jobTitleList, setJobTitleList] = useState([]);
   const [payGradeList, setPayGradeList] = useState([]);
   const [statusList, setStatusList] = useState([]);
-
+  const [errorMessage, setErrorMessage] = useState("");
   const [branchList, setBranchList] = useState([]);
   const [departmentList, setDepartmentList] = useState([]);
   const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
@@ -124,18 +124,17 @@ const EditPI = () => {
               }),
             }
           );
-
+          console.log(response);
           if (response.ok) {
-            console.log("Edited Data sent to server:");
-            alert("Data Edited Successfully");
+            setErrorMessage("Successfully Edited");
           } else {
-            console.log("Data not sent to server");
-            alert("Data not Edited");
+            setErrorMessage("Error occurred");
           }
 
           setFormSubmitted(false);
         }
       } catch (error) {
+        setErrorMessage("Error occurred");
         console.error("An error occurred:", error);
       }
     };
@@ -152,6 +151,7 @@ const EditPI = () => {
         <label className="mb-3">
           Name:
           <input
+            required
             type="text"
             value={record.Name}
             onChange={(e) => setRecord({ ...record, Name: e.target.value })}
@@ -163,6 +163,7 @@ const EditPI = () => {
         <label className="mb-3">
           Birthday:
           <input
+            required
             type="date"
             value={
               record.Birthday
@@ -183,6 +184,7 @@ const EditPI = () => {
         <label className="mb-3">
           Gender:
           <select
+            required
             value={record.Gender}
             onChange={(e) => {
               setRecord({ ...record, Gender: e.target.value });
@@ -201,6 +203,7 @@ const EditPI = () => {
         <label className="mb-3">
           Branch:
           <select
+            required
             value={record.Branch_Name}
             onChange={(e) => {
               setRecord({ ...record, Branch_Name: e.target.value });
@@ -219,6 +222,7 @@ const EditPI = () => {
         <label className="mb-3">
           Department:
           <select
+            required
             value={record.Department}
             onChange={(e) => {
               setRecord({ ...record, Department: e.target.value });
@@ -237,6 +241,7 @@ const EditPI = () => {
         <label className="mb-3">
           Contact Number:
           <input
+            required
             type="tel"
             value={record.Emergency_contact_Number}
             onChange={(e) =>
@@ -250,6 +255,7 @@ const EditPI = () => {
         <label className="mb-3">
           Marital Status:
           <select
+            required
             value={record.Marital_status}
             onChange={(e) =>
               setRecord({ ...record, Marital_status: e.target.value })
@@ -275,6 +281,7 @@ const EditPI = () => {
         <label className="mb-3">
           Status:
           <select
+            required
             value={record.Status_Type}
             onChange={(e) =>
               setRecord({ ...record, Status_Type: e.target.value })
@@ -293,6 +300,7 @@ const EditPI = () => {
         <label className="mb-3">
           Pay Grade:
           <select
+            required
             value={record.Pay_grade}
             onChange={(e) =>
               setRecord({ ...record, Pay_grade: e.target.value })
@@ -307,7 +315,9 @@ const EditPI = () => {
           </select>
         </label>
         <br />
-
+        <div className="mb-3">
+          <p className="text-danger">{errorMessage}</p>
+        </div>
         <button
           onClick={goBack}
           type="button"

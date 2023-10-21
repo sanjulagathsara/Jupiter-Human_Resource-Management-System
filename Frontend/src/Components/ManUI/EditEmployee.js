@@ -100,7 +100,7 @@ const EditEmployee = () => {
       employeeId: record.Employee_ID,
     });
   };
-
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     const sendEditedDataToServer = async () => {
       try {
@@ -130,14 +130,17 @@ const EditEmployee = () => {
           );
 
           if (response.ok) {
+            setErrorMessage("Employee details edited successfully");
             console.log("Edited Data sent to server:");
           } else {
+            setErrorMessage("Employee details not edited");
             console.log("Data not sent to server");
           }
 
           setFormSubmitted(false);
         }
       } catch (error) {
+        setErrorMessage("Employee details not edited");
         console.error("An error occurred:", error);
       }
     };
@@ -166,6 +169,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Name:
           <input
+            required
             type="text"
             value={record.Name}
             onChange={(e) => setRecord({ ...record, Name: e.target.value })}
@@ -177,6 +181,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Birthday:
           <input
+            required
             type="date"
             value={
               record.Birthday
@@ -192,6 +197,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Gender:
           <select
+            required
             value={record.Gender}
             onChange={(e) => {
               setRecord({ ...record, Gender: e.target.value });
@@ -210,6 +216,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Branch:
           <select
+            required
             value={record.Branch_Name}
             onChange={(e) => {
               setRecord({ ...record, Branch_Name: e.target.value });
@@ -228,6 +235,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Department:
           <select
+            required
             value={record.Department}
             onChange={(e) => {
               setRecord({ ...record, Department: e.target.value });
@@ -246,6 +254,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Contact Number:
           <input
+            required
             type="tel"
             value={record.Emergency_contact_Number}
             onChange={(e) =>
@@ -259,6 +268,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Marital Status:
           <select
+            required
             value={record.Marital_status}
             onChange={(e) =>
               setRecord({ ...record, Marital_status: e.target.value })
@@ -301,6 +311,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Status:
           <select
+            required
             value={record.Status_Type}
             onChange={(e) =>
               setRecord({ ...record, Status_Type: e.target.value })
@@ -319,6 +330,7 @@ const EditEmployee = () => {
         <label className="mb-3">
           Pay Grade:
           <select
+            required
             value={record.Pay_grade}
             onChange={(e) =>
               setRecord({ ...record, Pay_grade: e.target.value })
@@ -353,6 +365,9 @@ const EditEmployee = () => {
         )}
 
         <br />
+        <div className="mb-3">
+          <p className="text-danger">{errorMessage}</p>
+        </div>
         <button
           onClick={goBack}
           type="button"

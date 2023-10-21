@@ -56,10 +56,10 @@ const SupervisorUI = () => {
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link
-                  to="/login/Employee/EmployeeUI/PersonalInfo"
+                  to="/login/Employee/EmployeeUI/request-leave"
                   className="nav-link"
                 >
-                  View Leaves Informations
+                  Request Leave
                 </Link>
               </li>
               <li className="nav-item">
@@ -67,20 +67,20 @@ const SupervisorUI = () => {
                   to="/login/Employee/ManUI/request-leave"
                   className="nav-link"
                 >
-                  View Employee
+                  View Leave Informations
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/login/Employee/" className="nav-link">
+                <Link
+                  to="/login/Employee/EmployeeUI/PersonalInfo"
+                  className="nav-link"
+                >
                   View My Details
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  to="/login/Employee/ManUI/request-leave"
-                  className="nav-link"
-                >
-                  View Reports
+                <Link to="/login/Employee/reset-password" className="nav-link">
+                  Reset Password
                 </Link>
               </li>
               <li className="nav-item">
