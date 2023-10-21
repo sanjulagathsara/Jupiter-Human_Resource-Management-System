@@ -1,6 +1,6 @@
 /* Apply a gradient background */
 .d-flex.align-items-center.gradient-bg {
-    background: linear-gradient(to bottom, #668560, #5a991b);
+    background: linear-gradient(to bottom, #668560, #92af75);
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;

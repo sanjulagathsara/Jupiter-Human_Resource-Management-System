@@ -4,6 +4,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 const AddEmployee = () => {
   const navigate = useNavigate();
+
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (response.data.valid && response.data.role === "JT002") {
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const goBack = () => {
     navigate(-1);
   };
@@ -17,6 +33,8 @@ const AddEmployee = () => {
   const [supervisorList, setSupervisorList] = useState([]);
   const [statusType, setStatusType] = useState([]);
   const [jobTitle, setJobTitle] = useState("");
+  const [departmentList, setDepartmentList] = useState([]);
+  const genderList = ["Male", "Female"];
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -39,6 +57,8 @@ const AddEmployee = () => {
       Status: "",
       PayGrade: "",
       Supervisor: "",
+      Department: "",
+      Gender: "",
     });
   }
 
@@ -70,6 +90,13 @@ const AddEmployee = () => {
       setBranchList(response.data.map((item) => item.Branch_Name));
     };
     fetchBranchList();
+
+    const DepartmentList = async () => {
+      const response = await axios.get("http://localhost:5001/api/department");
+      console.log(response.data);
+      setDepartmentList(response.data.map((item) => item.Department_Name));
+    };
+    DepartmentList();
   }, []);
 
   useEffect(() => {
@@ -85,6 +112,8 @@ const AddEmployee = () => {
           Status: record.Status,
           PayGrade: record.PayGrade,
           Supervisor: record.Supervisor,
+          Department: record.Department,
+          Gender: record.Gender,
         })
         .then((res) => res.json())
         .then((json) => {
@@ -207,6 +236,42 @@ const AddEmployee = () => {
             />
           </label>
           <br />
+
+          <label className="mb-3">
+            Gender:
+            <select
+              value={record.Gender}
+              onChange={(e) => setRecord({ ...record, Gender: e.target.value })}
+              style={{ marginLeft: "10px" }}
+            >
+              <option value="">Select Gender</option>
+              {genderList.map((gender, index) => (
+                <option key={index} value={gender}>
+                  {gender}
+                </option>
+              ))}
+            </select>
+          </label>
+          <br />
+          <label className="mb-3">
+            Department :
+            <select
+              value={record.Department}
+              onChange={(e) =>
+                setRecord({ ...record, Department: e.target.value })
+              }
+              style={{ marginLeft: "10px" }}
+            >
+              <option value="">Select a supervisor</option>
+              {departmentList.map((department, index) => (
+                <option key={index} value={department}>
+                  {department}
+                </option>
+              ))}
+            </select>
+          </label>
+          <br />
+
           <label className="mb-3">
             Marital Status:
             <select
@@ -280,7 +345,7 @@ const AddEmployee = () => {
           <br />
 
           <label className="mb-3">
-            Supervisor ID:
+            Supervisor :
             <select
               value={record.Supervisor}
               onChange={(e) =>

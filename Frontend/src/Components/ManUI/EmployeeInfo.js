@@ -3,12 +3,28 @@ import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./EmployeeInfo.css";
 import Pagination from "./pagination";
+import axios from "axios";
 const EmployeeInfo = () => {
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(8);
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (response.data.valid && response.data.role === "JT002") {
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const goBack = () => {
     navigate(-1);

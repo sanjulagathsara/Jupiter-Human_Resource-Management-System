@@ -62,7 +62,7 @@ const PersonalInfo = () => {
 
           <h5>Pay Grade : {record.Pay_grade}</h5>
           {record.Supervisor_Name !== null && (
-            <h5>Supervisor_Name: {record.Supervisor_Name}</h5>
+            <h5>Supervisor Name: {record.Supervisor_Name}</h5>
           )}
           {record.Job_Title === "HR Manager" && (edit = true)}
         </div>

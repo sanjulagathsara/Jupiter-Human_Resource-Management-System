@@ -3,8 +3,7 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
-var employeeId;
+var employeeId = "";
 const app = express();
 var personalID;
 const session = require("express-session");
@@ -173,75 +172,6 @@ app.get("/api/leaveDetails", (req, res) => {
 app.post("/api/ManUI/EditPI/edited", (req, res) => {
   console.log("Edited data fetch from server:");
   console.log(req.body);
-
-  // db.query(
-  //   "select Job_Title_ID from employee_job_title where Job_Title = ?",
-  //   [req.body.jobTitle],
-  //   (err, rows) => {
-  //     if (err) {
-  //       console.error("Error querying MySQL:", err);
-  //       res.status(500).json({ error: "Internal server error" });
-  //       return;
-  //     } else {
-  //       db.query("Update employee SET Job_Title_ID = ? where Employee_ID = ?", [
-  //         rows[0].Job_Title_ID,
-  //         req.body.employeeId,
-  //       ]);
-  //     }
-  //   }
-  // );
-
-  // db.query(
-  //   "select Status_ID from employee_status where Status_Type = ?",
-  //   [req.body.status],
-  //   (err, rows) => {
-  //     if (err) {
-  //       console.error("Error querying MySQL:", err);
-  //       res.status(500).json({ error: "Internal server error" });
-  //       return;
-  //     } else {
-  //       db.query("Update employee SET Status_ID = ? where Employee_ID = ?", [
-  //         rows[0].Status_ID,
-  //         req.body.employeeId,
-  //       ]);
-  //     }
-  //   }
-  // );
-
-  // db.query(
-  //   "select Pay_Grade_ID from employee_pay_grade where Pay_Grade = ?",
-  //   [req.body.payGrade],
-  //   (err, rows) => {
-  //     if (err) {
-  //       console.error("Error querying MySQL:", err);
-  //       res.status(500).json({ error: "Internal server error" });
-  //       return;
-  //     } else {
-  //       db.query("update employee SET Pay_Grade_ID = ? where Employee_ID = ?", [
-  //         rows[0].Pay_Grade_ID,
-  //         req.body.employeeId,
-  //       ]);
-  //     }
-  //   }
-  // );
-
-  // db.query(
-  //   "select Employee_ID from employee where Name = ?",
-  //   [req.body.supervisorId],
-  //   (err, rows) => {
-  //     if (err) {
-  //       console.error("Error querying MySQL:", err);
-  //       res.status(500).json({ error: "Internal server error" });
-  //       return;
-  //     } else {
-  //       db.query(
-  //         "update employee SET Supervisor_ID = ? where Employee_ID = ?",
-  //         [rows[0].Employee_ID, req.body.employeeId]
-  //       );
-  //     }
-  //   }
-  // );
-
   db.query(
     "CALL UpdateEmployee(?,?,?,?,?,?,?,?,?,?,?,?)",
     [
@@ -331,8 +261,7 @@ app.post("/api/employee/addEmployee", (req, res) => {
     // Use lastEmployeeID inside this scope
     argon2.hash(`${lastEmployeeID}@Jupiter`).then((hash) => {
       console.log("Password", `${lastEmployeeID}@Jupiter`);
-      const sql = "CALL AddEmployeeAndUserAccount(?,?,?,?,?,?,?,?,?,?,?)";
-
+      const sql = "CALL AddEmployeeAndUserAccount(?,?,?,?,?,?,?,?,?,?,?,?,?)";
       db.query(
         sql,
         [
@@ -347,6 +276,8 @@ app.post("/api/employee/addEmployee", (req, res) => {
           req.body.Job_Title,
           req.body.PayGrade,
           req.body.Supervisor,
+          req.body.Department,
+          req.body.Gender,
         ],
         (err, rows) => {
           if (err) {
@@ -421,52 +352,6 @@ app.get("/api/personalInfo", (req, res) => {
   );
 });
 
-//Token verify
-// const verifyUser = (req, res, next) => {
-//   const token = req.cookies.token;
-//   console.log("Token:", token);
-
-//   if (token) {
-//     jwt.verify(token, "Seceret key token", (err, decodedToken) => {
-//       if (err) {
-//         console.log("Authentication error", err.message);
-//       } else {
-//         console.log(decodedToken);
-//         next();
-//       }
-//     });
-//   } else {
-//     console.log("Login token failed");
-//   }
-// };
-
-// app.get("/", verifyUser, (req, res) => {
-//   db.query(
-//     "select Job_Title_ID from employee where Employee_ID = ?",
-//     [personalID],
-//     (err, rows) => {
-//       if (err) {
-//         console.error("Error fetching data:", err);
-//         res.status(500).json({ error: "Internal server error" });
-//         return;
-//       } else {
-//         console.log(rows);
-//         if (rows.length > 0) {
-//           res.json({ message: "Success", job: rows[0].Job_Title_ID });
-//         } else {
-//           res.json({ message: "unsuccess", job: null });
-//         }
-//       }
-//     }
-//   );
-// });
-
-// app.get("/api/login1", (req, res) => {
-//   argon2.hash("E016").then((hash) => {
-//     console.log("Password", hash);
-//   });
-// });
-
 //User Login
 
 app.post("/api/login", (req, res) => {
@@ -500,33 +385,6 @@ app.post("/api/login", (req, res) => {
           .json({ message: "Invalid username or password" });
       }
     });
-
-    // db.query(
-    //   "SELECT Employee_ID,Job_Title_ID FROM user_account natural join employee WHERE Employee_ID = ? AND Password = ?",
-    //   [req.body.username, req.body.password],
-
-    //   (err, rows) => {
-    //     if (err) {
-    //       console.error("Error fetching data:", err);
-    //       res.status(500).json({ error: "Internal server error" });
-    //       return;
-    //     } else {
-    //       if (rows.length > 0) {
-    //         const id = req.body.username;
-    //         personalID = id;
-    //         // const token = jwt.sign({ id }, "Seceret key token", {
-    //         //   expiresIn: "1d",
-    //         // });
-
-    //       } else {
-    //         res.json({
-    //           status: "failed",
-    //         });
-    //         console.log("Login failed");
-    //       }
-    //     }
-    //   }
-    // );
   });
 });
 //clear cookies

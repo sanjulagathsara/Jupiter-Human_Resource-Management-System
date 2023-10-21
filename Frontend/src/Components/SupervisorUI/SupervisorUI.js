@@ -16,8 +16,12 @@ const SupervisorUI = () => {
     axios
       .get("http://localhost:5001/api/check")
       .then((response) => {
-        if (response.data.valid) {
-          navigate(`/login/Employee:${response.data.role}`);
+        if (
+          (response.data.valid && response.data.role === "JT003") ||
+          response.data.role === "JT004" ||
+          response.data.role === "JT009" ||
+          response.data.role === "JT005"
+        ) {
         } else {
           navigate("/login");
         }

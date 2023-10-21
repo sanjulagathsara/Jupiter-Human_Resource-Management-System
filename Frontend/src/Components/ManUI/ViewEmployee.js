@@ -1,7 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const ViewEmployee = () => {
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (response.data.valid && response.data.role === "JT002") {
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const goBack = () => {
     navigate(-1);
   };
@@ -52,7 +68,7 @@ const ViewEmployee = () => {
 
             <h5>Pay Grade : {record.Pay_grade}</h5>
             {record.Supervisor_Name !== null && (
-              <h5>Supervisor_Name: {record.Supervisor_Name}</h5>
+              <h5>Supervisor Name: {record.Supervisor_Name}</h5>
             )}
           </div>
         ))}

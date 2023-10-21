@@ -8,19 +8,6 @@ const Employee = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  // const [auth, setAuth] = useState(true);
-  // const [record, setRecord] = useState();
-
-  // useEffect(() => {
-  //   axios.get("http://localhost:5001/", username).then((response) => {
-  //     if (response.data.message === "Success") {
-  //       setAuth(true);
-  //       setRecord(response.data.job);
-  //     } else {
-  //       setAuth(false);
-  //     }
-  //   });
-  // }, []);
 
   //post user name and password to the backend and check whether it is correct
   axios.defaults.withCredentials = true;
