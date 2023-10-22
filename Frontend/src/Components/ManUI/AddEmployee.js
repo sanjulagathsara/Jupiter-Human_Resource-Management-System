@@ -35,9 +35,10 @@ const AddEmployee = () => {
   const [jobTitle, setJobTitle] = useState("");
   const [departmentList, setDepartmentList] = useState([]);
   const genderList = ["Male", "Female"];
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [formSubmitted, setFormSubmitted] = useState(false);
-
+  const [dependents, setDependents] = useState([]);
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
@@ -60,6 +61,7 @@ const AddEmployee = () => {
       Department: "",
       Gender: "",
     });
+    setDependents([]);
   }
 
   useEffect(() => {
@@ -114,6 +116,12 @@ const AddEmployee = () => {
           Supervisor: record.Supervisor,
           Department: record.Department,
           Gender: record.Gender,
+          DependantsDetails: dependents,
+        })
+
+        .then((res) => {
+          setErrorMessage(res.data.Message);
+          console.log(res.data);
         })
         .then((res) => res.json())
         .then((json) => {
@@ -123,7 +131,7 @@ const AddEmployee = () => {
         .catch((error) => {
           console.log("Data not sent to serve");
         });
-      clearDetails();
+
       setFormSubmitted(false);
     }
   }, [formSubmitted]);
@@ -153,21 +161,21 @@ const AddEmployee = () => {
     const dependant = {
       name: "",
       relationship: "",
-      birthday: "",
+      age: "",
       statusType: "",
     };
-    setValue([...value, dependant]);
+    setDependents([...dependents, dependant]);
   };
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...value];
+  const handleInputChange = (e, name, index) => {
+    const { value } = e.target;
+    const list = [...dependents];
     list[index][name] = value;
-    setValue(list);
+    setDependents(list);
   };
   const deleteHandle = (index) => {
-    const list = [...value];
-    list.splice(index, 1);
-    setValue(list);
+    const updatedDependents = [...dependents];
+    updatedDependents.splice(index, 1);
+    setDependents(updatedDependents);
   };
 
   return (
@@ -324,7 +332,7 @@ const AddEmployee = () => {
               onChange={(e) => setRecord({ ...record, Status: e.target.value })}
               style={{ marginLeft: "10px" }}
             >
-              <option value="">Select Status ID</option>
+              <option value="">Select Status </option>
               {statusList.map((status, index) => (
                 <option key={index} value={status}>
                   {status}
@@ -343,7 +351,7 @@ const AddEmployee = () => {
               }
               style={{ marginLeft: "10px" }}
             >
-              <option value="">Select Pay Grade ID</option>
+              <option value="">Select Pay Grade</option>
               {payGradeList.map((payGrade, index) => (
                 <option key={index} value={payGrade}>
                   {payGrade}
@@ -371,7 +379,7 @@ const AddEmployee = () => {
             </select>
           </label>
           <br />
-
+          <div style={{ color: "red" }}>{errorMessage}</div>
           <button
             onClick={() => handleAdd()}
             type="button"
@@ -385,23 +393,23 @@ const AddEmployee = () => {
           >
             Add Dependants Details
           </button>
-          {value.map((val, idx) => {
+          {dependents.map((dependant, idx) => {
             return (
               <div key={idx} style={{ marginTop: "20px" }}>
                 <label>
                   Name:
                   <input
                     type="text"
-                    value={val.name}
-                    onChange={(e) => handleInputChange(e, idx)}
+                    value={dependant.name}
+                    onChange={(e) => handleInputChange(e, "name", idx)}
                     style={{ marginLeft: "10px", marginRight: "10px" }}
                   />
                 </label>
                 <label styles={{ marginLeft: "10px" }}>
                   Relationship:
                   <select
-                    value={relationship}
-                    onChange={(e) => handleInputChange(e, idx)}
+                    value={dependant.relationship}
+                    onChange={(e) => handleInputChange(e, "relationship", idx)}
                     style={{ marginLeft: "10px", marginRight: "10px" }}
                   >
                     <option value="">Select a Relationship</option>
@@ -416,16 +424,16 @@ const AddEmployee = () => {
                   Age:
                   <input
                     type="text"
-                    value={val.birthday}
-                    onChange={(e) => handleInputChange(e, idx)}
+                    value={dependant.age}
+                    onChange={(e) => handleInputChange(e, "age", idx)}
                     style={{ marginLeft: "10px", marginRight: "10px" }}
                   />
                 </label>
                 <label>
                   Status:
                   <select
-                    value={statusType}
-                    onChange={(e) => handleInputChange(e, idx)}
+                    value={dependant.statusType}
+                    onChange={(e) => handleInputChange(e, "statusType", idx)}
                     style={{ marginLeft: "10px" }}
                   >
                     <option value="">Select a Status</option>
@@ -439,7 +447,7 @@ const AddEmployee = () => {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => deleteHandle()}
+                  onClick={() => deleteHandle(idx)}
                   style={{
                     marginBottom: "10px",
                     marginTop: "10px",

@@ -283,12 +283,12 @@ app.get("/api/employeeInfo", (req, res) => {
 //Post employee details
 app.post("/api/employee/addEmployee", (req, res) => {
   const sql2 = "SELECT getLastEmployeeID() AS lastEmployeeID";
+  var data = req.body.DependantsDetails;
 
   db.query(sql2, (err, rows) => {
     if (err) {
       console.error("Error querying MySQL:", err);
-      res.status(500).json({ error: "Internal server error" });
-      return;
+      return res.status(500).json({ Message: "Internal server error" });
     }
 
     const lastEmployeeID = rows[0].lastEmployeeID;
@@ -317,10 +317,40 @@ app.post("/api/employee/addEmployee", (req, res) => {
         (err, rows) => {
           if (err) {
             console.error("Error querying MySQL:", err);
-            res.status(500).json({ error: "Internal server error" });
+            return res.status(500).json({ Message: "Internal server error" });
           } else {
             console.log(rows);
-            res.json(rows);
+
+            data.forEach((element) => {
+              if (
+                element.name === "" ||
+                element.age === "" ||
+                element.relationship === "" ||
+                element.statusType === ""
+              ) {
+                return;
+              }
+              const sql3 = "CALL AddDependant(?,?,?,?,?)";
+              db.query(
+                sql3,
+                [
+                  lastEmployeeID,
+                  element.name,
+                  element.age,
+                  element.relationship,
+                  element.statusType,
+                ],
+                (err, rows) => {
+                  if (err) {
+                    console.error("Error querying MySQL:", err);
+                    return res
+                      .status(500)
+                      .json({ Message: "Internal server error" });
+                  }
+                }
+              );
+            });
+            res.json({ Message: "Employee added successfully" });
           }
         }
       );
