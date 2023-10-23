@@ -31,6 +31,24 @@ const ViewEmployee = () => {
       })
       .catch((error) => console.error("Error fetching data2:", error));
   }, []);
+
+  //get dependents data
+  const [dependents, setDependents] = useState([]);
+  const [isNull, setIsNull] = useState(true);
+  const [dependentsColumn, setDependentsColumn] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/dependantsDetails/employee")
+      .then((response) => {
+        setDependentsColumn(Object.keys(response.data[0]));
+        setDependents(response.data);
+        if (response.data.length != 0) {
+          setIsNull(false);
+        }
+      })
+      .catch((error) => console.error("Error fetching data2:", error));
+  }, []);
+
   return (
     <div>
       <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
@@ -42,8 +60,8 @@ const ViewEmployee = () => {
             style={{
               border: "2px solid black",
               padding: "20px",
-              marginTop: "50px",
-              marginBottom: "50px",
+              marginTop: "20px",
+              marginBottom: "20px",
               borderRadius: "10px",
               width: "45%",
               display: "flex",
@@ -70,8 +88,34 @@ const ViewEmployee = () => {
             {record.Supervisor_Name !== null && (
               <h5>Supervisor Name: {record.Supervisor_Name}</h5>
             )}
+            <div></div>
           </div>
         ))}
+        {!isNull && (
+          <div>
+            <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+              Dependents Details
+            </h1>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  {dependentsColumn.map((col) => (
+                    <th key={col}>{col}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {dependents.map((row) => (
+                  <tr key={row.Name}>
+                    {dependentsColumn.map((col) => (
+                      <td key={`${row.Name}-${col}`}>{row[col]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <button
           onClick={goBack}

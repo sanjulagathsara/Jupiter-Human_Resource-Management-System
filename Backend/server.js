@@ -262,6 +262,25 @@ app.get("/api/employeeInfo/employee", (req, res) => {
   );
 });
 
+//get relavent dependants details
+app.get("/api/dependantsDetails/employee", (req, res) => {
+  db.query(
+    "select Name,Age,Relationship,status as Status from dependants where Employee_ID = ?",
+    [employeeId],
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log("dependents: ", rows);
+
+        res.json(rows);
+      }
+    }
+  );
+});
+
 //Get all employee informations
 app.get("/api/employeeInfo", (req, res) => {
   db.query(
@@ -410,6 +429,25 @@ app.get("/api/personalInfo", (req, res) => {
         return;
       } else {
         console.log(rows);
+
+        res.json(rows);
+      }
+    }
+  );
+});
+
+//View dependants Details
+app.get("/api/dependantsDetails", (req, res) => {
+  db.query(
+    "select Name,Age,Relationship,status as Status from dependants where Employee_ID = ?",
+    [personalID],
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log("dependents: ", rows);
 
         res.json(rows);
       }

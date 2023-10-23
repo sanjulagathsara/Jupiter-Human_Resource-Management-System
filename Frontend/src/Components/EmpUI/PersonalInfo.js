@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 const PersonalInfo = () => {
-  const [column, setColumn] = useState([]);
   const [record, setRecord] = useState([]);
   var edit = false;
   const navigate = useNavigate();
@@ -15,8 +15,39 @@ const PersonalInfo = () => {
     fetch("http://localhost:5001/api/personalInfo")
       .then((response) => response.json())
       .then((data) => {
-        setColumn(Object.keys(data[0]));
         setRecord(data[0]);
+      })
+      .catch((error) => console.error("Error fetching data2:", error));
+  }, []);
+
+  axios.defaults.withCredentials = true;
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (response.data.valid) {
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // get dependents data
+  const [dependents, setDependents] = useState([]);
+  const [isNull, setIsNull] = useState(true);
+  const [dependentsColumn, setDependentsColumn] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5001/api/dependantsDetails")
+      .then((response) => response.json())
+      .then((data) => {
+        setDependentsColumn(Object.keys(data[0]));
+        setDependents(data);
+        if (data.length != 0) {
+          setIsNull(false);
+        }
       })
       .catch((error) => console.error("Error fetching data2:", error));
   }, []);
@@ -66,6 +97,29 @@ const PersonalInfo = () => {
           )}
           {record.Job_Title === "HR Manager" && (edit = true)}
         </div>
+        {!isNull && (
+          <div>
+            <h1>Dependents Details</h1>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  {dependentsColumn.map((col) => (
+                    <th key={col}>{col}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {dependents.map((row) => (
+                  <tr key={row.Name}>
+                    {dependentsColumn.map((col) => (
+                      <td key={`${row.Name}-${col}`}>{row[col]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button
@@ -96,8 +150,6 @@ const PersonalInfo = () => {
           )}
         </div>
       </div>
-
-      {column == null && <p>Loading....</p>}
     </div>
   );
 };
