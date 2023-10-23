@@ -42,7 +42,7 @@ const AddEmployee = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
-    alert("Form submitted");
+
     formRef.current.reset();
     console.log("Form submitted:", {});
   };
@@ -62,6 +62,7 @@ const AddEmployee = () => {
       Gender: "",
     });
     setDependents([]);
+    setErrorMessage("");
   }
 
   useEffect(() => {
@@ -399,6 +400,7 @@ const AddEmployee = () => {
                 <label>
                   Name:
                   <input
+                    required
                     type="text"
                     value={dependant.name}
                     onChange={(e) => handleInputChange(e, "name", idx)}
@@ -423,6 +425,7 @@ const AddEmployee = () => {
                 <label>
                   Age:
                   <input
+                    required
                     type="text"
                     value={dependant.age}
                     onChange={(e) => handleInputChange(e, "age", idx)}
@@ -432,6 +435,7 @@ const AddEmployee = () => {
                 <label>
                   Status:
                   <select
+                    required
                     value={dependant.statusType}
                     onChange={(e) => handleInputChange(e, "statusType", idx)}
                     style={{ marginLeft: "10px" }}
