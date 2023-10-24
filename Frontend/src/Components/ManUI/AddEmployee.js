@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
 const AddEmployee = () => {
   const navigate = useNavigate();
 
@@ -37,6 +36,51 @@ const AddEmployee = () => {
   const genderList = ["Male", "Female"];
   const [errorMessage, setErrorMessage] = useState("");
 
+
+  const organizations = ["Jupiter", "XYZ Ltd", "PQR Inc"];
+  const organizationDict = {
+    Jupiter: "OR001",
+    "XYZ Ltd": "OR002",
+    "PQR Inc": "OR003",
+  };
+  const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
+  const supervisors = ["E001", "E003"];
+  const statusList = [
+    "Intern-fulltime",
+    "Intern-Parttime",
+    "Contract-fulltime",
+    "Contract-parttime",
+    "Permanent",
+    "Freelance",
+  ];
+  const statusDict = {
+    "Intern-fulltime": "S001",
+    "Intern-Parttime": "S002",
+    "Contract-fulltime": "S003",
+    "Contract-parttime": "S004",
+    Permanent: "S005",
+    Freelance: "S006",
+  };
+  const jobTitleList = [
+    "HR Manager",
+    "Supervisor",
+    "Accountant",
+    "Software Engineer",
+    "QA Engineer",
+  ];
+  const jobTitleDict = {
+    "HR Manager": "JT001",
+    Supervisor: "JT002",
+    Accountant: "JT003",
+    "Software Engineer": "JT004",
+    "QA Engineer": "JT005",
+  };
+  const payGradeList = ["Level 1", "Level 2", "Level 3"];
+  const payGradeDict = {
+    "Level 1": "PG001",
+    "Level 2": "PG002",
+    "Level 3": "PG003",
+  };
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [dependents, setDependents] = useState([]);
   const handleSubmit = (e) => {
@@ -44,10 +88,22 @@ const AddEmployee = () => {
     setFormSubmitted(true);
 
     formRef.current.reset();
-    console.log("Form submitted:", {});
+    console.log("Form submitted:", {
+      employeeId,
+      organizationId,
+      name,
+      birthday,
+      contactNumber,
+      maritalStatus,
+      supervisorId,
+      statusID,
+      jobTitleId,
+      payGradeId,
+    });
   };
 
   function clearDetails() {
+
     setRecord({
       Name: "",
       Branch_Name: "",
@@ -124,6 +180,7 @@ const AddEmployee = () => {
           setErrorMessage(res.data.Message);
           console.log(res.data);
         })
+
         .then((res) => res.json())
         .then((json) => {
           console.log(json);
@@ -178,6 +235,7 @@ const AddEmployee = () => {
     updatedDependents.splice(index, 1);
     setDependents(updatedDependents);
   };
+
 
   return (
     <div>
@@ -458,12 +516,16 @@ const AddEmployee = () => {
                     marginLeft: "20px",
                   }}
                 >
-                  Delete
-                </button>
-              </div>
-            );
-          })}
-
+                  <option value="">Select a supervisor</option>
+                  {supervisors.map((supervisor, index) => (
+                    <option key={index} value={supervisor}>
+                      {supervisor}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </tr>
+          )}
           <button
             onClick={goBack}
             type="button"

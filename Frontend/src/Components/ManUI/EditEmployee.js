@@ -183,12 +183,14 @@ const EditEmployee = () => {
           <input
             required
             type="date"
+
             value={
               record.Birthday
                 ? new Date(record.Birthday).toISOString().split("T")[0]
                 : ""
             }
             onChange={(e) => setRecord({ ...record, Birthday: e.target.value })}
+
             style={{ marginLeft: "10px" }}
           />
         </label>

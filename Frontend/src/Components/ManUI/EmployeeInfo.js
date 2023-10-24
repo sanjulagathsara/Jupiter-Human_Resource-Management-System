@@ -37,7 +37,7 @@ const EmployeeInfo = () => {
         setColumns(Object.keys(data[0]));
         setRecords(data);
       })
-      .catch((error) => console.error("Error fetching data2:", error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const indexOfLastRecord = currentPage * rowsPerPage;

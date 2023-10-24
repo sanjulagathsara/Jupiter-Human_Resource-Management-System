@@ -8,8 +8,12 @@ const app = express();
 var personalID;
 const session = require("express-session");
 const argon2 = require("argon2");
+
 const dotenv = require("dotenv");
 dotenv.config();
+
+require("dotenv").config();
+
 
 app.use(cookieParser());
 app.use(

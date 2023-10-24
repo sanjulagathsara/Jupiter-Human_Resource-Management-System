@@ -1,37 +1,10 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
-
-const SupervisorUI = () => {
+const AccountantUI = () => {
   const navigate = useNavigate();
   const handleViewPersonalInfo = () => {
     navigate("/login/Employee/EmployeeUI/PersonalInfo");
   };
-  axios.defaults.withCredentials = true;
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5001/api/check")
-      .then((response) => {
-        if (
-          (response.data.valid && response.data.role === "JT003") ||
-          response.data.role === "JT004" ||
-          response.data.role === "JT009" ||
-          response.data.role === "JT005"
-        ) {
-        } else {
-          navigate("/login");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  const handleLogOut = () => {
-    axios.get("http://localhost:5001/api/logout");
-  };
-
-
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -54,10 +27,10 @@ const SupervisorUI = () => {
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link
-                  to="/login/Employee/EmployeeUI/request-leave"
+                  to="/login/Employee/EmployeeUI/PersonalInfo"
                   className="nav-link"
                 >
-                  Request Leave
+                  Add Employee
                 </Link>
               </li>
               <li className="nav-item">
@@ -65,20 +38,23 @@ const SupervisorUI = () => {
                   to="/login/Employee/ManUI/request-leave"
                   className="nav-link"
                 >
-                  View Leave Informations
+                  View Employee
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
-                  to="/login/Employee/EmployeeUI/PersonalInfo"
+                  to="/login/Employee/ManUI/request-leave"
                   className="nav-link"
                 >
                   View My Details
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/login/Employee/reset-password" className="nav-link">
-                  Reset Password
+                <Link
+                  to="/login/Employee/ManUI/request-leave"
+                  className="nav-link"
+                >
+                  View Reports
                 </Link>
               </li>
               <li className="nav-item">
@@ -90,7 +66,7 @@ const SupervisorUI = () => {
           </div>
         </div>
       </nav>
-      <h1>SupervisorUI</h1>
+      <h1>Accountant UI</h1>
       <button
         type="button"
         class="button-with-icon"
@@ -102,4 +78,4 @@ const SupervisorUI = () => {
   );
 };
 
-export default SupervisorUI;
+export default AccountantUI;

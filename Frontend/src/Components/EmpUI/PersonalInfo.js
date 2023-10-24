@@ -64,7 +64,7 @@ const PersonalInfo = () => {
 
       <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
-          Personal Informations
+          Personal information
         </h1>
 
         <div
