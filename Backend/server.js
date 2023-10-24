@@ -280,6 +280,7 @@ app.get("/api/dependantsDetails/employee", (req, res) => {
     }
   );
 });
+//added a
 
 //Get all employee informations
 app.get("/api/employeeInfo", (req, res) => {
