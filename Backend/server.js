@@ -46,6 +46,7 @@ db.connect((err) => {
   }
 });
 
+//new branch created
 //reset password
 app.post("/api/reset-password", (req, res) => {
   const { currentPassword, newPassword } = req.body;
