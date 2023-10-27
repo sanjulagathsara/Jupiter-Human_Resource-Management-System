@@ -121,6 +121,7 @@ const EditPI = () => {
                 Supervisor: record.Supervisor_Name,
                 Department: record.Department,
                 Gender: record.Gender,
+
               }),
             }
           );
@@ -165,11 +166,13 @@ const EditPI = () => {
           <input
             required
             type="date"
+
             value={
               record.Birthday
                 ? new Date(record.Birthday).toISOString().split("T")[0]
                 : ""
             }
+
             onChange={(e) =>
               setRecord({
                 ...record,
