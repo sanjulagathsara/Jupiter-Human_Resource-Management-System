@@ -210,14 +210,12 @@ const EditEmployee = () => {
           <input
             required
             type="date"
-
             value={
               record.Birthday
                 ? new Date(record.Birthday).toISOString().split("T")[0]
                 : ""
             }
             onChange={(e) => setRecord({ ...record, Birthday: e.target.value })}
-
             style={{ marginLeft: "10px" }}
           />
         </label>
@@ -393,42 +391,39 @@ const EditEmployee = () => {
           </label>
         )}
         <br />
-        <div>
-          {!isNull1 ? (
-            <>
-              <h1>Dependents Details</h1>
-              <table className="table table-striped">
-                <thead>
-                  <tr>
+
+        {!isNull1 ? (
+          <>
+            <h1>Dependents Details</h1>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  {visibleColumns.map((col) => (
+                    <th key={col}>{col}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {dependents.map((row, index) => (
+                  <tr key={row.name}>
                     {visibleColumns.map((col) => (
-                      <th key={col}>{col}</th>
+                      <td key={`${row.name}-${col}`}>
+                        <input
+                          type="text"
+                          name={col}
+                          value={row[col]}
+                          onChange={(event) => handleInputChange1(event, index)}
+                        />
+                      </td>
                     ))}
                   </tr>
-                </thead>
-                <tbody>
-                  {dependents.map((row, index) => (
-                    <tr key={row.name}>
-                      {visibleColumns.map((col) => (
-                        <td key={`${row.name}-${col}`}>
-                          <input
-                            type="text"
-                            name={col}
-                            value={row[col]}
-                            onChange={(event) =>
-                              handleInputChange1(event, index)
-                            }
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </>
-          ) : (
-            <h1>No dependents</h1>
-          )}
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </>
+        ) : (
+          <h1>No dependents</h1>
+        )}
 
         <div className="mb-3">
           <p className="text-danger">{errorMessage}</p>

@@ -19,6 +19,15 @@ import AddHRManager from "./Components/Admin/AddHrManager";
 import EditPI from "./Components/ManUI/EditPI";
 import ResetPassword from "./Components/resetPassword";
 function App() {
+  window.addEventListener("scroll", function () {
+    var footer = document.querySelector("footer");
+    if (window.scrollY > 100) {
+      footer.classList.add("sticky-footer");
+    } else {
+      footer.classList.remove("sticky-footer");
+    }
+  });
+
   return (
     <div className="App">
       <Router>

@@ -13,6 +13,8 @@ const EditPI = () => {
   const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
   const genderList = ["Male", "Female"];
   const navigate = useNavigate();
+  const [dependents, setDependents] = useState([]);
+  const visibleColumns = ["Name", "Age", "Relationship", "status"];
 
   axios.defaults.withCredentials = true;
 
@@ -96,6 +98,18 @@ const EditPI = () => {
       employeeId: record.Employee_ID,
     });
   };
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/personal/dependants")
+      .then((response) => {
+        setDependentsColumn(Object.keys(response.data[0]));
+        setDependents(response.data);
+        if (response.data.length != 0) {
+          setIsNull1(false);
+        }
+      })
+      .catch((error) => console.error("Error fetching data2:", error));
+  }, []);
 
   useEffect(() => {
     const sendEditedDataToServer = async () => {
@@ -121,7 +135,7 @@ const EditPI = () => {
                 Supervisor: record.Supervisor_Name,
                 Department: record.Department,
                 Gender: record.Gender,
-
+                Dependents: dependents,
               }),
             }
           );
@@ -142,6 +156,15 @@ const EditPI = () => {
 
     sendEditedDataToServer();
   }, [formSubmitted]);
+
+  const [isNull1, setIsNull1] = useState(true);
+  const [dependentsColumn, setDependentsColumn] = useState([]);
+  const handleInputChange1 = (event, index) => {
+    const { name, value } = event.target;
+    const list = [...dependents];
+    list[index][name] = value;
+    setDependents(list);
+  };
 
   return (
     <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
@@ -166,13 +189,11 @@ const EditPI = () => {
           <input
             required
             type="date"
-
             value={
               record.Birthday
                 ? new Date(record.Birthday).toISOString().split("T")[0]
                 : ""
             }
-
             onChange={(e) =>
               setRecord({
                 ...record,
@@ -318,6 +339,39 @@ const EditPI = () => {
           </select>
         </label>
         <br />
+
+        {!isNull1 ? (
+          <>
+            <h1>Dependents Details</h1>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  {visibleColumns.map((col) => (
+                    <th key={col}>{col}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {dependents.map((row, index) => (
+                  <tr key={row.name}>
+                    {visibleColumns.map((col) => (
+                      <td key={`${row.name}-${col}`}>
+                        <input
+                          type="text"
+                          name={col}
+                          value={row[col]}
+                          onChange={(event) => handleInputChange1(event, index)}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        ) : (
+          <h1>No dependents</h1>
+        )}
         <div className="mb-3">
           <p className="text-danger">{errorMessage}</p>
         </div>

@@ -1,12 +1,15 @@
 import React from "react";
+import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
+//import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
 
+import { useEffect, useState } from "react";
 const SupervisorUI = () => {
   const navigate = useNavigate();
   const handleViewPersonalInfo = () => {
     navigate("/login/Employee/EmployeeUI/PersonalInfo");
   };
+
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
@@ -30,7 +33,6 @@ const SupervisorUI = () => {
   const handleLogOut = () => {
     axios.get("http://localhost:5001/api/logout");
   };
-
 
   return (
     <div>
@@ -82,7 +84,7 @@ const SupervisorUI = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/login" className="nav-link">
+                <Link to="/" onClick={handleLogOut} className="nav-link">
                   Log Out
                 </Link>
               </li>
@@ -93,7 +95,7 @@ const SupervisorUI = () => {
       <h1>SupervisorUI</h1>
       <button
         type="button"
-        class="button-with-icon"
+        className="button-with-icon"
         onClick={handleViewPersonalInfo}
       >
         View Personal Info
