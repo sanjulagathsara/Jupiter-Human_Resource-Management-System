@@ -46,6 +46,24 @@ db.connect((err) => {
   }
 });
 
+//get dependent details
+app.get("/api/dependants", (req, res) => {
+  db.query(
+    "SELECT * FROM dependants where Employee_ID = ?",
+    [employeeId],
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error fetching data:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(rows);
+        res.json(rows);
+      }
+    }
+  );
+});
+
 //reset password
 app.post("/api/reset-password", (req, res) => {
   const { currentPassword, newPassword } = req.body;
@@ -207,6 +225,8 @@ app.get("/api/leaveDetails", (req, res) => {
 app.post("/api/ManUI/EditPI/edited", (req, res) => {
   console.log("Edited data fetch from server:");
   console.log(req.body);
+  const data = req.body.Dependents;
+  console.log("data", data);
   db.query(
     "CALL UpdateEmployee(?,?,?,?,?,?,?,?,?,?,?,?)",
     [
@@ -231,7 +251,30 @@ app.post("/api/ManUI/EditPI/edited", (req, res) => {
           error: "Internal server error",
         });
       } else {
-        return res.json({ message: "Data Updated Successfully" });
+        data.forEach((element) => {
+          const sql3 = "CALL EditDependant(?,?,?,?,?)";
+          db.query(
+            sql3,
+            [
+              element.Name,
+              element.Age,
+              element.Relationship,
+              element.status,
+              element.Dependant_ID,
+            ],
+            (err, rows) => {
+              if (err) {
+                console.error("Error querying MySQL:", err);
+                res.json({
+                  Message: "Internal server error",
+                  error: "Internal server error",
+                });
+              } else {
+                return res.json({ message: "Data Updated Successfully" });
+              }
+            }
+          );
+        });
       }
     }
   );

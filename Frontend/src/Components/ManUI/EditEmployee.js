@@ -14,6 +14,7 @@ const EditEmployee = () => {
   const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
+  const visibleColumns = ["Name", "Age", "Relationship", "status"];
 
   useEffect(() => {
     axios
@@ -71,6 +72,23 @@ const EditEmployee = () => {
     DepartmentList();
   }, []);
 
+  const [dependents, setDependents] = useState([]);
+  const [isNull1, setIsNull1] = useState(true);
+  const [dependentsColumn, setDependentsColumn] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/dependants")
+      .then((response) => {
+        setDependentsColumn(Object.keys(response.data[0]));
+        setDependents(response.data);
+        if (response.data.length != 0) {
+          setIsNull1(false);
+        }
+      })
+      .catch((error) => console.error("Error fetching data2:", error));
+  }, []);
+
   //get informations of relavent employee
   const [record, setRecord] = useState([]);
   useEffect(() => {
@@ -125,6 +143,7 @@ const EditEmployee = () => {
                 Supervisor: record.Supervisor_Name,
                 Department: record.Department,
                 Gender: record.Gender,
+                Dependents: dependents,
               }),
             }
           );
@@ -132,6 +151,7 @@ const EditEmployee = () => {
           if (response.ok) {
             setErrorMessage("Employee details edited successfully");
             console.log("Edited Data sent to server:");
+            console.log("dep", dependents);
           } else {
             setErrorMessage("Employee details not edited");
             console.log("Data not sent to server");
@@ -159,6 +179,13 @@ const EditEmployee = () => {
     };
     SupervisorList();
   }, [jobTitle]);
+
+  const handleInputChange1 = (event, index) => {
+    const { name, value } = event.target;
+    const list = [...dependents];
+    list[index][name] = value;
+    setDependents(list);
+  };
 
   return (
     <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
@@ -363,8 +390,44 @@ const EditEmployee = () => {
             </select>
           </label>
         )}
-
         <br />
+        <div>
+          {!isNull1 ? (
+            <>
+              <h1>Dependents Details</h1>
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    {visibleColumns.map((col) => (
+                      <th key={col}>{col}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {dependents.map((row, index) => (
+                    <tr key={row.name}>
+                      {visibleColumns.map((col) => (
+                        <td key={`${row.name}-${col}`}>
+                          <input
+                            type="text"
+                            name={col}
+                            value={row[col]}
+                            onChange={(event) =>
+                              handleInputChange1(event, index)
+                            }
+                          />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <h1>No dependents</h1>
+          )}
+        </div>
+
         <div className="mb-3">
           <p className="text-danger">{errorMessage}</p>
         </div>
