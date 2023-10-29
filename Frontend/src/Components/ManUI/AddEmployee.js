@@ -39,6 +39,8 @@ const AddEmployee = () => {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [dependents, setDependents] = useState([]);
+  const [attributes, setAttributes] = useState([]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
@@ -62,7 +64,9 @@ const AddEmployee = () => {
       Gender: "",
     });
     setDependents([]);
+    setAttributes([]);
     setErrorMessage("");
+    setFormSubmitted(false);
   }
 
   useEffect(() => {
@@ -118,22 +122,18 @@ const AddEmployee = () => {
           Department: record.Department,
           Gender: record.Gender,
           DependantsDetails: dependents,
+          CustomAttributes: attributes,
         })
 
         .then((res) => {
           setErrorMessage(res.data.Message);
+          console.log("Attributes", attributes);
           console.log(res.data);
         })
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json);
-          console.log("Data sent to server");
-        })
-        .catch((error) => {
-          console.log("Data not sent to serve");
-        });
 
-      setFormSubmitted(false);
+        .catch((error) => {
+          console.log("Data not sent to server", error);
+        });
     }
   }, [formSubmitted]);
 
@@ -157,6 +157,25 @@ const AddEmployee = () => {
   ];
   const relationship = ["Son", "Daughter"];
   const [value, setValue] = useState([]);
+
+  const handleInputChange1 = (e, name, index) => {
+    const { value } = e.target;
+    const list = [...attributes];
+    list[index][name] = value;
+    setAttributes(list);
+  };
+  const deleteHandle1 = (index) => {
+    const updatedAttributes = [...attributes];
+    updatedAttributes.splice(index, 1);
+    setAttributes(updatedAttributes);
+  };
+  const AddCustomAttributes = () => {
+    const attribute = {
+      key: "",
+      value: "",
+    };
+    setAttributes([...attributes, attribute]);
+  };
 
   const handleAdd = () => {
     const dependant = {
@@ -381,8 +400,47 @@ const AddEmployee = () => {
           </label>
           <br />
           <div style={{ color: "red" }}>{errorMessage}</div>
+          {attributes.map((attribute, idx) => {
+            return (
+              <div key={idx} style={{ marginTop: "20px" }}>
+                <label>
+                  Attribute:
+                  <input
+                    required
+                    type="text"
+                    value={attribute.key}
+                    onChange={(e) => handleInputChange1(e, "key", idx)}
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />
+                </label>
+                <label>
+                  Value:
+                  <input
+                    required
+                    type="text"
+                    value={attribute.value}
+                    onChange={(e) => handleInputChange1(e, "value", idx)}
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />
+                </label>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => deleteHandle1(idx)}
+                  style={{
+                    marginBottom: "10px",
+                    marginTop: "10px",
+                    marginLeft: "20px",
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            );
+          })}
           <button
-            onClick={() => handleAdd()}
+            onClick={() => AddCustomAttributes()}
+            disabled={formSubmitted}
             type="button"
             className="btn btn-primary"
             style={{
@@ -392,8 +450,11 @@ const AddEmployee = () => {
               marginTop: "20px",
             }}
           >
-            Add Dependants Details
+            Add Custom Attributes
           </button>
+
+          <br />
+
           {dependents.map((dependant, idx) => {
             return (
               <div key={idx} style={{ marginTop: "20px" }}>
@@ -463,7 +524,21 @@ const AddEmployee = () => {
               </div>
             );
           })}
-
+          <button
+            onClick={() => handleAdd()}
+            type="button"
+            disabled={formSubmitted}
+            className="btn btn-primary"
+            style={{
+              color: "white",
+              fontSize: "16px",
+              marginRight: "50px",
+              marginTop: "20px",
+            }}
+          >
+            Add Dependants Details
+          </button>
+          <br />
           <button
             onClick={goBack}
             type="button"
@@ -477,15 +552,16 @@ const AddEmployee = () => {
           >
             Back
           </button>
+
           <button
             className="btn btn-primary"
             type="submit"
             value="Submit"
+            disabled={formSubmitted}
             style={{ marginTop: "20px" }}
           >
             Submit
           </button>
-
           <button
             onClick={clearDetails}
             type="button"

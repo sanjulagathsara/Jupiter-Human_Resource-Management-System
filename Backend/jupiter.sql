@@ -131,6 +131,15 @@ create table dependants(
         )
 ;
 
+create table custom_attributes(
+		Employee_ID varchar(5),
+        Attribute varchar(25),
+        value varchar(25),
+        primary key(Employee_ID, Attribute,value),
+		foreign key(Employee_ID) references Employee(Employee_ID)
+
+        );
+
 CREATE VIEW SupervisorsAndSubordinates AS
 SELECT
     Sup.Employee_ID AS SupervisorID,
@@ -170,7 +179,7 @@ CREATE TRIGGER before_LeaveApplication_insert
 BEFORE INSERT ON leave_application
 FOR EACH ROW
 BEGIN
-    -- Calculate the next employeeID
+    -- Calculate the next Application Number
     declare max_Application_No int;
     SELECT MAX(CAST(SUBSTRING(Leave_Application_No, 2) AS UNSIGNED)) into max_Application_No from leave_application;
     if(max_Application_No is null) then 
@@ -328,21 +337,143 @@ BEGIN
     RETURN (select CONCAT('E', LPAD((SELECT MAX(CAST(SUBSTRING(Employee_ID, 2) AS UNSIGNED))  FROM employee)+1, 3, '0')));
 END //
 
-DELIMITER ;
 
+DELIMITER ;
 CREATE 
     ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
     SQL SECURITY DEFINER
 VIEW `loginwithjobtitle` AS
     SELECT 
-        `jupiter_g9`.`user_account`.`Employee_ID` AS `Employee_ID`,
-        `jupiter_g9`.`user_account`.`user_name` AS `user_name`,
-        `jupiter_g9`.`user_account`.`password` AS `password`,
-        `jupiter_g9`.`employee`.`Job_Title_ID` AS `Job_Title_ID`
+        `Employee_ID`,
+        `user_name`,
+        `password`,
+         `Job_Title_ID`
     FROM
-        (`jupiter_g9`.`user_account`
-        JOIN `jupiter_g9`.`employee` ON ((`jupiter_g9`.`user_account`.`Employee_ID` = `jupiter_g9`.`employee`.`Employee_ID`)))
+        (`user_account`
+        JOIN `employee` ON ((`user_account`.`Employee_ID` = `employee`.`Employee_ID`)));
+
+
+create view GetPersonalInfo as SELECT e.Employee_ID, p.Pay_Grade as Pay_grade,b.Branch_Name, e.Name,e.Birthday,e.Gender,e.Department,e.Marital_status,e.Emergency_contact_Number, es.Status_Type, ej.Job_Title,ej.Job_Title_ID, s.Name as Supervisor_Name FROM employee e join branch b on b.Branch_ID = e.Branch_ID  natural join employee_pay_grade p natural join employee_status es natural join employee_job_title ej  left join employee s on e.Supervisor_ID = s.Employee_ID ;        
+
+
+-- create a procedure to When add employee auto add the username and password
+
+DELIMITER //
+
+CREATE PROCEDURE UpdateEmployee(
+	IN empID varchar(5),
+    IN Name VARCHAR(255),
+    IN birthday date,    
+    IN contactNumber varchar(255),    
+    In maritalStatus varchar(255),
+    IN branchName VARCHAR(30),
+    IN statusType VARCHAR(20),
+    IN jobTitle VARCHAR(50),
+    IN paygrade VARCHAR(10),
+    IN SupervisorName VARCHAR(100),
+    In department varchar(50),
+    In gender Enum("Male","Female")
+    
+)
+BEGIN
+    DECLARE newEmployeeID varchar(5);
+
+    -- Add the new employee
+    update employee set Name = Name, Birthday = birthday, Emergency_contact_Number = contactNumber, Marital_status = maritalStatus,Branch_ID = select_branch_ID(branchName),Job_Title_ID = select_jobTitle_ID (jobTitle),Pay_Grade_ID = select_payGrade_ID (paygrade),Status_ID = select_status_ID (statusType),Supervisor_ID= select_supervisor_ID (SupervisorName),Department = department,Gender = gender where Employee_ID = empID;
+  COMMIT;
+END //
+
+
+
+DELIMITER ;
+
+-- create trigger for auto increment dependant ID
+DELIMITER //
+
+CREATE TRIGGER before_dependant_insert
+BEFORE INSERT ON dependants
+FOR EACH ROW
+BEGIN
+    -- Calculate the next dependant ID
+    declare max_ID int;
+     SELECT MAX(CAST(SUBSTRING(Dependant_ID, 2) AS UNSIGNED)) into max_ID FROM dependants;
+    if(max_ID is null) then 
+    set max_ID = 0;
+    end if;
+    SET NEW.Dependant_ID = CONCAT('D', LPAD((max_ID + 1 ), 3, '0'));
+END;
+
+//
+
+DELIMITER ;
+
+-- procedure for reset password
+DELIMITER //
+
+CREATE PROCEDURE UpdatePassword(
+	IN empID varchar(5),
+    IN pass VARCHAR(255)
+)
+BEGIN
+    -- Add the new employee
+    update user_account set password = pass where Employee_ID = empID;
+
+  COMMIT;
+END //
+
+DELIMITER ;
+
+-- procedure add dependant
+DELIMITER //
+
+CREATE PROCEDURE AddDependant(
+	IN empID varchar(5),
+    IN name VARCHAR(255),
+    IN age int,
+    IN relationship varchar(20),
+    IN statusType varchar(20)
+)
+BEGIN
+    -- Add the new employee
+    insert into dependants(Employee_ID,Name,Age,Relationship,status) values (empID,name,age,relationship,statusType);
+
+  COMMIT;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE AddCustomAttribute(
+	IN empID varchar(5),
+    IN attribute VARCHAR(25),
+    IN value1 VARCHAR(25)
+)
+BEGIN
+    -- Add the new employee
+    insert into custom_attributes(Employee_ID,Attribute,value) values (empID,attribute, value1);
+
+  COMMIT;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE EditDependant(
+    IN name VARCHAR(255),
+    IN age int,
+    IN relationship varchar(20),
+    IN statusType varchar(20),
+    In dependant_ID varchar(5)
+)
+BEGIN
+    -- Add the new employee
+   	update dependants set Name = name, Age = age, Relationship = relationship , status = statusType where dependants.Dependant_ID = dependant_ID;
+
+
+  COMMIT;
+END //
+
+DELIMITER ;
 --------------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO Employee_Job_Title (Job_Title_ID, Job_Title)

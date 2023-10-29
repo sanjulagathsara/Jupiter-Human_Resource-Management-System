@@ -437,6 +437,8 @@ app.get("/api/employeeInfo", (req, res) => {
 app.post("/api/employee/addEmployee", (req, res) => {
   const sql2 = "SELECT getLastEmployeeID() AS lastEmployeeID";
   var data = req.body.DependantsDetails;
+  var attributes = req.body.CustomAttributes;
+  console.log("Attributes", attributes);
 
   db.query(sql2, (err, rows) => {
     if (err) {
@@ -499,6 +501,27 @@ app.post("/api/employee/addEmployee", (req, res) => {
                     return res
                       .status(500)
                       .json({ Message: "Internal server error" });
+                  } else {
+                    attributes.forEach((element) => {
+                      if (element.key === "" || element.value === "") {
+                        console.log("Attribute is empty");
+                        return;
+                      }
+                      const sql4 = "CALL AddCustomAttribute(?,?,?)";
+                      console.log("Attribute sql4", element.key, element.value);
+                      db.query(
+                        sql4,
+                        [lastEmployeeID, element.key, element.value],
+                        (err) => {
+                          if (err) {
+                            console.error("Error querying MySQL:", err);
+                            return res
+                              .status(500)
+                              .json({ Message: "Internal server error" });
+                          }
+                        }
+                      );
+                    });
                   }
                 }
               );
