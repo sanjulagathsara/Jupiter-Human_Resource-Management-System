@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import "./ManUI.css";
+
 const AddEmployee = () => {
   const navigate = useNavigate();
 
@@ -180,11 +182,13 @@ const AddEmployee = () => {
   };
 
   return (
-    <div>
-      <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+    <body>
+      <br/>
+      <div className="d-flex flex-column align-items-center">
+        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
           Personal Informations
-        </h1>
+        </b></h1>
+        <br/>
         <form onSubmit={handleSubmit} ref={formRef}>
           <label className="mb-3">
             Name:
@@ -381,14 +385,14 @@ const AddEmployee = () => {
           </label>
           <br />
           <div style={{ color: "red" }}>{errorMessage}</div>
+          <br/>
           <button
             onClick={() => handleAdd()}
             type="button"
-            className="btn btn-primary"
+            className="btn"
             style={{
-              color: "white",
-              fontSize: "16px",
-              marginRight: "50px",
+              width : "250px",
+              marginRight: "10px",
               marginTop: "20px",
             }}
           >
@@ -450,9 +454,12 @@ const AddEmployee = () => {
                 </label>
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn"
                   onClick={() => deleteHandle(idx)}
                   style={{
+                    textAlign: 'center', lineHeight: 1,
+                    fontSize: "12px",
+                    width: "100px", height: "30px", backgroundColor : "orangered",
                     marginBottom: "10px",
                     marginTop: "10px",
                     marginLeft: "20px",
@@ -467,32 +474,28 @@ const AddEmployee = () => {
           <button
             onClick={goBack}
             type="button"
-            className="btn btn-primary"
+            className="btn"
             style={{
-              color: "white",
-              fontSize: "16px",
-              marginRight: "50px",
+              marginLeft: "50px",
               marginTop: "20px",
             }}
           >
             Back
           </button>
           <button
-            className="btn btn-primary"
-            type="submit"
-            value="Submit"
-            style={{ marginTop: "20px" }}
+            className="btn"
+            style={{
+              marginLeft: "50px",
+              marginTop: "20px",
+            }}
           >
             Submit
           </button>
-
           <button
             onClick={clearDetails}
             type="button"
-            className="btn btn-primary"
+            className="btn"
             style={{
-              color: "white",
-              fontSize: "16px",
               marginLeft: "50px",
               marginTop: "20px",
             }}
@@ -500,8 +503,8 @@ const AddEmployee = () => {
             Clear
           </button>
         </form>
-      </div>
-    </div>
+      </div><br/><br/>
+    </body>
   );
 };
 

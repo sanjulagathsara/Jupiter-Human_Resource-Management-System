@@ -1,0 +1,50 @@
+/* footer{
+    text-align: center;
+    font-family: 'Times New Roman';
+    font-size: 15px;
+    background-color: orange;
+    color: black;
+    padding: 3px;
+    
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    font-weight: bold;
+} */
+
+/*Style for the footer */
+footer {
+    /* position: absolute; */
+    text-align: center;
+    font-family: 'Times New Roman';
+    font-size: 15px;
+    background-color: orange;
+    color: black;
+    padding: 3px;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    font-weight: bold;
+} */
+
+/* Add a class for the sticky behavior */
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+}
+
+
+header{
+    text-align: center;
+    font-family: 'Times New Roman';
+    font-size: 15px;
+    background-color: orange;
+    color: black;
+    padding: 3px;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    font-weight: bold;
+}

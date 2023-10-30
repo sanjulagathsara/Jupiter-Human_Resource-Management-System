@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import "./PersonalInfo.css";
 
 const PersonalInfo = () => {
   const [record, setRecord] = useState([]);
@@ -62,17 +63,17 @@ const PersonalInfo = () => {
         </div>
       </nav>
 
-      <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
+      <div className="d-flex flex-column align-items-center">
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
           Personal Informations
           </b></h1>
-
         <div
           style={{
-            border: "2px solid black",
-            padding: "20px",
-            marginTop: "20px",
-            marginBottom: "50px",
+            // backgroundColor: "#5b5b1e",
+            // border: "2px solid black",
+            padding: "10px",
+            marginTop: "0px",
+            marginBottom: "30px",
             borderRadius: "10px",
             width: "45%",
             display: "flex",
@@ -100,17 +101,17 @@ const PersonalInfo = () => {
         {!isNull && (
           <div>
             <h1><b>Dependents Details</b></h1>
-            <table className="table table-striped">
-              <thead>
-                <tr>
+            <table>
+              <thead >
+                <tr className = "heading">
                   {dependentsColumn.map((col) => (
                     <th key={col}>{col}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {dependents.map((row) => (
-                  <tr key={row.Name}>
+                {dependents.map((row, index) => (
+                  <tr className={index % 2 === 0 ? "even_row" : "odd_row"} key={row.Name}>
                     {dependentsColumn.map((col) => (
                       <td key={`${row.Name}-${col}`}>{row[col]}</td>
                     ))}
@@ -120,35 +121,20 @@ const PersonalInfo = () => {
             </table>
           </div>
         )}
-
+        <br/>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <button
-            onClick={goBack}
-            type="button"
-            className="btn btn-primary"
-            style={{
-              color: "white",
-              fontSize: "16px",
-            }}
-          >
+          <button type="button" className="btn" onClick={goBack}>
             Back
           </button>
 
           {edit && (
             <Link to="/login/Employee/ManUI/EditPI">
-              <button
-                className="btn btn-primary"
-                style={{
-                  color: "white",
-                  fontSize: "16px",
-                  marginLeft: "50px",
-                }}
-              >
+              <button className="btn">
                 Edit
               </button>
             </Link>
           )}
-        </div>
+        </div> <br/>
       </div>
     </body>
   );
