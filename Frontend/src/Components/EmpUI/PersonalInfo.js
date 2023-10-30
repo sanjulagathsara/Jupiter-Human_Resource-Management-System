@@ -53,7 +53,7 @@ const PersonalInfo = () => {
   }, []);
 
   return (
-    <div>
+    <body>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link to="/login/Employee" className="navbar-brand">
@@ -63,15 +63,15 @@ const PersonalInfo = () => {
       </nav>
 
       <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
           Personal Informations
-        </h1>
+          </b></h1>
 
         <div
           style={{
             border: "2px solid black",
             padding: "20px",
-            marginTop: "50px",
+            marginTop: "20px",
             marginBottom: "50px",
             borderRadius: "10px",
             width: "45%",
@@ -99,7 +99,7 @@ const PersonalInfo = () => {
         </div>
         {!isNull && (
           <div>
-            <h1>Dependents Details</h1>
+            <h1><b>Dependents Details</b></h1>
             <table className="table table-striped">
               <thead>
                 <tr>
@@ -150,7 +150,7 @@ const PersonalInfo = () => {
           )}
         </div>
       </div>
-    </div>
+    </body>
   );
 };
 

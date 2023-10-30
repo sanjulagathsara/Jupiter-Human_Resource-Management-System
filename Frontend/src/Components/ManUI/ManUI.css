@@ -1,0 +1,58 @@
+/* CSS to change button size and color */
+.btn {
+    /* Button size */
+    width : 200px;
+    height : 50px;
+    padding: 10px 20px; /* You can adjust the values to change the button size */
+  
+    /* Button color */
+    background-color: #241d02; /* Change to your desired color code */
+    color: #fff; /* Text color for the button */
+    border: none; /* Remove button border, you can change this if needed */
+    border-radius: 5px; /* Rounded button corners */
+    cursor: pointer; /* Show pointer cursor on hover */
+  
+    /* Add some margin for spacing between buttons */
+    margin: 5px;
+    border-radius: 10px;
+
+    /* Control the font size for the text on the buttons */
+    font-size: 16px;
+  }
+  
+  /* Change the color on hover */
+  .btn:hover {
+    background-color: #695f05; /* Change to a different color on hover */
+    color: #000;
+  }
+
+.square {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 80vh;
+  margin: 0;
+  flex-direction: column;
+}
+
+body {
+  position: relative; /* Make the body element a positioning context for ::before */
+  background-image: url('https://i.postimg.cc/vTgbt5SD/image.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.n {
+  width: 500px; /* Set the width to 200 pixels */
+  height: 300px; /* Set the height to 100 pixels */
+  background-color: rgb(227, 224, 143); /*Add a background color for visibility*/
+}
+  
+  
+
+
+  
+  
+  
+  
+  

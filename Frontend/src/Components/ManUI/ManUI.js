@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 //import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import "./ManUI.css";
+
 
 const ManUI = () => {
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ const ManUI = () => {
   }, []);
 
   return (
-    <div>
+    <body>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link to="/login/Employee/ManUI" className="navbar-brand">
@@ -131,18 +133,32 @@ const ManUI = () => {
           </div>
         </div>
       </nav>
-      <h1>Manager UI</h1>
 
-      <button type="button" onClick={handleViewPersonalInfo}>
-        View My Details
-      </button>
-      <button type="button" onClick={handleAddEmployee}>
-        Add Employee
-      </button>
-      <button type="button" onClick={handleEmployeeInfo}>
-        View Employees
-      </button>
-    </div>
+      <div class = "square">
+        <div class = "nq">
+          <div>
+            <h1><b>Manager UI</b></h1>
+          </div><br/>
+          <div>
+            <div>
+              <button type="button" class = "btn" onClick={handleViewPersonalInfo}>
+              View My Details
+              </button>
+            </div>
+            <div>
+              <button type="button" class = "btn" onClick={handleAddEmployee}>
+              Add Employee
+              </button>
+            </div>
+            <div>
+              <button type="button" class = "btn" onClick={handleEmployeeInfo}>
+              View Employees
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
   );
 };
 
