@@ -182,7 +182,7 @@ const AddEmployee = () => {
   };
 
   return (
-    <body>
+    <div class = "Instead_body_AE">
       <br/>
       <div className="d-flex flex-column align-items-center">
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
@@ -503,8 +503,8 @@ const AddEmployee = () => {
             Clear
           </button>
         </form>
-      </div><br/><br/>
-    </body>
+      </div><br/><br/><br/>
+    </div>
   );
 };
 

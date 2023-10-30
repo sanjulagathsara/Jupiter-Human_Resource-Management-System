@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "./PersonalInfo.css";
+// import "./EmpUI/ManUI/ManUI.css";
 
 const PersonalInfo = () => {
   const [record, setRecord] = useState([]);
@@ -54,7 +55,7 @@ const PersonalInfo = () => {
   }, []);
 
   return (
-    <body>
+    <div class = "Instead_body_AE">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link to="/login/Employee" className="navbar-brand">
@@ -99,7 +100,7 @@ const PersonalInfo = () => {
           {record.Job_Title === "HR Manager" && (edit = true)}
         </div>
         {!isNull && (
-          <div>
+          <div className="d-flex flex-column align-items-center">
             <h1><b>Dependents Details</b></h1>
             <table>
               <thead >
@@ -136,7 +137,7 @@ const PersonalInfo = () => {
           )}
         </div> <br/>
       </div>
-    </body>
+    </div>
   );
 };
 

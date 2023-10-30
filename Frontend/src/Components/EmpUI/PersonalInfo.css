@@ -1,19 +1,13 @@
-body {
-    position: relative; /* Make the body element a positioning context for ::before */
-    background-image: url('https://i.postimg.cc/jjgygT3F/image.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.odd_row {
-    background-color: #eee01e; /* Set the background color for odd rows */
+.even_row {
+    background-color: #bee07a; /* Set the background color for odd rows */
 }
   
-.even_row {
-    background-color: #5b5b31; /* Set the background color for even rows */
+.odd_row {
+    background-color: #cbaf83; /* Set the background color for even rows */
 }
 
 .heading {
-    background-color: #5b5b31; /* Set the background color for even rows */
+    background-color: #0d5b1a; /* Set the background color for even rows */
+    color : white;
 }
   

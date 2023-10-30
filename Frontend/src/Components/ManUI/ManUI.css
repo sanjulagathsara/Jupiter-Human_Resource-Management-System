@@ -13,7 +13,7 @@
   cursor: pointer; /* Show pointer cursor on hover */
 
   /* Add some margin for spacing between buttons */
-  margin-top: 10px;
+  margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
   border-radius: 10px;
@@ -62,16 +62,50 @@
   z-index: -1;
 }
 
+/* Background for Add employees   */
+.Instead_body_AE {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-/* Common background for all sites */
-body {
-  position: relative; /* Make the body element a positioning context for ::before */
-  background-image: url('https://i.postimg.cc/jjgygT3F/image.jpg');
+.Instead_body_AE::before {
+  content: "";
+  background-image: url('https://i.postimg.cc/L4kVzcBj/pexels-andrea-piacquadio-3756678.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  filter: blur(10px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
-  
+ 
+/* Background for Edit Personal informations, Employee Info*/
+.Instead_body_EPI {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+}
 
+.Instead_body_EPI::before {
+  content: "";
+  background-image: url('https://i.postimg.cc/L4kVzcBj/pexels-andrea-piacquadio-3756678.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100dvh;
+  filter: blur(10px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 
   
   

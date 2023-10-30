@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./EmployeeInfo.css";
 import Pagination from "./pagination";
 import axios from "axios";
+import "./ManUI.css";
+
 const EmployeeInfo = () => {
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
@@ -50,10 +52,10 @@ const EmployeeInfo = () => {
 
   return (
     <div>
-      <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+      <div className="Instead_body_EPI">
+        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
           Employee Information
-        </h1>
+        </b></h1>
         <table className="table table-bordered" style={{ width: "70%" }}>
           <thead className="thead-dark">
             <tr>
@@ -100,24 +102,16 @@ const EmployeeInfo = () => {
         </table>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button
-            onClick={goBack}
-            type="button"
-            className="btn btn-primary"
-            style={{
-              color: "white",
-              fontSize: "16px",
-              marginTop: "20px",
-              marginBottom: "20px",
-            }}
-          >
+            onClick={goBack} type="button" className="btn">
             Back
           </button>
         </div>
+        <br/>
         <Pagination
           rowsPerPage={rowsPerPage}
           totalRecords={records.length}
           paginate={paginate}
-        />
+        /><br/><br/>
       </div>
     </div>
   );
