@@ -12,6 +12,9 @@ const SupervisorUI = () => {
   const handleRequestLeave = () => {
     navigate("/login/Employee/EmployeeUI/request-leave");
   };
+  const handleLeaveApplications = () => {
+    navigate("/login/Employee/SupUI/leaveApplication");
+  };
 
   axios.defaults.withCredentials = true;
 
@@ -113,9 +116,9 @@ const SupervisorUI = () => {
       <button
         type="button"
         className="button-with-icon"
-        onClick={handleRequestLeave}
+        onClick={handleLeaveApplications}
       >
-        View
+        View Leave Applications
       </button>
     </div>
   );
