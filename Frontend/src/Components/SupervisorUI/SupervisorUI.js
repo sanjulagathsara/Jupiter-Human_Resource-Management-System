@@ -100,29 +100,30 @@ const SupervisorUI = () => {
           </div>
         </div>
       </nav>
-
-      <p className="jupiter"><b>SupervisorUI</b></p>
-      <button
-        type="button"
-        className="btn"
-        onClick={handleViewPersonalInfo}
-      >
-        View Personal Info
-      </button>
-      <button
-        type="button"
-        className="btn"
-        onClick={handleRequestLeave}
-      >
-        Request Leave
-      </button>
-      <button
-        type="button"
-        className="btn"
-        onClick={handleLeaveApplications}
-      >
-        View Leave Applications
-      </button>
+      <div class = "S_main">
+        <p className="jupiter"><b>SupervisorUI</b></p>
+        <button
+          type="button"
+          className="btn"
+          onClick={handleViewPersonalInfo}
+        >
+          View Personal Info
+        </button>
+        <button
+          type="button"
+          className="btn"
+          onClick={handleRequestLeave}
+        >
+          Request Leave
+        </button>
+        <button
+          type="button"
+          className="btn"
+          onClick={handleLeaveApplications}
+        >
+          View Leave Applications
+        </button>
+      </div>
     </div>
   );
 };
