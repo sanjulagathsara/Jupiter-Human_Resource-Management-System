@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./ManUI.css";
 const ViewEmployee = () => {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
@@ -122,8 +123,8 @@ const ViewEmployee = () => {
         >
           Back
         </button>
-      </div>
-    </div>
+      </div><br/><br/>
+    </div> 
   );
 };
 
