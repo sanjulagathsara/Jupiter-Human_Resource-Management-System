@@ -6,21 +6,22 @@ const image =
 
 const Dashboard = () => {
   return (
-    <div className="gradient-bg vh-100">
+    <div class="dashboard">
+      <br/>
       <div>
-        <h1 className="h1">Jupiter</h1>
-        <h2 className="h2">Human Resource Management System</h2>
-
+        <p className="jupiter"><b>Jupiter</b></p>
+        <p className = "subheading"><b>Human Resource Management System</b></p>
+  
         <img src={image} className="image" alt="HR Management System" />
         <div>
-          <span className="sparkle-button">
+          <span>
             <Link to="/login">
-              <button className={"sparkle-button"}>Login</button>
+              <button className="btn">Login</button>
             </Link>
           </span>
-          <span className="sparkle-button">
+          <span>
             <Link to="/about">
-              <button className={"sparkle-button"}>About</button>
+              <button className= "btn">About</button>
             </Link>
           </span>
         </div>

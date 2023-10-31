@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./ManUI.css";
 
 const EditPI = () => {
   const [jobTitleList, setJobTitleList] = useState([]);
@@ -252,10 +253,11 @@ const EditPI = () => {
   const relationship = ["Son", "Daughter"];
 
   return (
-    <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-      <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+    <div className="Instead_body_EPI">
+      <h1 style={{ marginBottom: "20px", marginTop: "50px" }}><b>
         Personal Informations
-      </h1>
+      </b></h1>
+      <br/>
       <form onSubmit={handleSubmit}>
         <label className="mb-3">
           Name:
@@ -598,25 +600,12 @@ const EditPI = () => {
         <div className="mb-3">
           <p className="text-danger">{errorMessage}</p>
         </div>
-        <button
-          onClick={goBack}
-          type="button"
-          className="btn btn-primary"
-          style={{
-            color: "white",
-            fontSize: "16px",
-            marginRight: "50px",
-            marginTop: "20px",
-          }}
-        >
+
+        <button onClick={goBack} type="button" className="btn">
           Back
         </button>
-        <button
-          className="btn btn-primary"
-          type="submit"
-          value="Submit"
-          style={{ marginTop: "20px" }}
-        >
+
+        <button className="btn" type="submit" value="Submit">
           Save
         </button>
       </form>

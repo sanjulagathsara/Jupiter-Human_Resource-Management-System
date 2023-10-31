@@ -1,0 +1,13 @@
+.even_row {
+    background-color: #bee07a; /* Set the background color for odd rows */
+}
+  
+.odd_row {
+    background-color: #cbaf83; /* Set the background color for even rows */
+}
+
+.heading {
+    background-color: #0d5b1a; /* Set the background color for even rows */
+    color : white;
+}
+  

@@ -51,38 +51,41 @@ const Employee = () => {
   }
 
   return (
-    <div className="gradient-bg vh-100">
-      <div className="d-flex justify-content-center align-items-center gradient-bg bg-primary vh-100">
-        <div className="bg-white p-3 rounded w-25">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="username">Username</label>{" "}
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="username"
-                className="form-control rounded-0"
-                onChange={(event) => setUsername(event.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password">Password</label>{" "}
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="password"
-                className="form-control rounded-0"
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <p className="text-danger">{errorMessage}</p>
-            </div>
-            <button className="btn btn-success w-100 rounded-0">Login</button>
-          </form>
-        </div>
+    <div className="welcome">
+      <div className="bg-white p-3 rounded w-25" style={{marginTop : "250px"}}>
+        <form onSubmit={handleSubmit} className="d-flex flex-column align-items-center">
+          <div className="mb-3">
+            <label htmlFor="username"><b>Username</b></label>{" "}
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="username"
+              className="form-control rounded-0"
+              style={{ width: '328px' }}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="password"><b>Password</b></label>{" "}
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="password"
+              className="form-control rounded-0"
+              style={{ width: '328px' }}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
+
+          <div className="mb-3">
+            <p className="text-danger">{errorMessage}</p>
+          </div>
+
+          <button className="btn btn-success w-100 rounded-0"><b>Login</b></button>
+        </form>
       </div>
     </div>
   );
