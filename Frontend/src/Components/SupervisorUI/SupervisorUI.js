@@ -9,6 +9,9 @@ const SupervisorUI = () => {
   const handleViewPersonalInfo = () => {
     navigate("/login/Employee/EmployeeUI/PersonalInfo");
   };
+  const handleRequestLeave = () => {
+    navigate("/login/Employee/EmployeeUI/request-leave");
+  };
 
   axios.defaults.withCredentials = true;
 
@@ -99,6 +102,20 @@ const SupervisorUI = () => {
         onClick={handleViewPersonalInfo}
       >
         View Personal Info
+      </button>
+      <button
+        type="button"
+        className="button-with-icon"
+        onClick={handleRequestLeave}
+      >
+        Request Leave
+      </button>
+      <button
+        type="button"
+        className="button-with-icon"
+        onClick={handleRequestLeave}
+      >
+        View
       </button>
     </div>
   );
