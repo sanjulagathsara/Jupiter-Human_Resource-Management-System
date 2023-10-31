@@ -18,6 +18,13 @@ import LoginUI from "./Components/login";
 import AddHRManager from "./Components/Admin/AddHrManager";
 import EditPI from "./Components/ManUI/EditPI";
 import ResetPassword from "./Components/resetPassword";
+import ReportUI from "./Components/GeneratingReports/ReportUI";
+import EmpByDep from "./Components/GeneratingReports/EmpByDep";
+import LeavesByDep from "./Components/GeneratingReports/LeavesByDep";
+import EmpRepByGroup from "./Components/GeneratingReports/EmpRepByGroup";
+import RepByCusField from "./Components/GeneratingReports/RepByCusFields";
+import RepByDeptStatus from "./Components/GeneratingReports/RepByDepStatus";
+
 function App() {
   window.addEventListener("scroll", function () {
     var footer = document.querySelector("footer");
@@ -105,6 +112,27 @@ function App() {
               path="/login/Employee/reset-password"
               element={<ResetPassword />}
             ></Route>
+            <Route
+              path="/login/Employee/ManUI/ViewReports"
+              element={<ReportUI />}
+            ></Route>
+            <Route
+              path="/employee-by-department"
+              element={<EmpByDep />}
+            ></Route>
+            <Route
+              path="/employee-reports-by-group"
+              element={<EmpRepByGroup />}
+            ></Route>
+            <Route path="/total-leaves-by-department" 
+              element={<LeavesByDep/>}></Route>
+
+              <Route path="/reports-by-custom-fields"
+              element={<RepByCusField/>}></Route>
+
+              <Route path="/reports-by-dependants-status"
+              element={<RepByDeptStatus/>}></Route>
+
             <Route path="*" element={<h1>Not Found</h1>}></Route>
           </Routes>
         </div>

@@ -88,7 +88,7 @@ const ManUI = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/login/Employee/ManUI/request-leave"
+                  to="/login/Employee/ManUI/ViewReports"
                   className="nav-link"
                   data-bs-toggle="collapse"
                   data-bs-target=".navbar-collapse.show"
