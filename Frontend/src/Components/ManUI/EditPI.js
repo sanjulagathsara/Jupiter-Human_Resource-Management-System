@@ -474,7 +474,7 @@ const EditPI = () => {
             marginTop: "20px",
           }}
         >
-          Add Custom Attributes
+          Add New Custom Attribute
         </button>
         <br />
 
@@ -592,7 +592,7 @@ const EditPI = () => {
             marginTop: "20px",
           }}
         >
-          Add Dependants Details
+          Add New Dependant
         </button>
 
         <div className="mb-3">
