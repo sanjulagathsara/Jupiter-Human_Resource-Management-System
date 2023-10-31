@@ -45,6 +45,40 @@ db.connect((err) => {
     console.log("Connected to MySQL");
   }
 });
+//get custom attributes
+app.get("/api/personal/customAttributes", (req, res) => {
+  db.query(
+    "SELECT * FROM custom_attributes where Employee_ID = ?",
+    [personalID],
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error fetching data:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(rows);
+        res.json(rows);
+      }
+    }
+  );
+});
+
+app.get("/api/employee/customAttributes", (req, res) => {
+  db.query(
+    "SELECT * FROM custom_attributes where Employee_ID = ?",
+    [employeeId],
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error fetching data:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(rows);
+        res.json(rows);
+      }
+    }
+  );
+});
 
 //get dependent details
 app.get("/api/dependants", (req, res) => {
@@ -665,6 +699,54 @@ app.get("/api/check", (req, res) => {
       valid: false,
     });
   }
+});
+//post new dependants
+
+app.post("/api/ManUI/EditPI/newDependents", (req, res) => {
+  const depend = req.body.Dependents;
+  depend.forEach((element) => {
+    const sql = "CALL AddDependant(?,?,?,?,?)";
+    db.query(
+      sql,
+      [
+        req.body.EmployeeID,
+        element.name,
+        element.age,
+        element.relationship,
+        element.statusType,
+      ],
+      (err, rows) => {
+        if (err) {
+          console.error("Error querying MySQL:", err);
+          return res.status(500).json({ Message: "Internal server error" });
+        } else {
+          console.log(rows);
+          res.json({ Message: "Dependant added successfully" });
+        }
+      }
+    );
+  }); //end of forEach
+});
+//post new custom attributes
+app.post("/api/ManUI/EditPI/newCustomAttributes", (req, res) => {
+  const attributes = req.body.Attributes;
+
+  const sql = "CALL AddCustomAttribute(?,?,?)";
+  attributes.forEach((element) => {
+    db.query(
+      sql,
+      [req.body.EmployeeID, element.key, element.value],
+      (err, rows) => {
+        if (err) {
+          console.error("Error querying MySQL:", err);
+          return res.status(500).json({ Message: "Internal server error" });
+        } else {
+          console.log(rows);
+          res.json({ Message: "Custom Attribute added successfully" });
+        }
+      }
+    );
+  });
 });
 
 app.listen(port, () => {

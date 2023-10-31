@@ -14,6 +14,9 @@ const EditPI = () => {
   const genderList = ["Male", "Female"];
   const navigate = useNavigate();
   const [dependents, setDependents] = useState([]);
+  const [dependents1, setDependents1] = useState([]);
+  const [attributes, setAttributes] = useState([]);
+
   const visibleColumns = ["Name", "Age", "Relationship", "status"];
 
   axios.defaults.withCredentials = true;
@@ -145,8 +148,6 @@ const EditPI = () => {
           } else {
             setErrorMessage("Error occurred");
           }
-
-          setFormSubmitted(false);
         }
       } catch (error) {
         setErrorMessage("Error occurred");
@@ -154,7 +155,45 @@ const EditPI = () => {
       }
     };
 
+    const sendNewDependentsToServer = async () => {
+      console.log("dependents", dependents1);
+      console.log("form", formSubmitted);
+      if (formSubmitted) {
+        const response = await axios.post(
+          "http://localhost:5001/api/ManUI/EditPI/newDependents",
+          {
+            EmployeeID: record.Employee_ID,
+            Dependents: dependents1,
+          }
+        );
+        console.log(response);
+      }
+    };
+
+    const sendNewCustomAttributesToServer = async () => {
+      if (formSubmitted) {
+        console.log("attributes", attributes);
+        console.log("form", formSubmitted);
+        const response = await axios.post(
+          "http://localhost:5001/api/ManUI/EditPI/newCustomAttributes",
+          {
+            EmployeeID: record.Employee_ID,
+            Attributes: attributes,
+          }
+        );
+        console.log(response);
+      }
+    };
+
+    // Call the functions when formSubmitted changes
+
     sendEditedDataToServer();
+    if (dependents1.length > 0) {
+      sendNewDependentsToServer();
+    }
+    if (attributes.length > 0) {
+      sendNewCustomAttributesToServer();
+    }
   }, [formSubmitted]);
 
   const [isNull1, setIsNull1] = useState(true);
@@ -165,6 +204,52 @@ const EditPI = () => {
     list[index][name] = value;
     setDependents(list);
   };
+  const handleInputChange2 = (e, name, index) => {
+    const { value } = e.target;
+    const list = [...attributes];
+    list[index][name] = value;
+    setAttributes(list);
+  };
+  const deleteHandle1 = (index) => {
+    const updatedAttributes = [...attributes];
+    updatedAttributes.splice(index, 1);
+    setAttributes(updatedAttributes);
+  };
+  const AddCustomAttributes = () => {
+    const attribute = {
+      key: "",
+      value: "",
+    };
+    setAttributes([...attributes, attribute]);
+  };
+  const handleAdd = () => {
+    const dependant = {
+      name: "",
+      age: "",
+      relationship: "",
+
+      statusType: "",
+    };
+    setDependents1([...dependents1, dependant]);
+  };
+  const handleInputChange = (e, name, index) => {
+    const { value } = e.target;
+    const list = [...dependents1];
+    list[index][name] = value;
+    setDependents1(list);
+  };
+  const deleteHandle = (index) => {
+    const updatedDependents = [...dependents1];
+    updatedDependents.splice(index, 1);
+    setDependents1(updatedDependents);
+  };
+  const dependancyStatus = [
+    "Student",
+    "Under graduate",
+    "Post graduate",
+    "Other",
+  ];
+  const relationship = ["Son", "Daughter"];
 
   return (
     <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
@@ -339,6 +424,59 @@ const EditPI = () => {
           </select>
         </label>
         <br />
+        {attributes.map((attribute, idx) => {
+          return (
+            <div key={idx} style={{ marginTop: "20px" }}>
+              <label>
+                Attribute:
+                <input
+                  required
+                  type="text"
+                  value={attribute.key}
+                  onChange={(e) => handleInputChange2(e, "key", idx)}
+                  style={{ marginLeft: "10px", marginRight: "10px" }}
+                />
+              </label>
+              <label>
+                Value:
+                <input
+                  required
+                  type="text"
+                  value={attribute.value}
+                  onChange={(e) => handleInputChange2(e, "value", idx)}
+                  style={{ marginLeft: "10px", marginRight: "10px" }}
+                />
+              </label>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => deleteHandle1(idx)}
+                style={{
+                  marginBottom: "10px",
+                  marginTop: "10px",
+                  marginLeft: "20px",
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          );
+        })}
+        <button
+          onClick={() => AddCustomAttributes()}
+          disabled={formSubmitted}
+          type="button"
+          className="btn btn-primary"
+          style={{
+            color: "white",
+            fontSize: "16px",
+            marginRight: "50px",
+            marginTop: "20px",
+          }}
+        >
+          Add Custom Attributes
+        </button>
+        <br />
 
         {!isNull1 ? (
           <>
@@ -370,8 +508,93 @@ const EditPI = () => {
             </table>
           </>
         ) : (
-          <h1>No dependents</h1>
+          <></>
         )}
+
+        {dependents1.map((dependant, idx) => {
+          return (
+            <div key={idx} style={{ marginTop: "20px" }}>
+              <label>
+                Name:
+                <input
+                  required
+                  type="text"
+                  value={dependant.name}
+                  onChange={(e) => handleInputChange(e, "name", idx)}
+                  style={{ marginLeft: "10px", marginRight: "10px" }}
+                />
+              </label>
+              <label styles={{ marginLeft: "10px" }}>
+                Relationship:
+                <select
+                  value={dependant.relationship}
+                  onChange={(e) => handleInputChange(e, "relationship", idx)}
+                  style={{ marginLeft: "10px", marginRight: "10px" }}
+                >
+                  <option value="">Select a Relationship</option>
+                  {relationship.map((relationship, index) => (
+                    <option key={index} value={relationship}>
+                      {relationship}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Age:
+                <input
+                  required
+                  type="text"
+                  value={dependant.age}
+                  onChange={(e) => handleInputChange(e, "age", idx)}
+                  style={{ marginLeft: "10px", marginRight: "10px" }}
+                />
+              </label>
+              <label>
+                Status:
+                <select
+                  required
+                  value={dependant.statusType}
+                  onChange={(e) => handleInputChange(e, "statusType", idx)}
+                  style={{ marginLeft: "10px" }}
+                >
+                  <option value="">Select a Status</option>
+                  {dependancyStatus.map((dependancyStatus, index) => (
+                    <option key={index} value={dependancyStatus}>
+                      {dependancyStatus}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => deleteHandle(idx)}
+                style={{
+                  marginBottom: "10px",
+                  marginTop: "10px",
+                  marginLeft: "20px",
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          );
+        })}
+        <button
+          onClick={() => handleAdd()}
+          type="button"
+          disabled={formSubmitted}
+          className="btn btn-primary"
+          style={{
+            color: "white",
+            fontSize: "16px",
+            marginRight: "50px",
+            marginTop: "20px",
+          }}
+        >
+          Add Dependants Details
+        </button>
+
         <div className="mb-3">
           <p className="text-danger">{errorMessage}</p>
         </div>
