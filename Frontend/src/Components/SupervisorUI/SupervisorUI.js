@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "./SupervisorUI.css";
 
+import "./SupervisorUI.css";
+
 //import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
 
 import { useEffect, useState } from "react";

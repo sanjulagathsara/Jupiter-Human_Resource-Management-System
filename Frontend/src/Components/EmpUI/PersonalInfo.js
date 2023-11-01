@@ -161,7 +161,7 @@ const PersonalInfo = () => {
               </button>
             </Link>
           )}
-        </div> <br/>
+        </div> <br/><br/><br/>
       </div>
     </div>
   );

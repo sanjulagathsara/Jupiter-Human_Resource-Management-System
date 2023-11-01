@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./ManUI.css";
 const ViewEmployee = () => {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
@@ -66,15 +67,15 @@ const ViewEmployee = () => {
   }, []);
 
   return (
-    <div>
-      <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+    <div class = "Instead_body_AE">
+      <div className="d-flex flex-column align-items-center">
+        <h1 style={{ marginBottom: "20px", marginTop: "50px" }}><b>
           Personal Informations
-        </h1>
+        </b></h1>
         {record.map((record) => (
           <div
             style={{
-              border: "2px solid black",
+              // border: "2px solid black",
               padding: "20px",
               marginTop: "20px",
               marginBottom: "20px",
@@ -123,7 +124,7 @@ const ViewEmployee = () => {
             <h1 style={{ marginBottom: "20px", marginTop: "10px" }}>
               Dependents Details
             </h1>
-            <table className="table table-striped">
+            <table>
               <thead>
                 <tr>
                   {dependentsColumn.map((col) => (
@@ -145,18 +146,12 @@ const ViewEmployee = () => {
         )}
 
         <button
-          onClick={goBack}
-          type="button"
-          className="btn btn-primary"
-          style={{
-            color: "white",
-            fontSize: "16px",
-          }}
+          onClick={goBack} type="button" className="btn"
         >
           Back
         </button>
-      </div>
-    </div>
+      </div><br/><br/>
+    </div> 
   );
 };
 

@@ -274,10 +274,10 @@ const EditEmployee = () => {
   const relationship = ["Son", "Daughter"];
 
   return (
-    <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-      <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+    <div className="Instead_body_AE">
+      <h1 style={{ marginBottom: "50px", marginTop: "50px" }}><b>
         Personal Informations
-      </h1>
+      </b></h1>
       <form onSubmit={handleSubmit}>
         <label className="mb-3">
           Name:
@@ -652,10 +652,8 @@ const EditEmployee = () => {
         <button
           onClick={goBack}
           type="button"
-          className="btn btn-primary"
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
           }}
@@ -663,7 +661,7 @@ const EditEmployee = () => {
           Back
         </button>
         <button
-          className="btn btn-primary"
+          className="btn"
           type="submit"
           value="Submit"
           style={{ marginTop: "20px" }}
