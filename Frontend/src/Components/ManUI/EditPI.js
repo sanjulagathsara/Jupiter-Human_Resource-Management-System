@@ -597,6 +597,7 @@ const EditPI = () => {
           style={{
             marginRight: "50px",
             marginTop: "20px",
+            width:"250px"
           }}
         >
           Add New Dependant
