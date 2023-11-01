@@ -11,3 +11,79 @@
     color : white;
 }
   
+  /* Background for Personal Information, Request leave  */
+  .Instead_body_PInfo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .Instead_body_PInfo::before {
+    content: "";
+    background-image: url('https://i.postimg.cc/JhWS9Nj2/image.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    filter: blur(10px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  /* Styling for the table */
+table {
+  width: auto;
+  height: 1dvh;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: rgb(217, 219, 197);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for table headers */
+thead th {
+  height: 50px;
+  background-color: #a8956b;
+  color: white;
+  padding: 10px;
+}
+
+/* Styling for table rows with transparent background on hover and alternating row colors */
+tbody tr {
+  height: 80px;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05); /* Light gray background for odd rows */
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.1); /* Slightly darker gray background for even rows */
+}
+
+/* Vertically center the buttons within the table cells */
+tbody td {
+  vertical-align: middle;
+}
+
+/* Styling for the buttons */
+/* Adjust the button styles as needed */
+button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Styling for table rows with transparent background on hover */
+.transparent-hover-row {
+  background-color: transparent;
+  transition: background-color 0.3s;
+}

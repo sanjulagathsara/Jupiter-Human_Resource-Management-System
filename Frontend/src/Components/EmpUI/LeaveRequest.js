@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./PersonalInfo.css";
 
 const LeaveRequest = () => {
   const navigate = useNavigate();
@@ -64,23 +65,24 @@ const LeaveRequest = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-      <h1>Leave Request Form</h1>
-
-      <h2>
+    <div class="Instead_body_PInfo">
+      <br/><br/><br/>
+      <h1><b>Leave Request Form</b></h1>
+      <br/><br/>
+      <h4>
         Remaining Maternity Leave count :
         {record.Remaining_Maternity_Leave_Count}
-      </h2>
-      <h2>
+      </h4>
+      <h4>
         Remaining No Pay Leave count : {record.Remaining_No_pay_Leave_Count}
-      </h2>
-      <h2>
+      </h4>
+      <h4>
         Remaining Annual Leave count : {record.Remaining_Annual_Leave_Count}
-      </h2>
-      <h2>
+      </h4>
+      <h4>
         Remaining Casual Leave count : {record.Remaining_Casual_Leave_Count}
-      </h2>
-
+      </h4>
+      <br/><br/>
       <form onSubmit={handleSubmit}>
         <label className="mb-3">Select Leave Type:</label>
         <select
@@ -106,20 +108,19 @@ const LeaveRequest = () => {
         <div className="mb-3">
           <p className="text-danger">{errorMessage}</p>
         </div>
+
         <button
           onClick={goBack}
           type="button"
-          className="btn btn-primary"
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
           }}
         >
           Back
         </button>
-        <button type="submit">Submit</button>
+        <button type="submit" className = "btn">Submit</button>
       </form>
     </div>
   );

@@ -19,7 +19,7 @@ const Pagination = ({ rowsPerPage, totalRecords, paginate }) => {
               className="page-link"
               style={{
                 marginRight: "5px",
-                backgroundColor: "#1E90FF",
+                backgroundColor: "#7B3F00",
                 color: "white",
               }}
             >

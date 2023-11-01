@@ -1,6 +1,10 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import "./SupervisorUI.css";
+
+import "./SupervisorUI.css";
+
 //import bootsrap from "bootstrap/dist/css/bootstrap.min.css";
 
 import { useEffect, useState } from "react";
@@ -41,7 +45,7 @@ const SupervisorUI = () => {
   };
 
   return (
-    <div>
+    <div class = "Instead_body_SUI">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link to="/login/Employee/ManUI" className="navbar-brand">
@@ -98,28 +102,34 @@ const SupervisorUI = () => {
           </div>
         </div>
       </nav>
-      <h1>SupervisorUI</h1>
-      <button
-        type="button"
-        className="button-with-icon"
-        onClick={handleViewPersonalInfo}
-      >
-        View Personal Info
-      </button>
-      <button
-        type="button"
-        className="button-with-icon"
-        onClick={handleRequestLeave}
-      >
-        Request Leave
-      </button>
-      <button
-        type="button"
-        className="button-with-icon"
-        onClick={handleLeaveApplications}
-      >
-        View Leave Applications
-      </button>
+
+      <div class = "S_main">
+        <p className="jupiter"><b>SupervisorUI</b></p>
+        <button
+          type="button"
+          className="btn"
+          onClick={handleViewPersonalInfo}
+        >
+          View Personal Info
+        </button>
+
+        <button
+          type="button"
+          className="btn"
+          onClick={handleRequestLeave}
+        >
+          Request Leave
+        </button>
+
+        <button
+          type="button"
+          className="btn"
+          onClick={handleLeaveApplications}
+          style={{width : "250px"}}
+        >
+          View Leave Applications
+        </button>
+      </div>
     </div>
   );
 };

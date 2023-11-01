@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./ManUI.css";
+import "./EmployeeInfo.css";
 
 const EditPI = () => {
   const [jobTitleList, setJobTitleList] = useState([]);
@@ -451,8 +452,12 @@ const EditPI = () => {
               </label>
               <button
                 type="button"
+                className="btn"
                 onClick={() => deleteHandle1(idx)}
                 style={{
+                  textAlign: 'center', lineHeight: 1,
+                  fontSize: "12px",
+                  width: "100px", height: "30px", backgroundColor : "orangered",
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
@@ -470,21 +475,20 @@ const EditPI = () => {
           type="button"
           className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
-            allign: "center",
+            marginBottom:"20px",
+            width : "250px"
           }}
         >
           Add New Custom Attribute
         </button>
-        <br />
+        <br/><br/><br/>
 
         {!isNull1 ? (
           <>
-            <h1>Dependents Details</h1>
-            <table className="table table-striped">
+            <h1><b>Dependents Details</b></h1>
+            <table>
               <thead>
                 <tr>
                   {visibleColumns.map((col) => (
@@ -524,7 +528,7 @@ const EditPI = () => {
                   type="text"
                   value={dependant.name}
                   onChange={(e) => handleInputChange(e, "name", idx)}
-                  style={{ marginLeft: "10px", marginRight: "10px" }}
+                  style={{ marginLeft: "10px", marginRight: "10px"}}
                 />
               </label>
               <label styles={{ marginLeft: "10px" }}>
@@ -570,8 +574,12 @@ const EditPI = () => {
               </label>
               <button
                 type="button"
+                className="btn"
                 onClick={() => deleteHandle(idx)}
                 style={{
+                  textAlign: 'center', lineHeight: 1,
+                  fontSize: "12px",
+                  width: "100px", height: "30px", backgroundColor : "orangered",
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
@@ -587,10 +595,8 @@ const EditPI = () => {
           onClick={() => handleAdd()}
           type="button"
           disabled={formSubmitted}
-          className="btn "
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
           }}

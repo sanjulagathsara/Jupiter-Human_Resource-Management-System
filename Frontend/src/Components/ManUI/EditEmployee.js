@@ -274,10 +274,10 @@ const EditEmployee = () => {
   const relationship = ["Son", "Daughter"];
 
   return (
-    <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
-      <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+    <div className="Instead_body_AE">
+      <h1 style={{ marginBottom: "50px", marginTop: "50px" }}><b>
         Personal Informations
-      </h1>
+      </b></h1>
       <form onSubmit={handleSubmit}>
         <label className="mb-3">
           Name:
@@ -502,9 +502,12 @@ const EditEmployee = () => {
               </label>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn"
                 onClick={() => deleteHandle1(idx)}
                 style={{
+                  textAlign: 'center', lineHeight: 1,
+                  fontSize: "12px",
+                  width: "100px", height: "30px", backgroundColor : "orangered",
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
@@ -519,12 +522,11 @@ const EditEmployee = () => {
           onClick={() => AddCustomAttributes()}
           disabled={formSubmitted}
           type="button"
-          className="btn btn-primary"
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
+            width : "250px"
           }}
         >
           Add New Custom Attributes
@@ -620,9 +622,12 @@ const EditEmployee = () => {
               </label>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn"
                 onClick={() => deleteHandle(idx)}
                 style={{
+                  textAlign: 'center', lineHeight: 1,
+                  fontSize: "12px",
+                  width: "100px", height: "30px", backgroundColor : "orangered",
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
@@ -637,12 +642,11 @@ const EditEmployee = () => {
           onClick={() => handleAdd()}
           type="button"
           disabled={formSubmitted}
-          className="btn btn-primary"
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
+            width: "250px"
           }}
         >
           Add New Dependant
@@ -654,10 +658,8 @@ const EditEmployee = () => {
         <button
           onClick={goBack}
           type="button"
-          className="btn btn-primary"
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
           }}
@@ -665,7 +667,7 @@ const EditEmployee = () => {
           Back
         </button>
         <button
-          className="btn btn-primary"
+          className="btn"
           disabled={formSubmitted}
           type="submit"
           value="Submit"
