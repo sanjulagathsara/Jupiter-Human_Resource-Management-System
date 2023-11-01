@@ -45,12 +45,9 @@ const SupervisorUI = () => {
   };
 
   return (
-    <div class = "Instead_body_SUI">
+    <div class="Instead_body_SUI">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link to="/login/Employee/ManUI" className="navbar-brand">
-            Home
-          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -77,7 +74,7 @@ const SupervisorUI = () => {
                   to="/login/Employee/ManUI/request-leave"
                   className="nav-link"
                 >
-                  View Leave Informations
+                  View Leave Applications
                 </Link>
               </li>
               <li className="nav-item">
@@ -85,7 +82,7 @@ const SupervisorUI = () => {
                   to="/login/Employee/EmployeeUI/PersonalInfo"
                   className="nav-link"
                 >
-                  View My Details
+                  View Personal Information
                 </Link>
               </li>
               <li className="nav-item">
@@ -103,20 +100,24 @@ const SupervisorUI = () => {
         </div>
       </nav>
 
-      <div class = "S_main">
-        <p className="jupiter"><b>SupervisorUI</b></p>
+      <div class="S_main">
+        <p className="jupiter">
+          <b>SupervisorUI</b>
+        </p>
         <button
           type="button"
           className="btn"
           onClick={handleViewPersonalInfo}
+          style={{ width: "250px" }}
         >
-          View Personal Info
+          View Personal Information
         </button>
 
         <button
           type="button"
           className="btn"
           onClick={handleRequestLeave}
+          style={{ width: "250px" }}
         >
           Request Leave
         </button>
@@ -125,7 +126,7 @@ const SupervisorUI = () => {
           type="button"
           className="btn"
           onClick={handleLeaveApplications}
-          style={{width : "250px"}}
+          style={{ width: "250px" }}
         >
           View Leave Applications
         </button>

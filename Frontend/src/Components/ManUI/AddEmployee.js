@@ -205,7 +205,7 @@ const AddEmployee = () => {
       <br />
       <div className="d-flex flex-column align-items-center">
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
-          <b>Personal Informations</b>
+          <b>Adding Personal Information</b>
         </h1>
         <br />
         <form onSubmit={handleSubmit} ref={formRef}>

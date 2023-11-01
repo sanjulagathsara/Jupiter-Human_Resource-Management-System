@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./LeavesByDep.css"; // Import your CSS file
+import { useNavigate } from "react-router-dom";
 
 function LeavesByDep() {
+  const navigate = useNavigate();
   const [department, setDepartment] = useState("Customer Service");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [leaveData, setLeaveData] = useState([]);
   const [departmentNames, setDepartmentNames] = useState([]);
   const [showEmployeeBox, setShowEmployeeBox] = useState(false); // State to control whether to show the employee box
-
+  const goBack = () => {
+    navigate(-1);
+  };
   useEffect(() => {
     fetch("http://localhost:5001/employeedepartments")
       .then((response) => response.json())
@@ -47,7 +51,9 @@ function LeavesByDep() {
     <div className="centered-container">
       <h1 className="main-title">Total Leaves by Department</h1>
       <div className="employee-form">
-        <label htmlFor="department">Select Department:</label>
+        <label htmlFor="department" style={{ marginBottom: "10px" }}>
+          Select Department:
+        </label>
         <select
           id="department"
           value={department}
@@ -60,14 +66,19 @@ function LeavesByDep() {
             </option>
           ))}
         </select>
-        <label htmlFor="startDate">Start Date:</label>
+        <label htmlFor="startDate" style={{ marginBottom: "10px" }}>
+          Start Date:
+        </label>
         <input
           type="date"
           id="startDate"
           value={startDate}
           onChange={(event) => setStartDate(event.target.value)}
         />
-        <label htmlFor="endDate">End Date:</label>
+        <br />
+        <label htmlFor="endDate" style={{ marginBottom: "10px" }}>
+          End Date:
+        </label>
         <input
           type="date"
           id="endDate"
@@ -87,6 +98,9 @@ function LeavesByDep() {
           <p>Total Casual Leave: {leaveData.Casual_Leave_Days}</p>
         </div>
       )}
+      <button className="btn" onClick={goBack}>
+        Go Back
+      </button>
     </div>
   );
 }

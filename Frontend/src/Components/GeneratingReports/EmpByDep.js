@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './EmpByDep.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./EmpByDep.css";
+import { useNavigate } from "react-router-dom";
 
 export default function EmpByDep() {
-  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState("");
   const [employeeDepartments, setEmployeeDepartments] = useState([]);
   const [employeesInDepartment, setEmployeesInDepartment] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     fetchEmployeeDepartments();
@@ -14,17 +19,20 @@ export default function EmpByDep() {
 
   const fetchEmployeeDepartments = () => {
     axios
-      .get('http://localhost:5001/employeedepartments')
+      .get("http://localhost:5001/employeedepartments")
       .then((response) => {
         if (response.data.departments) {
           setEmployeeDepartments(response.data.departments);
-          console.log('Retrieved Employee Departments:', response.data.departments);
+          console.log(
+            "Retrieved Employee Departments:",
+            response.data.departments
+          );
         } else {
-          setError('No departments found.');
+          setError("No departments found.");
         }
       })
       .catch((error) => {
-        setError('Error fetching employee departments: ' + error.message);
+        setError("Error fetching employee departments: " + error.message);
       });
   };
 
@@ -35,7 +43,7 @@ export default function EmpByDep() {
   const handleSubmit = () => {
     if (selectedDepartment) {
       axios
-        .get('http://localhost:5001/employeesbydepartment', {
+        .get("http://localhost:5001/employeesbydepartment", {
           params: { department: selectedDepartment },
         })
         .then((response) => {
@@ -46,15 +54,15 @@ export default function EmpByDep() {
           }
         })
         .catch((error) => {
-          setError('Error fetching employees: ' + error.message);
+          setError("Error fetching employees: " + error.message);
         });
     }
   };
 
   return (
-    <div className='centered-container'>
-      <h1 className='main-title'>Employees by Department</h1>
-      <div className="employee-form"> 
+    <div className="centered-container">
+      <h1 className="main-title">Employees by Department</h1>
+      <div className="employee-form">
         <label htmlFor="department">Select Department:</label>
         <select
           id="department"
@@ -88,6 +96,9 @@ export default function EmpByDep() {
           </div>
         </div>
       )}
+      <button className="btn" onClick={goBack}>
+        Go Back
+      </button>
     </div>
   );
 }

@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "./PersonalInfo.css";
 
-
 const PersonalInfo = () => {
   const [record, setRecord] = useState([]);
   var edit = false;
@@ -66,17 +65,12 @@ const PersonalInfo = () => {
       })
       .catch((error) => console.error("Error fetching data2:", error));
   }, []);
+  const handleLogOut = () => {
+    axios.get("http://localhost:5001/api/logout");
+  };
 
   return (
-    <div class = "Instead_body_PInfo">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container-fluid">
-          <Link to="/login/Employee" className="navbar-brand">
-            Logout
-          </Link>
-        </div>
-      </nav>
-
+    <div class="Instead_body_PInfo">
       <div className="d-flex flex-column align-items-center">
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
           <b>Personal Information</b>
@@ -160,7 +154,10 @@ const PersonalInfo = () => {
               <button className="btn">Edit</button>
             </Link>
           )}
-        </div> <br/><br/><br/>
+        </div>{" "}
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   );

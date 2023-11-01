@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './RepByDepStatus.css'; // Import your CSS file
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./RepByDepStatus.css"; // Import your CSS file
+import { useNavigate } from "react-router-dom";
 
 function RepByDeptStatus() {
   const [Dependantstatus, setDependantstatus] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState("");
   const [employeeData, setEmployeeData] = useState([]);
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     fetchDependantStatus();
@@ -13,19 +18,19 @@ function RepByDeptStatus() {
 
   const fetchDependantStatus = () => {
     axios
-      .get('http://localhost:5001/dependantstatus')
+      .get("http://localhost:5001/dependantstatus")
       .then((response) => {
         if (response.status === 200) {
           return response.data;
         } else {
-          throw new Error('Network response was not OK');
+          throw new Error("Network response was not OK");
         }
       })
       .then((data) => {
         setDependantstatus(data.dependantstatus);
       })
       .catch((error) => {
-        console.error('Error fetching dependant statuses:', error);
+        console.error("Error fetching dependant statuses:", error);
       });
   };
 
@@ -36,7 +41,7 @@ function RepByDeptStatus() {
   const handleSubmit = () => {
     if (selectedStatus) {
       axios
-        .get('http://localhost:5001/reports-by-dependants-status', {
+        .get("http://localhost:5001/reports-by-dependants-status", {
           params: {
             depstatus: selectedStatus,
           },
@@ -45,16 +50,16 @@ function RepByDeptStatus() {
           setEmployeeData(response.data);
         })
         .catch((error) => {
-          console.error('Error fetching employee data:', error);
+          console.error("Error fetching employee data:", error);
         });
     } else {
-      console.error('Please select a status before submitting.');
+      console.error("Please select a status before submitting.");
     }
   };
 
   return (
     <div className="centered-container">
-      <h1 className='main-title'>Dependant Status Report</h1>
+      <h1 className="main-title">Dependant Status Report</h1>
       <div className="employee-form">
         <select
           value={selectedStatus}
@@ -81,16 +86,18 @@ function RepByDeptStatus() {
             {employeeData.map((employee, index) => (
               <li key={index} className="result-item">
                 <div className="employee-details">
-                  <div>Employee Name: {employee['employee_name']}</div>
-                  <div>Dependant Name: {employee['name']}</div>
-                  <div>Relationship: {employee['Relationship']}</div>
-                  
+                  <div>Employee Name: {employee["employee_name"]}</div>
+                  <div>Dependant Name: {employee["name"]}</div>
+                  <div>Relationship: {employee["Relationship"]}</div>
                 </div>
               </li>
             ))}
           </ul>
         </div>
       )}
+      <button className="btn" onClick={goBack}>
+        Back
+      </button>
     </div>
   );
 }

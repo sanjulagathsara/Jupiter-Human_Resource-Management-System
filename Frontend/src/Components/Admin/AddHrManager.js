@@ -189,7 +189,7 @@ const AddHRManager = () => {
       <br />
       <div className="d-flex flex-column align-items-center">
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
-          Personal Information
+          Adding Personal Information
         </h1>
         <form onSubmit={handleSubmit} ref={formRef}>
           <label className="mb-3">
@@ -497,7 +497,7 @@ const AddHRManager = () => {
               marginTop: "20px",
             }}
           >
-            Add Dependants Details
+            Add Dependant Details
           </button>
           <br />
           <div style={{ color: "red", marginTop: "10px" }}>{errorMessage}</div>

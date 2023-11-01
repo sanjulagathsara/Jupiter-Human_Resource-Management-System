@@ -42,9 +42,6 @@ const EmployeeUI = () => {
     <div className="Instead_body_EM">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link to="/login/Employee/EmployeeUI" className="navbar-brand">
-            Home
-          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -90,18 +87,13 @@ const EmployeeUI = () => {
       </nav>
 
       <div className="square_Emp">
-        <p className="jupiter"><b>EmployeeUI</b></p>
-        <button
-          className="btn"
-          onClick={handleViewPersonalInfo}
-        >
+        <p className="jupiter">
+          <b>EmployeeUI</b>
+        </p>
+        <button className="btn" onClick={handleViewPersonalInfo}>
           View Personal Info
         </button>
-        <button
-          
-          className="btn"
-          onClick={handleRequestLeave}
-        >
+        <button className="btn" onClick={handleRequestLeave}>
           Request Leave
         </button>
       </div>

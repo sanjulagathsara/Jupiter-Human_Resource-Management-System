@@ -275,9 +275,9 @@ const EditEmployee = () => {
 
   return (
     <div className="Instead_body_AE">
-      <h1 style={{ marginBottom: "50px", marginTop: "50px" }}><b>
-        Personal Informations
-      </b></h1>
+      <h1 style={{ marginBottom: "50px", marginTop: "50px" }}>
+        <b>Edit Personal Information</b>
+      </h1>
       <form onSubmit={handleSubmit}>
         <label className="mb-3">
           Name:
@@ -505,9 +505,12 @@ const EditEmployee = () => {
                 className="btn"
                 onClick={() => deleteHandle1(idx)}
                 style={{
-                  textAlign: 'center', lineHeight: 1,
+                  textAlign: "center",
+                  lineHeight: 1,
                   fontSize: "12px",
-                  width: "100px", height: "30px", backgroundColor : "orangered",
+                  width: "100px",
+                  height: "30px",
+                  backgroundColor: "orangered",
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
@@ -526,7 +529,7 @@ const EditEmployee = () => {
           style={{
             marginRight: "50px",
             marginTop: "20px",
-            width : "250px"
+            width: "250px",
           }}
         >
           Add New Custom Attributes
@@ -534,7 +537,7 @@ const EditEmployee = () => {
         <br />
         {!isNull1 ? (
           <>
-            <h1>Dependents Details</h1>
+            <h1>Edit Dependent Details</h1>
             <table className="table table-striped">
               <thead>
                 <tr>
@@ -625,9 +628,12 @@ const EditEmployee = () => {
                 className="btn"
                 onClick={() => deleteHandle(idx)}
                 style={{
-                  textAlign: 'center', lineHeight: 1,
+                  textAlign: "center",
+                  lineHeight: 1,
                   fontSize: "12px",
-                  width: "100px", height: "30px", backgroundColor : "orangered",
+                  width: "100px",
+                  height: "30px",
+                  backgroundColor: "orangered",
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
@@ -646,7 +652,7 @@ const EditEmployee = () => {
           style={{
             marginRight: "50px",
             marginTop: "20px",
-            width: "250px"
+            width: "250px",
           }}
         >
           Add New Dependant
