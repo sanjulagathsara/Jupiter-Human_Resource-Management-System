@@ -38,7 +38,7 @@ const About = () => {
         <button
           onClick={goBack}
           type="button"
-          className="btn btn-primary"
+          className="btn"
           style={{
             color: "white",
             fontSize: "16px",

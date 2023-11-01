@@ -91,8 +91,11 @@ const LeaveApplication = () => {
 
   return (
     <div className="Instead_body_LA">
-      <br/><br/>
-      <h1><b>Leave Application</b></h1>
+      <br />
+      <br />
+      <h1>
+        <b>Leave Application</b>
+      </h1>
       <br />
       <table className="tabled">
         <thead>
@@ -131,12 +134,12 @@ const LeaveApplication = () => {
                   type="button"
                   disabled={type <= 0 ? true : false}
                   onClick={() => handleAccept(i)}
-                  className="btn btn-primary"
+                  className="btn btn-success"
                   style={{
-                    color: "white",
-                    fontSize: "16px",
-                    marginRight: "50px",
-                    marginTop: "20px",
+                    // color: "white",
+                    // fontSize: "16px",
+                    marginRight: "5px",
+                    // marginTop: "20px",
                   }}
                 >
                   Accept
@@ -144,12 +147,12 @@ const LeaveApplication = () => {
                 <button
                   type="button"
                   onClick={() => handleReject(i)}
-                  className="btn btn-primary"
+                  className="btn btn-warning"
                   style={{
-                    color: "white",
-                    fontSize: "16px",
-                    marginRight: "50px",
-                    marginTop: "20px",
+                    //color: "white",
+                    //fontSize: "16px",
+                    marginRight: "5px",
+                    //marginTop: "20px",
                   }}
                 >
                   Reject
@@ -159,7 +162,7 @@ const LeaveApplication = () => {
           ))}
         </tbody>
       </table>
-      <br/>
+      <br />
       <button
         onClick={goBack}
         type="button"
