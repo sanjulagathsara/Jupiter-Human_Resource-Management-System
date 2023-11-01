@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./AdminUi.css";
 
 const AdminUI = () => {
   axios.defaults.withCredentials = true;
@@ -29,18 +30,26 @@ const AdminUI = () => {
   };
 
   return (
-    <div>
-      <button
-        onClick={handleAddHRManager}
-        className="btn btn-primary"
-        style={{ marginBottom: "10px", marginTop: "10px", marginRight: "10px" }}
-      >
-        Add HR Manager
-      </button>
-      <br />
-      <button onClick={handleLogOut} className="btn btn-primary">
-        Log Out
-      </button>
+    <div className="Instead_body_AdminUI">
+      <div class="square">
+        <p className="jupiter">
+          <b>Admin UI</b>
+        </p>
+        <button
+          onClick={handleAddHRManager}
+          className="btn"
+          style={{
+            marginTop: "10px",
+            marginRight: "10px",
+          }}
+        >
+          Add HR Manager
+        </button>
+        <br />
+        <button onClick={handleLogOut} className="btn">
+          Log Out
+        </button>
+      </div>
     </div>
   );
 };
