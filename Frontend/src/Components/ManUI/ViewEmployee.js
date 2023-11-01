@@ -106,9 +106,9 @@ const ViewEmployee = () => {
             )}
             {!isCustomNull && (
               <div>
-                <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+                <h5 style={{ marginBottom: "20px", marginTop: "20px" }}>
                   Custom Attributes
-                </h1>
+                </h5>
                 {customAttributes.map((rec) => (
                   <h5>
                     {rec["Attribute"]} :{rec["value"]}

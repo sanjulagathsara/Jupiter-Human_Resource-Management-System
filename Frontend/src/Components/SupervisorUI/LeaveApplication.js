@@ -5,11 +5,12 @@ import { useNavigate, Link } from "react-router-dom";
 
 const LeaveApplication = () => {
   const navigate = useNavigate();
+  var type = "";
   const [record, setRecord] = useState([]);
   const [status, setStatus] = useState("false");
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleAccept = (i) => {
-    // Get the specific record for the clicked button
     const updatedRecord = [...record];
     updatedRecord[i].Approval_status = "Accepted";
     if (status === "false") {
@@ -17,16 +18,14 @@ const LeaveApplication = () => {
     } else {
       setStatus("false");
     }
-
-    // Send the specific record to the backend
     axios
       .post("http://localhost:5001/api/SupUI/edited/leaveApplications", {
         status: "Accepted",
         record: updatedRecord[i],
       })
       .then((response) => {
-        // Handle the response from the server if needed
         console.log("Record accepted and sent to the server");
+        console.log(record);
         setErrorMessage(response.data.message);
       })
       .catch((err) => {
@@ -35,7 +34,6 @@ const LeaveApplication = () => {
   };
 
   const handleReject = (i) => {
-    // Get the specific record for the clicked button
     const updatedRecord = [...record];
     updatedRecord[i].Approval_status = "Rejected";
     if (status === "false") {
@@ -44,14 +42,12 @@ const LeaveApplication = () => {
       setStatus("false");
     }
 
-    // Send the specific record to the backend
     axios
       .post("http://localhost:5001/api/SupUI/edited/leaveApplications", {
         status: "Rejected",
         record: updatedRecord[i],
       })
       .then((response) => {
-        // Handle the response from the server if needed
         console.log("Record rejected and sent to the server");
         setErrorMessage(response.data.message);
       })
@@ -86,7 +82,6 @@ const LeaveApplication = () => {
       .get("http://localhost:5001/api/SupUI/leaveApplications")
       .then((response) => {
         setRecord(response.data);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -105,6 +100,7 @@ const LeaveApplication = () => {
             <th scope="col">Leave Type</th>
             <th scope="col">Start Date</th>
             <th scope="col">End Date</th>
+            <th scope="col">Remaining Relavent Type Leave Count</th>
             <th scope="col">Accept / Reject</th>
           </tr>
         </thead>
@@ -117,8 +113,21 @@ const LeaveApplication = () => {
               <td>{item.Start_Date.split("T")[0]}</td>
               <td>{item.End_Date.split("T")[0]}</td>
               <td>
+                Remaining {item.LeaveType} Leave Count:{" "}
+                {item.LeaveType === "Annual"
+                  ? (type = item.Remaining_Annual_Leave_Count)
+                  : item.LeaveType === "Casual"
+                  ? (type = item.Remaining_Casual_Leave_Count)
+                  : item.LeaveType === "Maternity"
+                  ? (type = item.Remaining_Maternity_Leave_Count)
+                  : item.LeaveType === "No-pay"
+                  ? (type = item.Remaining_No_pay_Leave_Count)
+                  : (type = "")}
+              </td>
+              <td>
                 <button
                   type="button"
+                  disabled={type <= 0 ? true : false}
                   onClick={() => handleAccept(i)}
                   className="btn btn-primary"
                   style={{

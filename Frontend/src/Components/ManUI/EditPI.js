@@ -130,7 +130,7 @@ const EditPI = () => {
                 EmployeeID: record.Employee_ID,
                 Name: record.Name,
                 Branch_Name: record.Branch_Name,
-                Birthday: record.Birthday,
+                Birthday: record.Birthday.split("T")[0],
                 ContactNumber: record.Emergency_contact_Number,
                 MaritalStatus: record.Marital_status,
                 Job_Title: record.Job_Title,
@@ -254,10 +254,10 @@ const EditPI = () => {
 
   return (
     <div className="Instead_body_EPI">
-      <h1 style={{ marginBottom: "20px", marginTop: "50px" }}><b>
-        Personal Informations
-      </b></h1>
-      <br/>
+      <h1 style={{ marginBottom: "20px", marginTop: "50px" }}>
+        <b>Personal Informations</b>
+      </h1>
+      <br />
       <form onSubmit={handleSubmit}>
         <label className="mb-3">
           Name:
@@ -451,7 +451,6 @@ const EditPI = () => {
               </label>
               <button
                 type="button"
-                
                 onClick={() => deleteHandle1(idx)}
                 style={{
                   marginBottom: "10px",
@@ -469,12 +468,13 @@ const EditPI = () => {
           onClick={() => AddCustomAttributes()}
           disabled={formSubmitted}
           type="button"
-          className="btn "
+          className="btn"
           style={{
             color: "white",
             fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
+            allign: "center",
           }}
         >
           Add New Custom Attribute
@@ -570,13 +570,12 @@ const EditPI = () => {
               </label>
               <button
                 type="button"
-                
                 onClick={() => deleteHandle(idx)}
                 style={{
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
-                  backgroundColor: "orangered"
+                  backgroundColor: "orangered",
                 }}
               >
                 Delete

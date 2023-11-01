@@ -68,7 +68,7 @@ const PersonalInfo = () => {
   }, []);
 
   return (
-    <div class = "Instead_body_AE">
+    <div class="Instead_body_AE">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link to="/login/Employee" className="navbar-brand">
@@ -78,16 +78,16 @@ const PersonalInfo = () => {
       </nav>
 
       <div className="d-flex flex-column align-items-center">
-        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
-          Personal Information
-          </b></h1>
+        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+          <b>Personal Information</b>
+        </h1>
         <div
           style={{
             // backgroundColor: "#5b5b1e",
             // border: "2px solid black",
             padding: "10px",
             marginTop: "0px",
-            marginBottom: "30px",
+            marginBottom: "10px",
             borderRadius: "10px",
             width: "45%",
             display: "flex",
@@ -105,7 +105,6 @@ const PersonalInfo = () => {
           <h5>Department : {record.Department}</h5>
           <h5>Marital Status : {record.Marital_status}</h5>
           <h5>Status Type : {record.Status_Type}</h5>
-
           <h5>Pay Grade : {record.Pay_grade}</h5>
           {record.Supervisor_Name !== null && (
             <h5>Supervisor Name: {record.Supervisor_Name}</h5>
@@ -114,9 +113,7 @@ const PersonalInfo = () => {
         </div>
         {!isCustomNull && (
           <div>
-            <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
-              Custom Attributes
-            </h1>
+            <h3 style={{ marginBottom: "20px" }}>Custom Attributes</h3>
             {customAttributes.map((rec) => (
               <h5>
                 {rec["Attribute"]} :{rec["value"]}
@@ -124,13 +121,14 @@ const PersonalInfo = () => {
             ))}
           </div>
         )}
-
         {!isNull && (
           <div className="d-flex flex-column align-items-center">
-            <h1><b>Dependents Details</b></h1>
+            <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+              <b>Dependents Details</b>
+            </h1>
             <table>
-              <thead >
-                <tr className = "heading">
+              <thead>
+                <tr className="heading">
                   {dependentsColumn.map((col) => (
                     <th key={col}>{col}</th>
                   ))}
@@ -138,7 +136,10 @@ const PersonalInfo = () => {
               </thead>
               <tbody>
                 {dependents.map((row, index) => (
-                  <tr className={index % 2 === 0 ? "even_row" : "odd_row"} key={row.Name}>
+                  <tr
+                    className={index % 2 === 0 ? "even_row" : "odd_row"}
+                    key={row.Name}
+                  >
                     {dependentsColumn.map((col) => (
                       <td key={`${row.Name}-${col}`}>{row[col]}</td>
                     ))}
@@ -148,7 +149,7 @@ const PersonalInfo = () => {
             </table>
           </div>
         )}
-        <br/>
+        <br />
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button type="button" className="btn" onClick={goBack}>
             Back
@@ -156,12 +157,11 @@ const PersonalInfo = () => {
 
           {edit && (
             <Link to="/login/Employee/ManUI/EditPI">
-              <button className="btn">
-                Edit
-              </button>
+              <button className="btn">Edit</button>
             </Link>
           )}
-        </div> <br/>
+        </div>{" "}
+        <br />
       </div>
     </div>
   );

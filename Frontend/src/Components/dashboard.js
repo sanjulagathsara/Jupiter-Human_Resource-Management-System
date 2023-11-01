@@ -7,11 +7,15 @@ const image =
 const Dashboard = () => {
   return (
     <div class="dashboard">
-      <br/>
+      <br />
       <div>
-        <p className="jupiter"><b>Jupiter</b></p>
-        <p className = "subheading"><b>Human Resource Management System</b></p>
-  
+        <p className="jupiter">
+          <b>Jupiter</b>
+        </p>
+        <p className="subheading">
+          <b>Human Resource Management System</b>
+        </p>
+
         <img src={image} className="image" alt="HR Management System" />
         <div>
           <span>
@@ -21,7 +25,7 @@ const Dashboard = () => {
           </span>
           <span>
             <Link to="/about">
-              <button className= "btn">About</button>
+              <button className="btn">About</button>
             </Link>
           </span>
         </div>

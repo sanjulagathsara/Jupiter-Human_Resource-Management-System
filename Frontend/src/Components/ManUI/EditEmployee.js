@@ -136,7 +136,7 @@ const EditEmployee = () => {
                 EmployeeID: record.Employee_ID,
                 Name: record.Name,
                 Branch_Name: record.Branch_Name,
-                Birthday: record.Birthday,
+                Birthday: record.Birthday.split("T")[0],
                 ContactNumber: record.Emergency_contact_Number,
                 MaritalStatus: record.Marital_status,
                 Job_Title: record.Job_Title,
@@ -666,6 +666,7 @@ const EditEmployee = () => {
         </button>
         <button
           className="btn btn-primary"
+          disabled={formSubmitted}
           type="submit"
           value="Submit"
           style={{ marginTop: "20px" }}

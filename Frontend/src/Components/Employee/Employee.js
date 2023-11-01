@@ -9,6 +9,9 @@ const Employee = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [errorMessage, setErrorMessage] = useState("");
+  const goBack = () => {
+    navigate("/");
+  };
 
   //post user name and password to the backend and check whether it is correct
   axios.defaults.withCredentials = true;
@@ -52,41 +55,64 @@ const Employee = () => {
 
   return (
     <div className="welcome">
-      <div className="bg-white p-3 rounded w-25" style={{marginTop : "250px"}}>
-        <form onSubmit={handleSubmit} className="d-flex flex-column align-items-center">
-          <div className="mb-3">
-            <label htmlFor="username"><b>Username</b></label>{" "}
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="username"
-              className="form-control rounded-0"
-              style={{ width: '328px' }}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </div>
+      {/* <div className="d-flex flex-column align-items-center"> */}
+      <form onSubmit={handleSubmit} className="login">
+        <div className="mb-3">
+          <label htmlFor="username">
+            <h5>
+              <b>Username</b>
+            </h5>
+          </label>
+          <input
+            type="text"
+            id="username"
+            required
+            name="username"
+            placeholder="username"
+            className="form-control rounded-0"
+            style={{ width: "328px" }}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+        </div>
 
-          <div className="mb-3">
-            <label htmlFor="password"><b>Password</b></label>{" "}
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="password"
-              className="form-control rounded-0"
-              style={{ width: '328px' }}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </div>
+        <div className="mb-4">
+          <label htmlFor="password">
+            <h5>
+              <b>Password</b>
+            </h5>
+          </label>
+          <input
+            type="password"
+            required
+            id="password"
+            name="password"
+            placeholder="password"
+            className="form-control rounded-0"
+            style={{ width: "328px" }}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <p className="text-danger">{errorMessage}</p>
+        </div>
+        <button>
+          <b>Login</b>
+        </button>
+      </form>
+      {/* </div> */}
 
-          <div className="mb-3">
-            <p className="text-danger">{errorMessage}</p>
-          </div>
-
-          <button className="btn btn-success w-100 rounded-0"><b>Login</b></button>
-        </form>
-      </div>
+      <button
+        onClick={goBack}
+        type="button"
+        className="btn"
+        style={{
+          color: "white",
+          fontSize: "16px",
+          marginRight: "50px",
+        }}
+      >
+        Back
+      </button>
     </div>
   );
 };
