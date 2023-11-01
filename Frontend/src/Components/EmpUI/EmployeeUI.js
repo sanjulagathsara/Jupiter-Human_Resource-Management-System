@@ -89,17 +89,17 @@ const EmployeeUI = () => {
         </div>
       </nav>
 
-      <div>
+      <div className="square_Emp">
+        <p className="jupiter"><b>EmployeeUI</b></p>
         <button
-          type="button"
-          className="button-with-icon"
+          className="btn"
           onClick={handleViewPersonalInfo}
         >
           View Personal Info
         </button>
         <button
-          type="button"
-          className="button-with-icon"
+          
+          className="btn"
           onClick={handleRequestLeave}
         >
           Request Leave
