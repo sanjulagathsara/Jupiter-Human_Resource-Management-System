@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import "./AddHrManager.css";
 
 const AddHRManager = () => {
   const navigate = useNavigate();
@@ -250,7 +251,7 @@ const AddHRManager = () => {
               onChange={(e) =>
                 setRecord({ ...record, ContactNumber: e.target.value })
               }
-              style={{ marginLeft: "10px" }}
+              style={{ marginLeft: "10px", textAlign: "left" }}
             />
           </label>
           <br />
@@ -280,7 +281,7 @@ const AddHRManager = () => {
               onChange={(e) =>
                 setRecord({ ...record, Department: e.target.value })
               }
-              style={{ marginLeft: "10px" }}
+              style={{ marginLeft: "10px", color: "black" }}
             >
               <option value="">Select a Department</option>
               {departmentList.map((department, index) => (
@@ -409,7 +410,7 @@ const AddHRManager = () => {
 
           {dependents.map((dependant, idx) => {
             return (
-              <div key={idx} style={{ marginTop: "20px" }}>
+              <div key={idx} style={{ marginTop: "20px", textAlign: "left" }}>
                 <label>
                   Name:
                   <input
@@ -417,10 +418,14 @@ const AddHRManager = () => {
                     type="text"
                     value={dependant.name}
                     onChange={(e) => handleInputChange(e, "name", idx)}
-                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                    style={{
+                      marginLeft: "10px",
+                      marginRight: "10px",
+                      textAlign: "left",
+                    }}
                   />
                 </label>
-                <label styles={{ marginLeft: "10px" }}>
+                <label styles={{ marginLeft: "10px", textAlign: "left" }}>
                   Relationship:
                   <select
                     value={dependant.relationship}
@@ -500,7 +505,7 @@ const AddHRManager = () => {
           <button
             onClick={goBack}
             type="button"
-            className="btn btn-primary"
+            className="btn"
             style={{
               color: "white",
               fontSize: "16px",
@@ -512,7 +517,7 @@ const AddHRManager = () => {
           </button>
           <button
             disabled={formSubmitted}
-            className="btn btn-primary"
+            className="btn"
             type="submit"
             value="Submit"
             style={{ marginTop: "20px" }}
@@ -523,7 +528,7 @@ const AddHRManager = () => {
           <button
             onClick={clearDetails}
             type="button"
-            className="btn btn-primary"
+            className="btn"
             style={{
               color: "white",
               fontSize: "16px",

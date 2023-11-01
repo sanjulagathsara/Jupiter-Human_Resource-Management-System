@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./ManUI.css";
 
-
-
 const ManUI = () => {
   const navigate = useNavigate();
   const handleViewPersonalInfo = () => {
@@ -40,12 +38,9 @@ const ManUI = () => {
   }, []);
 
   return (
-    <div class = "Instead_body_MUI">
+    <div className="Instead_body_MUI">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link to="/login/Employee/ManUI" className="navbar-brand">
-            Home
-          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -135,22 +130,29 @@ const ManUI = () => {
         </div>
       </nav>
 
-      <div class = "square">
-        <p className="jupiter"><b>Manager UI</b></p>
-      
+      <div class="square">
+        <p className="jupiter">
+          <b>Manager UI</b>
+        </p>
+
         <div>
-          <button type="button" class = "btn" onClick={handleViewPersonalInfo}>
-          View My Details
+          <button type="button" class="btn" onClick={handleViewPersonalInfo}>
+            View My Details
           </button>
         </div>
         <div>
-          <button type="button" class = "btn" onClick={handleAddEmployee}>
-          Add Employee
+          <button type="button" class="btn" onClick={handleAddEmployee}>
+            Add Employee
           </button>
         </div>
         <div>
-          <button type="button" class = "btn" onClick={handleEmployeeInfo}>
-          View Employees
+          <button type="button" class="btn" onClick={handleEmployeeInfo}>
+            View Employees
+          </button>
+        </div>
+        <div>
+          <button type="button" class="btn">
+            View Reports
           </button>
         </div>
       </div>

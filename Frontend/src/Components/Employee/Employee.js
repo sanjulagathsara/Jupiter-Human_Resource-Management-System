@@ -55,59 +55,60 @@ const Employee = () => {
 
   return (
     <div className="welcome">
-      <div className="bg-white p-3 rounded w-25" style={{ marginTop: "250px" }}>
-        <form
-          onSubmit={handleSubmit}
-          className="d-flex flex-column align-items-center"
-        >
-          <div className="mb-3">
-            <label htmlFor="username">
+      {/* <div className="d-flex flex-column align-items-center"> */}
+      <form onSubmit={handleSubmit} className="login">
+        <div className="mb-3">
+          <label htmlFor="username">
+            <h5>
               <b>Username</b>
-            </label>{" "}
-            <input
-              type="text"
-              id="username"
-              required
-              name="username"
-              placeholder="username"
-              className="form-control rounded-0"
-              style={{ width: "328px" }}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </div>
+            </h5>
+          </label>
+          <input
+            type="text"
+            id="username"
+            required
+            name="username"
+            placeholder="username"
+            className="form-control rounded-0"
+            style={{ width: "328px" }}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+        </div>
 
-          <div className="mb-3">
-            <label htmlFor="password">
+        <div className="mb-4">
+          <label htmlFor="password">
+            <h5>
               <b>Password</b>
-            </label>{" "}
-            <input
-              type="password"
-              required
-              id="password"
-              name="password"
-              placeholder="password"
-              className="form-control rounded-0"
-              style={{ width: "328px" }}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <p className="text-danger">{errorMessage}</p>
-          </div>
-          <button className="btn btn-success w-100 rounded-0">
-            <b>Login</b>
-          </button>
-        </form>
-      </div>
+            </h5>
+          </label>
+          <input
+            type="password"
+            required
+            id="password"
+            name="password"
+            placeholder="password"
+            className="form-control rounded-0"
+            style={{ width: "328px" }}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <p className="text-danger">{errorMessage}</p>
+        </div>
+        <button>
+          <b>Login</b>
+        </button>
+      </form>
+      {/* </div> */}
+
       <button
         onClick={goBack}
         type="button"
-        className="btn btn-primary"
+        className="btn"
         style={{
           color: "white",
           fontSize: "16px",
           marginRight: "50px",
-          marginTop: "20px",
         }}
       >
         Back

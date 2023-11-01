@@ -1,0 +1,65 @@
+/* CSS to change button size and color */
+.btn {
+    /* Button size */
+    width : 200px;
+    height : 50px;
+    padding: 10px 20px; 
+  
+    /* Button color */
+    background-color: #382e07; /* Change to your desired color code */
+    color: #fff; /* Text color for the button */
+    border: none; /* Remove button border, you can change this if needed */
+    border-radius: 5px; /* Rounded button corners */
+    cursor: pointer; /* Show pointer cursor on hover */
+  
+    /* Add some margin for spacing between buttons */
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+  
+    /* Control the font size for the text on the buttons */
+    font-size: 16px;
+  }
+  
+  /* Change the color on hover */
+  .btn:hover {
+    background-color: #93710b; /* Change to a different color on hover */
+    color: #000;
+  }
+  
+  
+  
+  /* Content in the website */
+  .square {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 90vh;
+    margin-top: 0px;
+    flex-direction: column;
+  }
+  
+  
+  /* Image background  */
+  .Instead_body_AdminUI {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .Instead_body_AdminUI::before {
+    content: "";
+    background-image: url('https://i.postimg.cc/pdqT8dkK/pexels-luke-miller-17739178.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 200%;
+    margin-top: -20%;
+    filter: blur(2px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  
