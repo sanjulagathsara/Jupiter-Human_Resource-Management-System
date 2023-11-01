@@ -531,11 +531,12 @@ const EditEmployee = () => {
         >
           Add New Custom Attributes
         </button>
-        <br />
+        <br/><br/><br/>
         {!isNull1 ? (
           <>
-            <h1>Dependents Details</h1>
-            <table className="table table-striped">
+            <h1><b>Dependents Details</b></h1>
+            <br/>
+            <table>
               <thead>
                 <tr>
                   {visibleColumns.map((col) => (
