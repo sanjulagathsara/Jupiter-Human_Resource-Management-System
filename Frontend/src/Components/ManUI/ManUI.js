@@ -151,7 +151,13 @@ const ManUI = () => {
           </button>
         </div>
         <div>
-          <button type="button" class="btn">
+          <button
+            type="button"
+            class="btn"
+            onClick={() => {
+              navigate("/login/Employee/ManUI/ViewReports");
+            }}
+          >
             View Reports
           </button>
         </div>
