@@ -9,6 +9,9 @@ const Employee = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [errorMessage, setErrorMessage] = useState("");
+  const goBack = () => {
+    navigate("/");
+  };
 
   //post user name and password to the backend and check whether it is correct
   axios.defaults.withCredentials = true;
@@ -52,41 +55,63 @@ const Employee = () => {
 
   return (
     <div className="welcome">
-      <div className="bg-white p-3 rounded w-25" style={{marginTop : "250px"}}>
-        <form onSubmit={handleSubmit} className="d-flex flex-column align-items-center">
+      <div className="bg-white p-3 rounded w-25" style={{ marginTop: "250px" }}>
+        <form
+          onSubmit={handleSubmit}
+          className="d-flex flex-column align-items-center"
+        >
           <div className="mb-3">
-            <label htmlFor="username"><b>Username</b></label>{" "}
+            <label htmlFor="username">
+              <b>Username</b>
+            </label>{" "}
             <input
               type="text"
               id="username"
+              required
               name="username"
               placeholder="username"
               className="form-control rounded-0"
-              style={{ width: '328px' }}
+              style={{ width: "328px" }}
               onChange={(event) => setUsername(event.target.value)}
             />
           </div>
 
           <div className="mb-3">
-            <label htmlFor="password"><b>Password</b></label>{" "}
+            <label htmlFor="password">
+              <b>Password</b>
+            </label>{" "}
             <input
               type="password"
+              required
               id="password"
               name="password"
               placeholder="password"
               className="form-control rounded-0"
-              style={{ width: '328px' }}
+              style={{ width: "328px" }}
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
-
           <div className="mb-3">
             <p className="text-danger">{errorMessage}</p>
           </div>
-
-          <button className="btn btn-success w-100 rounded-0"><b>Login</b></button>
+          <button className="btn btn-success w-100 rounded-0">
+            <b>Login</b>
+          </button>
         </form>
       </div>
+      <button
+        onClick={goBack}
+        type="button"
+        className="btn btn-primary"
+        style={{
+          color: "white",
+          fontSize: "16px",
+          marginRight: "50px",
+          marginTop: "20px",
+        }}
+      >
+        Back
+      </button>
     </div>
   );
 };

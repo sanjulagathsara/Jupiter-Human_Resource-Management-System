@@ -201,13 +201,13 @@ const AddEmployee = () => {
   };
 
   return (
-    <div class = "Instead_body_AE">
-      <br/>
+    <div class="Instead_body_AE">
+      <br />
       <div className="d-flex flex-column align-items-center">
-        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
-          Personal Informations
-        </b></h1>
-        <br/>
+        <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
+          <b>Personal Informations</b>
+        </h1>
+        <br />
         <form onSubmit={handleSubmit} ref={formRef}>
           <label className="mb-3">
             Name:
@@ -404,7 +404,7 @@ const AddEmployee = () => {
           </label>
           <br />
           <div style={{ color: "red" }}>{errorMessage}</div>
-          <br/>
+          <br />
           {attributes.map((attribute, idx) => {
             return (
               <div key={idx} style={{ marginTop: "20px" }}>
@@ -433,6 +433,12 @@ const AddEmployee = () => {
                   className="btn btn-primary"
                   onClick={() => deleteHandle1(idx)}
                   style={{
+                    textAlign: "center",
+                    lineHeight: 1,
+                    fontSize: "12px",
+                    width: "100px",
+                    height: "30px",
+                    backgroundColor: "orangered",
                     marginBottom: "10px",
                     marginTop: "10px",
                     marginLeft: "20px",
@@ -449,7 +455,7 @@ const AddEmployee = () => {
             type="button"
             className="btn"
             style={{
-              width : "250px",
+              width: "250px",
               marginRight: "10px",
               marginTop: "20px",
             }}
@@ -518,9 +524,12 @@ const AddEmployee = () => {
                   className="btn"
                   onClick={() => deleteHandle(idx)}
                   style={{
-                    textAlign: 'center', lineHeight: 1,
+                    textAlign: "center",
+                    lineHeight: 1,
                     fontSize: "12px",
-                    width: "100px", height: "30px", backgroundColor : "orangered",
+                    width: "100px",
+                    height: "30px",
+                    backgroundColor: "orangered",
                     marginBottom: "10px",
                     marginTop: "10px",
                     marginLeft: "20px",
@@ -537,9 +546,8 @@ const AddEmployee = () => {
             disabled={formSubmitted}
             className="btn"
             style={{
-              color: "white",
-              fontSize: "16px",
-              marginRight: "50px",
+              width: "250px",
+              marginRight: "10px",
               marginTop: "20px",
             }}
           >
@@ -565,7 +573,7 @@ const AddEmployee = () => {
             disabled={formSubmitted}
             style={{
               marginLeft: "50px",
-            
+
               marginTop: "20px",
             }}
           >
@@ -583,7 +591,10 @@ const AddEmployee = () => {
             Clear
           </button>
         </form>
-      </div><br/><br/><br/>
+      </div>
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

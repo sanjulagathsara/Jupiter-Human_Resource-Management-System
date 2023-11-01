@@ -49,7 +49,7 @@ db.connect((err) => {
 //get leave applications relevent to supervisor
 app.get("/api/SupUI/leaveApplications", (req, res) => {
   db.query(
-    "SELECT * FROM leave_application where Employee_ID IN (SELECT Employee_ID FROM employee where Supervisor_ID = ?) and Approval_status = 'Pending' ",
+    "SELECT Leave_Application_No, leave_application.Employee_ID, LeaveType, Start_Date, End_Date, Remaining_Maternity_Leave_Count, Remaining_No_pay_Leave_Count, Remaining_Annual_Leave_Count, Remaining_Casual_Leave_Count FROM leave_application JOIN employee_leave_details ON leave_application.Employee_ID = employee_leave_details.Employee_ID where leave_application.Employee_ID IN (SELECT Employee_ID FROM employee where Supervisor_ID = ?) and Approval_status = 'Pending' ",
     [personalID],
     (err, rows, fields) => {
       if (err) {
@@ -57,7 +57,6 @@ app.get("/api/SupUI/leaveApplications", (req, res) => {
         res.json({ error: "Internal server error" });
         return;
       } else {
-        console.log(rows);
         res.json(rows);
       }
     }
@@ -72,15 +71,15 @@ app.post("/api/SupUI/edited/leaveApplications", (req, res) => {
   console.log(data);
   // console.log("data", data);
 
-  const sql3 = "CALL Remaining_leave_count(?,?,?,?,?,?)";
+  const sql3 = "call Remaining_leave_count(?,?,?,?,?,?)";
   db.query(
     sql3,
     [
-      data.Leave_Application_ID,
+      data.Leave_Application_No,
       data.Employee_ID,
       data.LeaveType,
-      data.Start_Date.split("T")[0],
-      data.End_Date.split("T")[0],
+      "2023-10-19",
+      "2023-10-21",
       data.Approval_status,
     ],
     (err) => {
@@ -89,7 +88,7 @@ app.post("/api/SupUI/edited/leaveApplications", (req, res) => {
         res.json({ error: "Internal server error" });
         return;
       } else {
-        console.log("success");
+        console.log(data);
         return res.json({ message: "Data Updated Successfully" });
       }
     }
