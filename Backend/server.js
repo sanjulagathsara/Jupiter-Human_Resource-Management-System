@@ -32,10 +32,10 @@ app.use(express.json());
 const port = 5001;
 
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '12345678',
-  database: 'jupiter_g9'
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 });
 db.connect((err) => {
   if (err) {
@@ -798,57 +798,57 @@ app.post("/api/ManUI/EditPI/newCustomAttributes", (req, res) => {
   });
 });
 
-app.get('/employeedepartments', (req, res) => {
+app.get("/employeedepartments", (req, res) => {
   // SQL query to select distinct Department names from the database
-  const sqlSelect = 'SELECT DISTINCT Department FROM employee';
+  const sqlSelect = "SELECT DISTINCT Department FROM employee";
 
   // Execute the SQL query
   db.query(sqlSelect, (err, result) => {
-      if (err) {
-          // If there's an error, log it and return a 500 status with an error message
-          console.error(err);
-          return res.status(500).json({ message: 'Failed to retrieve employee departments' });
-      }
+    if (err) {
+      // If there's an error, log it and return a 500 status with an error message
+      console.error(err);
+      return res
+        .status(500)
+        .json({ message: "Failed to retrieve employee departments" });
+    }
 
-      // Map the retrieved results to extract Department names
-      const departments = result.map((row) => row.Department);
+    // Map the retrieved results to extract Department names
+    const departments = result.map((row) => row.Department);
 
-      // Log the retrieved Department names
-      console.log('Retrieved Employee Departments:', departments);
+    // Log the retrieved Department names
+    console.log("Retrieved Employee Departments:", departments);
 
-      // Return the Department names as JSON
-      return res.json({ departments });
+    // Return the Department names as JSON
+    return res.json({ departments });
   });
 });
 
-
-app.get('/employeesbydepartment', (req, res) => {
+app.get("/employeesbydepartment", (req, res) => {
   const department = req.query.department;
 
   const sqlSelect = "SELECT * FROM employeebydepartment WHERE Department = ?";
 
   db.query(sqlSelect, [department], (err, result) => {
-      if (err) {
-          console.error(err);
-          return res.status(500).json({ message: "Failed to retrieve employees" });
-      }
-      console.log(result);
-      // const employees = result.map((row) => row.Name);
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Failed to retrieve employees" });
+    }
+    console.log(result);
+    // const employees = result.map((row) => row.Name);
 
-      // console.log('Retrieved Employees:', employees);
+    // console.log('Retrieved Employees:', employees);
 
-      // return res.json({ employees });
-      return res.json(result);
+    // return res.json({ employees });
+    return res.json(result);
   });
 });
 
-
-app.get('/totalleavesbydepartment', (req, res) => {
+app.get("/totalleavesbydepartment", (req, res) => {
   const department = req.query.department; // Assuming you're passing the department name in the URL query parameter
   const startDate = req.query.startDate;
   const endDate = req.query.endDate;
-  console.log("res",req.query.department);
-  console.log("dept",department);
+  console.log("res", req.query.department);
+  console.log("dept", department);
   console.log(startDate);
   console.log(endDate);
   // SQL query to retrieve the total number of leaves for each leave type for the specified department
@@ -894,13 +894,10 @@ GROUP BY
   db.query(query, [startDate, endDate, department], (error, results) => {
     if (error) {
       console.error(error);
-      res.status(500).send('An error occurred while processing your request.');
+      res.status(500).send("An error occurred while processing your request.");
     } else {
-
       console.log(results);
       res.json(results);
-     
-
     }
   });
 });
@@ -918,21 +915,19 @@ GROUP BY
 //       console.log(result);
 //       // const employees = result.map((row) => row.Name);
 
-
 //       // console.log('Retrieved Employees:', employees);
 
 //       // return res.json({ employees });
 //   });
 // });
 
-
-app.get('/paygrades', (req, res) => {
-  const sqlSelect = 'SELECT Pay_Grade FROM employee_pay_grade';
+app.get("/paygrades", (req, res) => {
+  const sqlSelect = "SELECT Pay_Grade FROM employee_pay_grade";
 
   db.query(sqlSelect, (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: 'Failed to retrieve pay grades' });
+      return res.status(500).json({ message: "Failed to retrieve pay grades" });
     }
 
     const payGrades = result.map((row) => row.Pay_Grade);
@@ -941,13 +936,13 @@ app.get('/paygrades', (req, res) => {
   });
 });
 
-app.get('/jobtitles', (req, res) => {
-  const sqlSelect = 'SELECT Job_Title FROM employee_job_title';
+app.get("/jobtitles", (req, res) => {
+  const sqlSelect = "SELECT Job_Title FROM employee_job_title";
 
   db.query(sqlSelect, (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: 'Failed to retrieve job titles' });
+      return res.status(500).json({ message: "Failed to retrieve job titles" });
     }
 
     const jobTitles = result.map((row) => row.Job_Title);
@@ -956,13 +951,15 @@ app.get('/jobtitles', (req, res) => {
   });
 });
 
-app.get('/statuses', (req, res) => {
-  const sqlSelect = 'SELECT Status_Type FROM employee_status';
+app.get("/statuses", (req, res) => {
+  const sqlSelect = "SELECT Status_Type FROM employee_status";
 
   db.query(sqlSelect, (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: 'Failed to retrieve employee statuses' });
+      return res
+        .status(500)
+        .json({ message: "Failed to retrieve employee statuses" });
     }
 
     const statuses = result.map((row) => row.Status_Type);
@@ -971,8 +968,7 @@ app.get('/statuses', (req, res) => {
   });
 });
 
-
-app.get('/employeesbypaygrade', (req, res) => {
+app.get("/employeesbypaygrade", (req, res) => {
   const payGrade = req.query.payGrade;
 
   const sqlSelect = "SELECT * from  employeebypaygrade where pay_grade = ?";
@@ -982,13 +978,13 @@ app.get('/employeesbypaygrade', (req, res) => {
       console.error(err);
       return res.status(500).json({ message: "Failed to retrieve employees" });
     }
-    console.log(result)
+    console.log(result);
 
     return res.json(result);
   });
 });
 
-app.get('/employeesbyjobtitle', (req, res) => {
+app.get("/employeesbyjobtitle", (req, res) => {
   const jobTitle = req.query.jobTitle;
 
   const sqlSelect = "SELECT * FROM employeebyjobtitle where job_title = ?";
@@ -1004,7 +1000,7 @@ app.get('/employeesbyjobtitle', (req, res) => {
   });
 });
 
-app.get('/employeesbystatus', (req, res) => {
+app.get("/employeesbystatus", (req, res) => {
   const status = req.query.status;
 
   const sqlSelect = "SELECT * FROM employeebystatus where status_type = ?";
@@ -1019,15 +1015,17 @@ app.get('/employeesbystatus', (req, res) => {
   });
 });
 
-app.get('/reportsbycustomfields', (req, res) => {
+app.get("/reportsbycustomfields", (req, res) => {
   const customAttribute = req.query.attribute;
-  console.log("customAttribute",customAttribute);
-  const sqlSelect = 'SELECT * from custom_attributes  Where attribute = ?';
+  console.log("customAttribute", customAttribute);
+  const sqlSelect = "SELECT * from custom_attributes  Where attribute = ?";
 
-  db.query(sqlSelect,[customAttribute], (err, result) => {
+  db.query(sqlSelect, [customAttribute], (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: 'Failed to retrieve employee details' });
+      return res
+        .status(500)
+        .json({ message: "Failed to retrieve employee details" });
     }
 
     console.log(result);
@@ -1035,53 +1033,59 @@ app.get('/reportsbycustomfields', (req, res) => {
   });
 });
 
-app.get('/customfields', (req, res) => {
-const sqlSelect = 'SELECT Distinct attribute FROM custom_attributes';
-
-db.query(sqlSelect, (err, result) => {
-  if (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Failed to retrieve custom fields' });
-  }
-  
-  console.log(result);
-  return res.json(result);  
-});
-});
-
-
-app.get('/reports-by-dependants-status', (req, res) => {
-  const depstatus = req.query.depstatus;
-  //console.log("depstatus",depstatus);
-
-  const sqlSelect = 'Select * from employeedependantview where status = ?';
-
-  db.query(sqlSelect, [depstatus], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Failed to retrieve employeerelatedwithdependantstatus" });
-    } 
-    console.log(result);
-    // const employeerelatedwithdependantstatus = result.map((row) => row.Employee_ID);
-    // console.log(employeerelatedwithdependantstatus)
-   
-
-    return res.json(result);
-  });
-});
-
-app.get('/dependantstatus', (req, res) => {
-  const sqlSelect = 'SELECT Distinct status FROM dependants';
+app.get("/customfields", (req, res) => {
+  const sqlSelect = "SELECT Distinct attribute FROM custom_attributes";
 
   db.query(sqlSelect, (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: 'Failed to retrieve dependant status' });
+      return res
+        .status(500)
+        .json({ message: "Failed to retrieve custom fields" });
+    }
+
+    console.log(result);
+    return res.json(result);
+  });
+});
+
+app.get("/reports-by-dependants-status", (req, res) => {
+  const depstatus = req.query.depstatus;
+  //console.log("depstatus",depstatus);
+
+  const sqlSelect = "Select * from employeedependantview where status = ?";
+
+  db.query(sqlSelect, [depstatus], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({
+          message: "Failed to retrieve employeerelatedwithdependantstatus",
+        });
+    }
+    console.log(result);
+    // const employeerelatedwithdependantstatus = result.map((row) => row.Employee_ID);
+    // console.log(employeerelatedwithdependantstatus)
+
+    return res.json(result);
+  });
+});
+
+app.get("/dependantstatus", (req, res) => {
+  const sqlSelect = "SELECT Distinct status FROM dependants";
+
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ message: "Failed to retrieve dependant status" });
     }
 
     const dependantstatus = result.map((row) => row.status);
     // console.log("dependantstatus",dependantstatus);
-    
+
     return res.json({ dependantstatus });
   });
 });
@@ -1089,6 +1093,5 @@ app.get('/dependantstatus', (req, res) => {
 app.listen(port, () => {
   console.log("Server is running on port5001");
 });
-
 
 // sithika's code merge
