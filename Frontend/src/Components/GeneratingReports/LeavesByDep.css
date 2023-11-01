@@ -18,21 +18,9 @@
   text-align: left;
 }
 
-/* h1 {
-  font-size: 28px;
-  margin: 0;
-  margin-bottom: 20px;
-  color: #007BFF; 
-} */
 
-/* label {
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
-  color: #333;
-} */
 
-.select-field,
+/* .select-field,
 input[type="date"] {
   width: 100%;
   padding: 10px;
@@ -40,7 +28,7 @@ input[type="date"] {
   border: 1px solid #ccc;
   border-radius: 5px;
   outline: none;
-}
+} */
 
 button.submit-button {
   background-color: #007BFF;

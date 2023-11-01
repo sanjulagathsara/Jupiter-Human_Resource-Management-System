@@ -18,8 +18,6 @@
     font-weight: bold;
   }
   
-
-
 /* Background for Personal Information, Request leave  */
 .Instead_body_EM {
   position: relative;
@@ -41,46 +39,3 @@
   z-index: -1;
 }
 
-/* CSS to change button size and color */
-.btn {
-  /* Button size */
-  width : 200px;
-  height : 50px;
-  padding: 10px 20px; 
-
-  /* Button color */
-  background-color: #382e07; /* Change to your desired color code */
-  color: #fff; /* Text color for the button */
-  border: none; /* Remove button border, you can change this if needed */
-  border-radius: 5px; /* Rounded button corners */
-  cursor: pointer; /* Show pointer cursor on hover */
-
-  /* Add some margin for spacing between buttons */
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
-  border-radius: 10px;
-  
-  /* Control the font size for the text on the buttons */
-  font-size: 16px;
-}
-
-/* Change the color on hover */
-.btn:hover {
-  background-color: #93710b; /* Change to a different color on hover */
-  color: #000;
-}
-
-/* Content in the website */
-.square_Emp {
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  height: 80vh;
-  margin-top: 0px;
-  flex-direction: column;
-}
-
-.jupiter {
-  font-size: 50px;
-}
