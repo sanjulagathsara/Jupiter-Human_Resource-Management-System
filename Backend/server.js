@@ -44,57 +44,6 @@ db.connect((err) => {
     console.log("Connected to MySQL");
   }
 });
-
-//get leave applications relevent to supervisor
-app.get("/api/SupUI/leaveApplications", (req, res) => {
-  db.query(
-    "SELECT * FROM leave_application where Employee_ID IN (SELECT Employee_ID FROM employee where Supervisor_ID = ?) and Approval_status = 'Pending' ",
-    [personalID],
-    (err, rows, fields) => {
-      if (err) {
-        console.error("Error querying MySQL:", err);
-        res.json({ error: "Internal server error" });
-        return;
-      } else {
-        console.log(rows);
-        res.json(rows);
-      }
-    }
-  );
-});
-
-//post edited leave applications
-app.post("/api/SupUI/edited/leaveApplications", (req, res) => {
-  console.log("Edited data fetch from server:");
-
-  const data = req.body.record;
-  console.log(data);
-  // console.log("data", data);
-
-  const sql3 = "CALL Remaining_leave_count(?,?,?,?,?,?)";
-  db.query(
-    sql3,
-    [
-      data.Leave_Application_ID,
-      data.Employee_ID,
-      data.LeaveType,
-      data.Start_Date.split("T")[0],
-      data.End_Date.split("T")[0],
-      data.Approval_status,
-    ],
-    (err) => {
-      if (err) {
-        console.error("Error querying MySQL:", err);
-        res.json({ error: "Internal server error" });
-        return;
-      } else {
-        console.log("success");
-        return res.json({ message: "Data Updated Successfully" });
-      }
-    }
-  );
-});
-
 //get custom attributes
 app.get("/api/personal/customAttributes", (req, res) => {
   db.query(
@@ -498,7 +447,6 @@ app.get("/api/dependantsDetails/employee", (req, res) => {
     }
   );
 });
-//added a
 
 //Get all employee informations
 app.get("/api/employeeInfo", (req, res) => {
@@ -827,7 +775,7 @@ app.get('/employeedepartments', (req, res) => {
 app.get('/employeesbydepartment', (req, res) => {
   const department = req.query.department;
 
-  const sqlSelect = "SELECT Name FROM employee WHERE Department = ?";
+  const sqlSelect = "SELECT * FROM employeebydepartment WHERE Department = ?";
 
   db.query(sqlSelect, [department], (err, result) => {
       if (err) {
@@ -835,11 +783,12 @@ app.get('/employeesbydepartment', (req, res) => {
           return res.status(500).json({ message: "Failed to retrieve employees" });
       }
       console.log(result);
-      const employees = result.map((row) => row.Name);
+      // const employees = result.map((row) => row.Name);
 
-      console.log('Retrieved Employees:', employees);
+      // console.log('Retrieved Employees:', employees);
 
-      return res.json({ employees });
+      // return res.json({ employees });
+      return res.json(result);
   });
 });
 
@@ -906,24 +855,25 @@ GROUP BY
   });
 });
 
-app.get('/employeesbydepartment', (req, res) => {
-  const department = req.query.department;
+// app.get('/employeesbydepartment', (req, res) => {
+//   const department = req.query.department;
 
-  const sqlSelect = "SELECT Name FROM employee WHERE Department = ?";
+//   const sqlSelect = "SELECT * FROM employeebypaygrade WHERE Department = ?";
 
-  db.query(sqlSelect, [department], (err, result) => {
-      if (err) {
-          console.error(err);
-          return res.status(500).json({ message: "Failed to retrieve employees" });
-      }
-      console.log(result);
-      const employees = result.map((row) => row.Name);
+//   db.query(sqlSelect, [department], (err, result) => {
+//       if (err) {
+//           console.error(err);
+//           return res.status(500).json({ message: "Failed to retrieve employees" });
+//       }
+//       console.log(result);
+//       // const employees = result.map((row) => row.Name);
 
-      console.log('Retrieved Employees:', employees);
 
-      return res.json({ employees });
-  });
-});
+//       // console.log('Retrieved Employees:', employees);
+
+//       // return res.json({ employees });
+//   });
+// });
 
 
 app.get('/paygrades', (req, res) => {
@@ -975,24 +925,23 @@ app.get('/statuses', (req, res) => {
 app.get('/employeesbypaygrade', (req, res) => {
   const payGrade = req.query.payGrade;
 
-  const sqlSelect = "SELECT e.Employee_ID, e.Name FROM employee e JOIN employee_pay_grade p ON e.Pay_Grade_ID = p.Pay_Grade_ID WHERE p.Pay_Grade = ?";
+  const sqlSelect = "SELECT * from  employeebypaygrade where pay_grade = ?";
 
   db.query(sqlSelect, [payGrade], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ message: "Failed to retrieve employees" });
     }
+    console.log(result)
 
-    const employees = result.map((row) => row.Name);
-
-    return res.json({ employees });
+    return res.json(result);
   });
 });
 
 app.get('/employeesbyjobtitle', (req, res) => {
   const jobTitle = req.query.jobTitle;
 
-  const sqlSelect = "SELECT e.Employee_ID, e.Name FROM employee e JOIN employee_job_title j ON e.Job_Title_ID = j.Job_Title_ID WHERE j.Job_Title = ?";
+  const sqlSelect = "SELECT * FROM employeebyjobtitle where job_title = ?";
 
   db.query(sqlSelect, [jobTitle], (err, result) => {
     if (err) {
@@ -1001,26 +950,22 @@ app.get('/employeesbyjobtitle', (req, res) => {
     }
     console.log(result);
 
-    const employees = result.map((row) => row.Name);
-    
-    return res.json({ employees });
+    return res.json(result);
   });
 });
 
 app.get('/employeesbystatus', (req, res) => {
   const status = req.query.status;
 
-  const sqlSelect = "SELECT e.Employee_ID, e.Name FROM employee e JOIN employee_status s ON e.Status_ID = s.Status_ID WHERE s.Status_Type = ?";
+  const sqlSelect = "SELECT * FROM employeebystatus where status_type = ?";
 
   db.query(sqlSelect, [status], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ message: "Failed to retrieve employees" });
     }
-
-    const employees = result.map((row) => row.Name);
-
-    return res.json({ employees });
+    console.log(result);
+    return res.json(result);
   });
 });
 
@@ -1059,7 +1004,7 @@ app.get('/reports-by-dependants-status', (req, res) => {
   const depstatus = req.query.depstatus;
   //console.log("depstatus",depstatus);
 
-  const sqlSelect = 'select e.Name,d.name,d.Relationship from employee e right join dependants d on e.Employee_ID = d.Employee_ID where d.status = ?';
+  const sqlSelect = 'Select * from employeedependantview where status = ?';
 
   db.query(sqlSelect, [depstatus], (err, result) => {
     if (err) {
@@ -1094,5 +1039,3 @@ app.get('/dependantstatus', (req, res) => {
 app.listen(port, () => {
   console.log("Server is running on port5001");
 });
-
-//Merge after sahan's code

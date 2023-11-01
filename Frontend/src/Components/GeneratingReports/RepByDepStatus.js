@@ -54,9 +54,8 @@ function RepByDeptStatus() {
 
   return (
     <div className="centered-container">
-      <h1>Employee Details with Dependents</h1>
+      <h1 className='main-title'>Dependant Status Report</h1>
       <div className="employee-form">
-        <h2>Dependant Statuses:</h2>
         <select
           value={selectedStatus}
           onChange={handleStatusChange}
@@ -69,7 +68,7 @@ function RepByDeptStatus() {
             </option>
           ))}
         </select>
-        <button onClick={handleSubmit} className="submit-button">
+        <button onClick={handleSubmit} className="button-style">
           Submit
         </button>
         <p>Selected Status: {selectedStatus}</p>
@@ -81,12 +80,11 @@ function RepByDeptStatus() {
           <ul className="result-list">
             {employeeData.map((employee, index) => (
               <li key={index} className="result-item">
-                <div className="employee-name">
-                  Employee Name: {employee['Name']}
-                </div>
-                <div className="dependant-details">
+                <div className="employee-details">
+                  <div>Employee Name: {employee['employee_name']}</div>
                   <div>Dependant Name: {employee['name']}</div>
                   <div>Relationship: {employee['Relationship']}</div>
+                  
                 </div>
               </li>
             ))}

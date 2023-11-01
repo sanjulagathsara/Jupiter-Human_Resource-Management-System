@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './EmpByDep.css'; // Import your CSS file
+import './EmpByDep.css';
 
 export default function EmpByDep() {
   const [selectedDepartment, setSelectedDepartment] = useState('');
@@ -13,7 +13,8 @@ export default function EmpByDep() {
   }, []);
 
   const fetchEmployeeDepartments = () => {
-    axios.get('http://localhost:5001/employeedepartments')
+    axios
+      .get('http://localhost:5001/employeedepartments')
       .then((response) => {
         if (response.data.departments) {
           setEmployeeDepartments(response.data.departments);
@@ -33,11 +34,13 @@ export default function EmpByDep() {
 
   const handleSubmit = () => {
     if (selectedDepartment) {
-      axios.get('http://localhost:5001/employeesbydepartment', { params: { department: selectedDepartment } })
+      axios
+        .get('http://localhost:5001/employeesbydepartment', {
+          params: { department: selectedDepartment },
+        })
         .then((response) => {
-          if (response.data.employees) {
-            setEmployeesInDepartment(response.data.employees);
-            console.log('Retrieved Employees:', response.data.employees);
+          if (response.data) {
+            setEmployeesInDepartment(response.data);
           } else {
             setEmployeesInDepartment([]);
           }
@@ -50,8 +53,8 @@ export default function EmpByDep() {
 
   return (
     <div className='centered-container'>
-      <div className="employee-form">
-        <h1>Employees by Department</h1>
+      <h1 className='main-title'>Employees by Department</h1>
+      <div className="employee-form"> 
         <label htmlFor="department">Select Department:</label>
         <select
           id="department"
@@ -65,19 +68,23 @@ export default function EmpByDep() {
             </option>
           ))}
         </select>
-        <button className="submit-button" onClick={handleSubmit}>Submit</button>
+        <button className="button-style" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
       {error && <p className="error-message">Error: {error}</p>}
       {selectedDepartment && (
         <div className="selected-department">
-          <p>Selected Department: {selectedDepartment}</p>
           <div>
-            <p>Employees in the selected department:</p>
-            <ul>
-              {employeesInDepartment.map((employee, index) => (
-                <li key={index}>{employee}</li>
-              ))}
-            </ul>
+            {employeesInDepartment.map((employee, index) => (
+              <div className="employee-box" key={index}>
+                <p>Employee ID: {employee.employee_id}</p>
+                <p>Name: {employee.name}</p>
+                <p>Gender: {employee.gender}</p>
+                <p>Department: {employee.department}</p>
+                <p>Job Title: {employee.job_title}</p>
+              </div>
+            ))}
           </div>
         </div>
       )}

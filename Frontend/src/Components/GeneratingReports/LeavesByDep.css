@@ -77,3 +77,16 @@ button.submit-button:hover {
   margin: 5px 0;
   color: #333;
 }
+
+.results {
+  background-color: #838484d5; /* Background color for the employee boxes */
+  text-color: Black ;
+  text-align: left;
+  font-weight: bold;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 10px; /* Adjust padding as needed */
+  border-radius: 5px; /* Rounded corners for the boxes */
+  margin: 10px 0; /* Spacing between employee boxes */
+}
+

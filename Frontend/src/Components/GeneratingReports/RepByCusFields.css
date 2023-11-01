@@ -1,18 +1,28 @@
 .centered-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+  background-image: url('https://images.unsplash.com/photo-1527176930608-09cb256ab504?auto=format&fit=crop&q=80&w=2074&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
   
   .employee-form {
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 0 auto;
+      background-color: #838484d5; /* Background color for the employee boxes */
+      text-color: Black ;
+      text-align: left;
+      font-weight: bold;
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding: 10px; /* Adjust padding as needed */
+      border-radius: 5px; /* Rounded corners for the boxes */
+      margin: 10px 0; /* Spacing between employee boxes */
+    
   }
   
   .select-box {
@@ -56,4 +66,17 @@
   .error-message {
     color: red;
   }
+  
+  .result-item {
+    background-color: #838484d5; /* Background color for the employee boxes */
+    text-color: Black ;
+    text-align: left;
+    font-weight: bold;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 5px; /* Rounded corners for the boxes */
+    margin: 10px 0; /* Spacing between employee boxes */
+  }
+  
   

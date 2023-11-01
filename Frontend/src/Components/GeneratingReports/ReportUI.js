@@ -1,46 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './ReportUI.css';
 
 function ReportUI() {
-  const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '100vh', // Center vertically in the viewport
-  };
-
-  const buttonStyle = {
-    width: '200px',
-    padding: '10px',
-    margin: '10px',
-    background: 'blue',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    textAlign: 'center',
-  };
-
   return (
-    <div style={containerStyle}>
-      <Link to="/employee-by-department" style={buttonStyle}>
-        Employee by Department
+
+    
+    <div className="centered-container">
+    <div className="main-title">Reports</div>
+      <Link to="/employee-by-department" className="button-style">
+        Department Reports
       </Link>
-      <Link to="/total-leaves-by-department" style={buttonStyle}>
-        Total Leaves by Department
+      <Link to="/total-leaves-by-department" className="button-style">
+        Leaves Reports
+              </Link>
+      <Link to="/employee-reports-by-group" className="button-style">
+        Group Reports
       </Link>
-      <Link to="/employee-reports-by-group" style={buttonStyle}>
-        Employee Reports by Group
+      <Link to="/reports-by-custom-fields" className="button-style">
+        Custom Reports
       </Link>
-      <Link to="/reports-by-custom-fields" style={buttonStyle}>
-        Reports by Custom Fields
-      </Link>
-      <Link to="/reports-by-dependants-status" style={buttonStyle}>
-        Reports by Dependants Status
+      <Link to="/reports-by-dependants-status" className="button-style">
+        Dependant Reports
       </Link>
     </div>
+ 
   );
 }
 

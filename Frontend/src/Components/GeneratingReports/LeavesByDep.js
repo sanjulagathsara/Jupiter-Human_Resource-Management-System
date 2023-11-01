@@ -8,6 +8,7 @@ function LeavesByDep() {
   const [endDate, setEndDate] = useState('');
   const [leaveData, setLeaveData] = useState([]);
   const [departmentNames, setDepartmentNames] = useState([]);
+  const [showEmployeeBox, setShowEmployeeBox] = useState(false); // State to control whether to show the employee box
 
   useEffect(() => {
     fetch('http://localhost:5001/employeedepartments')
@@ -34,6 +35,7 @@ function LeavesByDep() {
     })
     .then((response) => {
       setLeaveData(response.data[0]);
+      setShowEmployeeBox(true); // Show the employee box after retrieving data
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -42,7 +44,7 @@ function LeavesByDep() {
 
   return (
     <div className="centered-container">
-      <h1>Total Leaves by Department</h1>
+      <h1 className='main-title'>Total Leaves by Department</h1>
       <div className="employee-form">
         <label htmlFor="department">Select Department:</label>
         <select id="department" value={department} onChange={handleDepartmentSelect}>
@@ -67,11 +69,11 @@ function LeavesByDep() {
           value={endDate}
           onChange={(event) => setEndDate(event.target.value)}
         />
-        <button className="submit-button" onClick={fetchTotalLeaves}>Fetch Total Leaves</button>
+        <button className="button-style" onClick={fetchTotalLeaves}>Fetch Total Leaves</button>
       </div>
-      {leaveData && (
+      {showEmployeeBox && leaveData && (
         <div className="results">
-          <h2>Total Leaves for {department}</h2>
+          <p>Total Leaves for {department}</p>
           <p>Total Maternity Leave: {leaveData.Maternity_Leave_Days}</p>
           <p>Total No-pay Leave: {leaveData.No_pay_Leave_Days}</p>
           <p>Total Annual Leave: {leaveData.Annual_Leave_Days}</p>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './EmpRepByGroup.css'; // Import your CSS file
+import './EmpRepByGroup.css';
 
 export default function EmpRepByGroup() {
   const [selectedPayGrade, setSelectedPayGrade] = useState('');
@@ -11,62 +11,41 @@ export default function EmpRepByGroup() {
   const [jobTitles, setJobTitles] = useState([]);
   const [statuses, setStatuses] = useState([]);
 
-  // Fetch pay grades, job titles, and statuses
   useEffect(() => {
-    // Fetch Pay Grades
-    axios
-      .get('http://localhost:5001/paygrades')
-      .then((response) => {
-        setPayGrades(response.data.payGrades);
-      })
-      .catch((error) => {
-        console.log('Error fetching pay grades:', error);
-      });
+    // Fetch Pay Grades, Job Titles, and Employee Statuses
+    const fetchData = async () => {
+      try {
+        const payGradesResponse = await axios.get('http://localhost:5001/paygrades');
+        setPayGrades(payGradesResponse.data.payGrades || []);
 
-    // Fetch Job Titles
-    axios
-      .get('http://localhost:5001/jobtitles')
-      .then((response) => {
-        setJobTitles(response.data.jobTitles);
-      })
-      .catch((error) => {
-        console.log('Error fetching job titles:', error);
-      });
+        const jobTitlesResponse = await axios.get('http://localhost:5001/jobtitles');
+        setJobTitles(jobTitlesResponse.data.jobTitles || []);
 
-    // Fetch Employee Statuses
-    axios
-      .get('http://localhost:5001/statuses')
-      .then((response) => {
-        setStatuses(response.data.statuses);
-      })
-      .catch((error) => {
-        console.log('Error fetching statuses:', error);
-      });
+        const statusesResponse = await axios.get('http://localhost:5001/statuses');
+        setStatuses(statusesResponse.data.statuses || []);
+      } catch (error) {
+        console.log('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handlePayGradeSelect = (event) => {
-    setSelectedPayGrade(event.target.value);
-    setSelectedJobTitle(''); // Reset Job Title selection
-    setSelectedStatus(''); // Reset Status selection
-  };
-
-  const handleJobTitleSelect = (event) => {
-    setSelectedJobTitle(event.target.value);
-    setSelectedPayGrade(''); // Reset Pay Grade selection
-    setSelectedStatus(''); // Reset Status selection
-  };
-
-  const handleStatusSelect = (event) => {
-    setSelectedStatus(event.target.value);
-    setSelectedPayGrade(''); // Reset Pay Grade selection
-    setSelectedJobTitle(''); // Reset Job Title selection
+  const handleSelectChange = (event, stateSetter, resetState1, resetState2) => {
+    stateSetter(event.target.value);
+    if (resetState1) {
+      resetState1('');
+    }
+    if (resetState2) {
+      resetState2('');
+    }
   };
 
   const handleRetrieveEmployees = (route, params) => {
     axios
       .get(`http://localhost:5001/${route}`, { params })
       .then((response) => {
-        setEmployees(response.data.employees);
+        setEmployees(response.data || []);
       })
       .catch((error) => {
         console.log('Error:', error);
@@ -75,23 +54,25 @@ export default function EmpRepByGroup() {
 
   return (
     <div className="centered-container">
+       <h1 className='main-title'>Employees by Pay Grade,Job Title,Status</h1>
       <div className="employee-form">
-        <h1>Employees by Group</h1>
-
         <label htmlFor="payGrade">Select Pay Grade:</label>
         <select
           id="payGrade"
           value={selectedPayGrade}
-          onChange={handlePayGradeSelect}
+          onChange={(event) => handleSelectChange(event, setSelectedPayGrade, setSelectedJobTitle, setSelectedStatus)}
         >
           <option value="">Select a pay grade</option>
-          {payGrades.map((payGrade, index) => (
-            <option key={index} value={payGrade}>
+          {payGrades.map((payGrade) => (
+            <option key={payGrade} value={payGrade}>
               {payGrade}
             </option>
           ))}
         </select>
-        <button className="submit-button" onClick={() => handleRetrieveEmployees('employeesbypaygrade', { payGrade: selectedPayGrade })}>
+        <button
+          className="button-style"
+          onClick={() => handleRetrieveEmployees('employeesbypaygrade', { payGrade: selectedPayGrade })}
+        >
           Retrieve Employees by Pay Grade
         </button>
 
@@ -99,16 +80,19 @@ export default function EmpRepByGroup() {
         <select
           id="jobTitle"
           value={selectedJobTitle}
-          onChange={handleJobTitleSelect}
+          onChange={(event) => handleSelectChange(event, setSelectedJobTitle, setSelectedPayGrade, setSelectedStatus)}
         >
           <option value="">Select a job title</option>
-          {jobTitles.map((jobTitle, index) => (
-            <option key={index} value={jobTitle}>
+          {jobTitles.map((jobTitle) => (
+            <option key={jobTitle} value={jobTitle}>
               {jobTitle}
             </option>
           ))}
         </select>
-        <button className="submit-button" onClick={() => handleRetrieveEmployees('employeesbyjobtitle', { jobTitle: selectedJobTitle })}>
+        <button
+          className="button-style"
+          onClick={() => handleRetrieveEmployees('employeesbyjobtitle', { jobTitle: selectedJobTitle })}
+        >
           Retrieve Employees by Job Title
         </button>
 
@@ -116,16 +100,19 @@ export default function EmpRepByGroup() {
         <select
           id="status"
           value={selectedStatus}
-          onChange={handleStatusSelect}
+          onChange={(event) => handleSelectChange(event, setSelectedStatus, setSelectedPayGrade, setSelectedJobTitle)}
         >
           <option value="">Select an employee status</option>
-          {statuses.map((status, index) => (
-            <option key={index} value={status}>
+          {statuses.map((status) => (
+            <option key={status} value={status}>
               {status}
             </option>
           ))}
         </select>
-        <button className="submit-button" onClick={() => handleRetrieveEmployees('employeesbystatus', { status: selectedStatus })}>
+        <button
+          className="button-style"
+          onClick={() => handleRetrieveEmployees('employeesbystatus', { status: selectedStatus })}
+        >
           Retrieve Employees by Status
         </button>
       </div>
@@ -133,11 +120,16 @@ export default function EmpRepByGroup() {
       {employees.length > 0 && (
         <div className="selected-department">
           <p>Retrieved Employees:</p>
-          <ul>
-            {employees.map((employee, index) => (
-              <li key={index}>{employee}</li>
-            ))}
-          </ul>
+          {employees.map((employee) => (
+            <div className="employee-card" key={employee.employee_id}>
+              <div className="employee-box">
+                <p>Employee ID: {employee.employee_id}</p>
+                <p>Name: {employee.name}</p>
+                <p>Gender: {employee.gender}</p>
+                <p>Department: {employee.department}</p>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

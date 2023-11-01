@@ -49,7 +49,7 @@ function RepByCusField() {
 
   return (
     <div className='centered-container'>
-      <h1 className='main-title'>Employee Reports by Custom Attributes</h1>
+      <h1 className='main-title'>Employees by Custom Attributes</h1>
       <div className='employee-form'>
         <label htmlFor='attribute' className='label'>
           Select Custom Attribute:
@@ -67,7 +67,7 @@ function RepByCusField() {
             </option>
           ))}
         </select>
-        <button onClick={handleSubmit} className='submit-button'>
+        <button onClick={handleSubmit} className='button-style'>
           Submit
         </button>
       </div>
