@@ -11,26 +11,26 @@
     color : white;
 }
   
-  /* Background for Personal Information, Request leave  */
-  .Instead_body_PInfo {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .Instead_body_PInfo::before {
-    content: "";
-    background-image: url('https://i.postimg.cc/JhWS9Nj2/image.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 200%;
-    filter: blur(10px);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
+/* Background for Personal Information, Request leave  */
+.Instead_body_PInfo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.Instead_body_PInfo::before {
+  content: "";
+  background-image: url('https://i.postimg.cc/JhWS9Nj2/image.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 200%;
+  filter: blur(10px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 
   /* Styling for the table */
 table {

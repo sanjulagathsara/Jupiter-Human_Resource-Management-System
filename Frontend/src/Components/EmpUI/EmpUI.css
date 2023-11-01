@@ -18,3 +18,24 @@
     font-weight: bold;
   }
   
+/* Background for Personal Information, Request leave  */
+.Instead_body_EM {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.Instead_body_EM::before {
+  content: "";
+  background-image: url('https://i.postimg.cc/JhWS9Nj2/image.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  filter: blur(2px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+

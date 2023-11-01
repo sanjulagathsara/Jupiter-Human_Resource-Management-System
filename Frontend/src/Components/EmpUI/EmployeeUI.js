@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./EmpUI.css";
 import axios from "axios";
 import { useEffect } from "react";
+import "./EmpUI.css";
+
 const EmployeeUI = () => {
   const navigate = useNavigate();
   const handleViewPersonalInfo = () => {
@@ -37,7 +39,7 @@ const EmployeeUI = () => {
     axios.get("http://localhost:5001/api/logout");
   };
   return (
-    <div>
+    <div className="Instead_body_EM">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link to="/login/Employee/EmployeeUI" className="navbar-brand">
@@ -87,7 +89,7 @@ const EmployeeUI = () => {
         </div>
       </nav>
 
-      <div className="d-flex flex-column align-items-center justify-content-center gradient-bg bg-primary vh-100 text-center">
+      <div>
         <button
           type="button"
           className="button-with-icon"
