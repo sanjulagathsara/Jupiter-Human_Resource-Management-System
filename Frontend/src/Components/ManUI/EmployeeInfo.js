@@ -52,6 +52,7 @@ const EmployeeInfo = () => {
 
   return (
     <div>
+      <br/>
       <div className="Instead_body_EPI">
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
           Employee Information

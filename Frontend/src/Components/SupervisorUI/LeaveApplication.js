@@ -99,7 +99,7 @@ const LeaveApplication = () => {
       <br/><br/>
       <h1><b>Leave Application</b></h1>
       <br />
-      <table className="table table-bordered">
+      <table className="tabled">
         <thead>
           <tr>
             <th scope="col">Leave Application ID</th>
