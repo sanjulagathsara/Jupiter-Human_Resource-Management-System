@@ -44,6 +44,56 @@ db.connect((err) => {
     console.log("Connected to MySQL");
   }
 });
+
+//get leave applications relevent to supervisor
+app.get("/api/SupUI/leaveApplications", (req, res) => {
+  db.query(
+    "SELECT Leave_Application_No, leave_application.Employee_ID, LeaveType, Start_Date, End_Date, Remaining_Maternity_Leave_Count, Remaining_No_pay_Leave_Count, Remaining_Annual_Leave_Count, Remaining_Casual_Leave_Count FROM leave_application JOIN employee_leave_details ON leave_application.Employee_ID = employee_leave_details.Employee_ID where leave_application.Employee_ID IN (SELECT Employee_ID FROM employee where Supervisor_ID = ?) and Approval_status = 'Pending' ",
+    [personalID],
+    (err, rows, fields) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.json({ error: "Internal server error" });
+        return;
+      } else {
+        res.json(rows);
+      }
+    }
+  );
+});
+
+//post edited leave applications
+app.post("/api/SupUI/edited/leaveApplications", (req, res) => {
+  console.log("Edited data fetch from server:");
+
+  const data = req.body.record;
+  console.log(data);
+  // console.log("data", data);
+
+  const sql3 = "call Remaining_leave_count(?,?,?,?,?,?)";
+  db.query(
+    sql3,
+    [
+      data.Leave_Application_No,
+      data.Employee_ID,
+      data.LeaveType,
+      data.Start_Date.split("T")[0],
+      data.End_Date.split("T")[0],
+      data.Approval_status,
+    ],
+    (err) => {
+      if (err) {
+        console.error("Error querying MySQL:", err);
+        res.json({ error: "Internal server error" });
+        return;
+      } else {
+        console.log(data);
+        return res.json({ message: "Data Updated Successfully" });
+      }
+    }
+  );
+});
+
 //get custom attributes
 app.get("/api/personal/customAttributes", (req, res) => {
   db.query(

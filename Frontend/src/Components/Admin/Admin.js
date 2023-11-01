@@ -1,10 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import "./Admin.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Admin = () => {
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/check")
+      .then((response) => {
+        if (
+          (response.data.valid && response.data.role === "JT003") ||
+          response.data.role === "JT004" ||
+          response.data.role === "JT009" ||
+          response.data.role === "JT005"
+        ) {
+        } else {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 

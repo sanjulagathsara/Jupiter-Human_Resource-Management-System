@@ -42,16 +42,16 @@ const AddHRManager = () => {
     Gender: "",
   });
   const maritalStatusOptions = ["Un-Married", "Married", "Divorced", "Widowed"];
-  const [statusType, setStatusType] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [departmentList, setDepartmentList] = useState([]);
   const genderList = ["Male", "Female"];
+  const [dependents, setDependents] = useState([]);
+  const [attributes, setAttributes] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
-    alert("Form submitted");
-    formRef.current.reset();
-
     console.log("Form submitted:", {});
   };
 
@@ -68,6 +68,10 @@ const AddHRManager = () => {
       Department: "",
       Gender: "",
     });
+    setDependents([]);
+    setAttributes([]);
+    setErrorMessage("");
+    setFormSubmitted(false);
   }
 
   useEffect(() => {
@@ -115,17 +119,18 @@ const AddHRManager = () => {
           Supervisor: null,
           Department: record.Department,
           Gender: record.Gender,
+          DependantsDetails: dependents,
+          CustomAttributes: attributes,
         })
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json);
-          console.log("Data sent to server");
+
+        .then((res) => {
+          setErrorMessage(res.data.Message);
+          console.log("Attributes", attributes);
+          console.log(res.data);
         })
         .catch((error) => {
-          console.log("Data not sent to serve");
+          console.log("Data not sent to server", error);
         });
-      clearDetails();
-      setFormSubmitted(false);
     }
   }, [formSubmitted]);
 
@@ -138,30 +143,50 @@ const AddHRManager = () => {
   const relationship = ["Son", "Daughter"];
   const [value, setValue] = useState([]);
 
+  const handleInputChange1 = (e, name, index) => {
+    const { value } = e.target;
+    const list = [...attributes];
+    list[index][name] = value;
+    setAttributes(list);
+  };
+  const deleteHandle1 = (index) => {
+    const updatedAttributes = [...attributes];
+    updatedAttributes.splice(index, 1);
+    setAttributes(updatedAttributes);
+  };
+  const AddCustomAttributes = () => {
+    const attribute = {
+      key: "",
+      value: "",
+    };
+    setAttributes([...attributes, attribute]);
+  };
+
   const handleAdd = () => {
     const dependant = {
       name: "",
       relationship: "",
-      birthday: "",
+      age: "",
       statusType: "",
     };
-    setValue([...value, dependant]);
+    setDependents([...dependents, dependant]);
   };
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...value];
+  const handleInputChange = (e, name, index) => {
+    const { value } = e.target;
+    const list = [...dependents];
     list[index][name] = value;
-    setValue(list);
+    setDependents(list);
   };
   const deleteHandle = (index) => {
-    const list = [...value];
-    list.splice(index, 1);
-    setValue(list);
+    const updatedDependents = [...dependents];
+    updatedDependents.splice(index, 1);
+    setDependents(updatedDependents);
   };
 
   return (
-    <div>
-      <div className="d-flex flex-column align-items-center gradient-bg bg-primary vh-100">
+    <div class="Instead_body_AE">
+      <br />
+      <div className="d-flex flex-column align-items-center">
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}>
           Personal Information
         </h1>
@@ -169,6 +194,7 @@ const AddHRManager = () => {
           <label className="mb-3">
             Name:
             <input
+              required
               type="text"
               value={record.Name}
               onChange={(e) => setRecord({ ...record, Name: e.target.value })}
@@ -180,6 +206,7 @@ const AddHRManager = () => {
           <label className="mb-3">
             Branch Name:
             <select
+              required
               value={record.Branch_Name}
               onChange={(e) =>
                 setRecord({ ...record, Branch_Name: e.target.value })
@@ -199,6 +226,7 @@ const AddHRManager = () => {
           <label className="mb-3">
             Birthday:
             <input
+              required
               type="date"
               value={
                 record.Birthday
@@ -216,6 +244,7 @@ const AddHRManager = () => {
           <label className="mb-3">
             Contact Number:
             <input
+              required
               type="tel"
               value={record.ContactNumber}
               onChange={(e) =>
@@ -229,6 +258,7 @@ const AddHRManager = () => {
           <label className="mb-3">
             Gender:
             <select
+              required
               value={record.Gender}
               onChange={(e) => setRecord({ ...record, Gender: e.target.value })}
               style={{ marginLeft: "10px" }}
@@ -245,13 +275,14 @@ const AddHRManager = () => {
           <label className="mb-3">
             Department :
             <select
+              required
               value={record.Department}
               onChange={(e) =>
                 setRecord({ ...record, Department: e.target.value })
               }
               style={{ marginLeft: "10px" }}
             >
-              <option value="">Select a supervisor</option>
+              <option value="">Select a Department</option>
               {departmentList.map((department, index) => (
                 <option key={index} value={department}>
                   {department}
@@ -264,6 +295,7 @@ const AddHRManager = () => {
           <label className="mb-3">
             Marital Status:
             <select
+              required
               value={record.MaritalStatus}
               onChange={(e) =>
                 setRecord({ ...record, MaritalStatus: e.target.value })
@@ -283,11 +315,12 @@ const AddHRManager = () => {
           <label className="mb-3">
             Status:
             <select
+              required
               value={record.Status}
               onChange={(e) => setRecord({ ...record, Status: e.target.value })}
               style={{ marginLeft: "10px" }}
             >
-              <option value="">Select Status ID</option>
+              <option value="">Select Status</option>
               {statusList.map((status, index) => (
                 <option key={index} value={status}>
                   {status}
@@ -299,13 +332,14 @@ const AddHRManager = () => {
           <label className="mb-3">
             Pay Grade:
             <select
+              required
               value={record.PayGrade}
               onChange={(e) =>
                 setRecord({ ...record, PayGrade: e.target.value })
               }
               style={{ marginLeft: "10px" }}
             >
-              <option value="">Select Pay Grade ID</option>
+              <option value="">Select Pay Grade</option>
               {payGradeList.map((payGrade, index) => (
                 <option key={index} value={payGrade}>
                   {payGrade}
@@ -314,37 +348,83 @@ const AddHRManager = () => {
             </select>
           </label>
           <br />
-
+          {attributes.map((attribute, idx) => {
+            return (
+              <div key={idx} style={{ marginTop: "20px" }}>
+                <label>
+                  Attribute:
+                  <input
+                    required
+                    type="text"
+                    value={attribute.key}
+                    onChange={(e) => handleInputChange1(e, "key", idx)}
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />
+                </label>
+                <label>
+                  Value:
+                  <input
+                    required
+                    type="text"
+                    value={attribute.value}
+                    onChange={(e) => handleInputChange1(e, "value", idx)}
+                    style={{ marginLeft: "10px", marginRight: "10px" }}
+                  />
+                </label>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => deleteHandle1(idx)}
+                  style={{
+                    textAlign: "center",
+                    lineHeight: 1,
+                    fontSize: "12px",
+                    width: "100px",
+                    height: "30px",
+                    backgroundColor: "orangered",
+                    marginBottom: "10px",
+                    marginTop: "10px",
+                    marginLeft: "20px",
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            );
+          })}
           <button
-            onClick={() => handleAdd()}
+            onClick={() => AddCustomAttributes()}
             type="button"
-            className="btn btn-primary"
+            className="btn"
             style={{
-              color: "white",
-              fontSize: "16px",
-              marginRight: "50px",
+              width: "250px",
+              marginRight: "10px",
               marginTop: "20px",
             }}
           >
-            Add Dependants Details
+            Add Custom Attributes
           </button>
-          {value.map((val, idx) => {
+
+          <br />
+
+          {dependents.map((dependant, idx) => {
             return (
               <div key={idx} style={{ marginTop: "20px" }}>
                 <label>
                   Name:
                   <input
+                    required
                     type="text"
-                    value={val.name}
-                    onChange={(e) => handleInputChange(e, idx)}
+                    value={dependant.name}
+                    onChange={(e) => handleInputChange(e, "name", idx)}
                     style={{ marginLeft: "10px", marginRight: "10px" }}
                   />
                 </label>
                 <label styles={{ marginLeft: "10px" }}>
                   Relationship:
                   <select
-                    value={relationship}
-                    onChange={(e) => handleInputChange(e, idx)}
+                    value={dependant.relationship}
+                    onChange={(e) => handleInputChange(e, "relationship", idx)}
                     style={{ marginLeft: "10px", marginRight: "10px" }}
                   >
                     <option value="">Select a Relationship</option>
@@ -358,17 +438,19 @@ const AddHRManager = () => {
                 <label>
                   Age:
                   <input
+                    required
                     type="text"
-                    value={val.birthday}
-                    onChange={(e) => handleInputChange(e, idx)}
+                    value={dependant.age}
+                    onChange={(e) => handleInputChange(e, "age", idx)}
                     style={{ marginLeft: "10px", marginRight: "10px" }}
                   />
                 </label>
                 <label>
                   Status:
                   <select
-                    value={statusType}
-                    onChange={(e) => handleInputChange(e, idx)}
+                    required
+                    value={dependant.statusType}
+                    onChange={(e) => handleInputChange(e, "statusType", idx)}
                     style={{ marginLeft: "10px" }}
                   >
                     <option value="">Select a Status</option>
@@ -381,9 +463,15 @@ const AddHRManager = () => {
                 </label>
                 <button
                   type="button"
-                  className="btn btn-primary"
-                  onClick={() => deleteHandle()}
+                  className="btn"
+                  onClick={() => deleteHandle(idx)}
                   style={{
+                    textAlign: "center",
+                    lineHeight: 1,
+                    fontSize: "12px",
+                    width: "100px",
+                    height: "30px",
+                    backgroundColor: "orangered",
                     marginBottom: "10px",
                     marginTop: "10px",
                     marginLeft: "20px",
@@ -394,6 +482,20 @@ const AddHRManager = () => {
               </div>
             );
           })}
+          <button
+            onClick={() => handleAdd()}
+            type="button"
+            className="btn"
+            style={{
+              width: "250px",
+              marginRight: "10px",
+              marginTop: "20px",
+            }}
+          >
+            Add Dependants Details
+          </button>
+          <br />
+          <div style={{ color: "red", marginTop: "10px" }}>{errorMessage}</div>
 
           <button
             onClick={goBack}
@@ -409,6 +511,7 @@ const AddHRManager = () => {
             Back
           </button>
           <button
+            disabled={formSubmitted}
             className="btn btn-primary"
             type="submit"
             value="Submit"
