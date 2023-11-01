@@ -452,13 +452,15 @@ const EditPI = () => {
               </label>
               <button
                 type="button"
-                
+                className="btn"
                 onClick={() => deleteHandle1(idx)}
                 style={{
+                  textAlign: 'center', lineHeight: 1,
+                  fontSize: "12px",
+                  width: "100px", height: "30px", backgroundColor : "orangered",
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
-                  backgroundColor: "orangered"
                 }}
               >
                 Delete
