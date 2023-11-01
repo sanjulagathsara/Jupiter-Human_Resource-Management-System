@@ -28,6 +28,11 @@
   color: #000;
 }
 
+.btn:disabled {
+  background-color: #806f4f; /* Change the color to a grayish tone or any color you prefer */
+  color: #f7eeee; /* Change the text color to a darker tone */
+}
+
 
 
 /* Content in the website */

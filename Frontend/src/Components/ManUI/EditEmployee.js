@@ -537,8 +537,10 @@ const EditEmployee = () => {
         <br />
         {!isNull1 ? (
           <>
-            <h1>Edit Dependent Details</h1>
-            <table className="table table-striped">
+            <h1>
+              <b>Edit Dependent Details</b>
+            </h1>
+            <table>
               <thead>
                 <tr>
                   {visibleColumns.map((col) => (
