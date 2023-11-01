@@ -18,21 +18,21 @@
   text-align: left;
 }
 
-h1 {
+/* h1 {
   font-size: 28px;
   margin: 0;
   margin-bottom: 20px;
-  color: #007BFF; /* Blue color for the title */
-}
+  color: #007BFF; 
+} */
 
-label {
+/* label {
   font-weight: bold;
   display: block;
   margin-top: 10px;
   color: #333;
-}
+} */
 
-select,
+.select-field,
 input[type="date"] {
   width: 100%;
   padding: 10px;
@@ -70,7 +70,7 @@ button.submit-button:hover {
   font-size: 24px;
   margin: 0;
   margin-bottom: 20px;
-  color: #007BFF; /* Blue color for the results title */
+  color: #007BFF; 
 }
 
 .results p {
@@ -79,14 +79,14 @@ button.submit-button:hover {
 }
 
 .results {
-  background-color: #838484d5; /* Background color for the employee boxes */
+  background-color: #838484d5; 
   text-color: Black ;
   text-align: left;
   font-weight: bold;
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 10px; /* Adjust padding as needed */
-  border-radius: 5px; /* Rounded corners for the boxes */
-  margin: 10px 0; /* Spacing between employee boxes */
+  padding: 10px; 
+  border-radius: 5px;
+  margin: 10px 0; 
 }
 

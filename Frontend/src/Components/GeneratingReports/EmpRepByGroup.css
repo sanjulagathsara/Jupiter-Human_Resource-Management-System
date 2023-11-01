@@ -10,11 +10,11 @@
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 600px; /* Increased width to accommodate multiple sections */
+  max-width: 800px; 
   margin: 0 auto;
 }
 
-h1 {
+.h12 {
   font-size: 24px;
   margin: 0;
   margin-bottom: 20px;
@@ -29,13 +29,13 @@ h1 {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-label {
+.label2 {
   font-weight: bold;
   display: block;
   margin-top: 10px;
 }
 
-select {
+.select-field {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -69,23 +69,23 @@ button.submit-button:hover {
   margin: 20px 0;
 }
 
-ul {
+/* .ul2 {
   list-style: none;
   padding: 0;
-}
-
-li {
+} */
+/* 
+.li2 {
   margin: 5px 0;
-}
+} */
 .employee-box {
-  background-color: #838484d5; /* Background color for the employee boxes */
+  background-color: #838484d5; 
   text-color: Black ;
   text-align: left;
   font-weight: bold;
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 10px; /* Adjust padding as needed */
-  border-radius: 5px; /* Rounded corners for the boxes */
-  margin: 10px 0; /* Spacing between employee boxes */
+  padding: 10px; 
+  border-radius: 5px; 
+  margin: 10px 0; 
 }
 

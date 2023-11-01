@@ -74,15 +74,15 @@
   }
   
   .employee-box {
-    background-color: #838484d5; /* Background color for the employee boxes */
+    background-color: #838484d5; 
     text-color: Black ;
     text-align: left;
     font-weight: bold;
     background-size: cover;
     background-repeat: no-repeat;
-    padding: 10px; /* Adjust padding as needed */
-    border-radius: 5px; /* Rounded corners for the boxes */
-    margin: 10px 0; /* Spacing between employee boxes */
+    padding: 10px; 
+    border-radius: 5px; 
+    margin: 10px 0; 
   }
   
   

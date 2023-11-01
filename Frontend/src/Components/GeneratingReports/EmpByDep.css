@@ -1,4 +1,4 @@
-.centered-container {
+ .centered-container {
   background-image: url('https://images.unsplash.com/photo-1527176930608-09cb256ab504?auto=format&fit=crop&q=80&w=2074&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-size: cover;
   background-repeat: repeat-y;
@@ -20,11 +20,11 @@
   margin: 0 auto;
 }
 
-label {
+/* .label2 {
   font-weight: bold;
-}
+} */
 
-select {
+.select-field {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -33,8 +33,8 @@ select {
 }
 
 .employee-box.submit-button {
-  width: 250px; /* Increased width */
-  padding: 15px; /* Increased padding */
+  width: 250px;
+  padding: 15px; 
   margin: 10px;
   background-color: rgb(183, 47, 47);
   color: white;
@@ -56,24 +56,24 @@ select {
   margin: 20px 0;
 }
 
-ul {
+/* .ul2 {
   list-style: none;
   padding: 0;
-}
+} */
 
-li {
+/* .li2 {
   margin: 5px 0;
-}
+} */
 
 .employee-box {
-  background-color: #838484d5; /* Background color for the employee boxes */
+  background-color: #838484d5; 
   text-color: Black ;
   text-align: left;
   font-weight: bold;
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 10px; /* Adjust padding as needed */
-  border-radius: 5px; /* Rounded corners for the boxes */
-  margin: 10px 0; /* Spacing between employee boxes */
+  padding: 10px; 
+  border-radius: 5px; 
+  margin: 10px 0; 
 }
 

@@ -54,7 +54,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   filter: blur(2px);
   position: absolute;
   top: 0;
@@ -75,7 +75,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   filter: blur(10px);
   position: absolute;
   top: 0;
@@ -99,7 +99,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   filter: blur(10px);
   position: absolute;
   top: 0;

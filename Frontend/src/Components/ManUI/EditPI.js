@@ -451,12 +451,13 @@ const EditPI = () => {
               </label>
               <button
                 type="button"
-                className="btn btn-primary"
+                
                 onClick={() => deleteHandle1(idx)}
                 style={{
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
+                  backgroundColor: "orangered"
                 }}
               >
                 Delete
@@ -468,7 +469,7 @@ const EditPI = () => {
           onClick={() => AddCustomAttributes()}
           disabled={formSubmitted}
           type="button"
-          className="btn btn-primary"
+          className="btn "
           style={{
             color: "white",
             fontSize: "16px",
@@ -569,12 +570,13 @@ const EditPI = () => {
               </label>
               <button
                 type="button"
-                className="btn btn-primary"
+                
                 onClick={() => deleteHandle(idx)}
                 style={{
                   marginBottom: "10px",
                   marginTop: "10px",
                   marginLeft: "20px",
+                  backgroundColor: "orangered"
                 }}
               >
                 Delete
@@ -586,7 +588,7 @@ const EditPI = () => {
           onClick={() => handleAdd()}
           type="button"
           disabled={formSubmitted}
-          className="btn btn-primary"
+          className="btn "
           style={{
             color: "white",
             fontSize: "16px",
