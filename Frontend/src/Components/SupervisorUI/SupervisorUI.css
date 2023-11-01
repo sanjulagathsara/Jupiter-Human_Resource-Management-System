@@ -1,4 +1,4 @@
-/* Image background  */
+/* Image background  for SupervisorUI*/
 .Instead_body_SUI {
     position: relative;
     width: 100%;
@@ -7,7 +7,7 @@
 
 .Instead_body_SUI::before {
     content: "";
-    background-image: url('https://i.postimg.cc/L4kVzcBj/pexels-andrea-piacquadio-3756678.jpg');
+    background-image: url('https://i.postimg.cc/k48Hww14/image.png');
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
@@ -27,7 +27,28 @@
     display: flex;
     justify-content: center; 
     align-items: center;
-    height: 90vh;
-    margin-top: 0px;
+    height: 50%;
+    margin-top: 10%;
     flex-direction: column;
-  }
+}
+
+/* Image background  for SupervisorUI*/
+.Instead_body_LA {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.Instead_body_LA::before {
+    content: "";
+    background-image: url('https://i.postimg.cc/k48Hww14/image.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    filter: blur(10px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}

@@ -39,7 +39,7 @@ const EmployeeInfo = () => {
         setColumns(Object.keys(data[0]));
         setRecords(data);
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => console.error("Error fetching data2:", error));
   }, []);
 
   const indexOfLastRecord = currentPage * rowsPerPage;
@@ -56,7 +56,7 @@ const EmployeeInfo = () => {
         <h1 style={{ marginBottom: "20px", marginTop: "20px" }}><b>
           Employee Information
         </b></h1>
-        <table className="table table-bordered" style={{ width: "70%" }}>
+        <table>
           <thead className="thead-dark">
             <tr>
               {columns.map((column, index) => (
@@ -67,7 +67,7 @@ const EmployeeInfo = () => {
           </thead>
           <tbody>
             {currentRecords.map((record, index) => (
-              <tr key={index}>
+              <tr key={index} className="transparent-hover-row">
                 {columns.map((column, index) => (
                   <td key={index}>{record[column]}</td>
                 ))}
@@ -100,6 +100,7 @@ const EmployeeInfo = () => {
             ))}
           </tbody>
         </table>
+        
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button
             onClick={goBack} type="button" className="btn">
@@ -134,3 +135,4 @@ const EmployeeInfo = () => {
 };
 
 export default EmployeeInfo;
+

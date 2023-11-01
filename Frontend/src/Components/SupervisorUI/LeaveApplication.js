@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import "./SupervisorUI.css";
 
 const LeaveApplication = () => {
   const navigate = useNavigate();
@@ -94,8 +95,9 @@ const LeaveApplication = () => {
   }, [status]);
 
   return (
-    <div>
-      <h1>Leave Application</h1>
+    <div className="Instead_body_LA">
+      <br/><br/>
+      <h1><b>Leave Application</b></h1>
       <br />
       <table className="table table-bordered">
         <thead>
@@ -148,13 +150,12 @@ const LeaveApplication = () => {
           ))}
         </tbody>
       </table>
+      <br/>
       <button
         onClick={goBack}
         type="button"
-        className="btn btn-primary"
+        className="btn"
         style={{
-          color: "white",
-          fontSize: "16px",
           marginRight: "50px",
           marginTop: "20px",
           marginBottom: "20px",
