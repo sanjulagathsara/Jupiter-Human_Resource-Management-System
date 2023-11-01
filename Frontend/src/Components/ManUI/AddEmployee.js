@@ -430,13 +430,15 @@ const AddEmployee = () => {
                 </label>
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn"
                   onClick={() => deleteHandle1(idx)}
                   style={{
+                    textAlign: 'center', lineHeight: 1,
+                    fontSize: "12px",
+                    width: "100px", height: "30px", backgroundColor : "orangered",
                     marginBottom: "10px",
                     marginTop: "10px",
-                    marginLeft: "20px",
-                  }}
+                    marginLeft: "20px"}}
                 >
                   Delete
                 </button>
@@ -456,8 +458,7 @@ const AddEmployee = () => {
           >
             Add Custom Attributes
           </button>
-
-          <br />
+          <br/><br/>
 
           {dependents.map((dependant, idx) => {
             return (
@@ -537,15 +538,14 @@ const AddEmployee = () => {
             disabled={formSubmitted}
             className="btn"
             style={{
-              color: "white",
-              fontSize: "16px",
-              marginRight: "50px",
+              width : "250px",
+              marginRight: "10px",
               marginTop: "20px",
             }}
           >
             Add Dependants Details
           </button>
-          <br />
+          <br/><br/>
           <button
             onClick={goBack}
             type="button"

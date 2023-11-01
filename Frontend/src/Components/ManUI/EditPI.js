@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./ManUI.css";
+import "./EmployeeInfo.css";
 
 const EditPI = () => {
   const [jobTitleList, setJobTitleList] = useState([]);
@@ -468,22 +469,22 @@ const EditPI = () => {
           onClick={() => AddCustomAttributes()}
           disabled={formSubmitted}
           type="button"
-          className="btn btn-primary"
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
+            marginBottom:"20px",
+            width : "250px"
           }}
         >
           Add New Custom Attribute
         </button>
-        <br />
+        <br/><br/><br/>
 
         {!isNull1 ? (
           <>
-            <h1>Dependents Details</h1>
-            <table className="table table-striped">
+            <h1><b>Dependents Details</b></h1>
+            <table>
               <thead>
                 <tr>
                   {visibleColumns.map((col) => (
@@ -523,7 +524,7 @@ const EditPI = () => {
                   type="text"
                   value={dependant.name}
                   onChange={(e) => handleInputChange(e, "name", idx)}
-                  style={{ marginLeft: "10px", marginRight: "10px" }}
+                  style={{ marginLeft: "10px", marginRight: "10px"}}
                 />
               </label>
               <label styles={{ marginLeft: "10px" }}>
@@ -586,10 +587,8 @@ const EditPI = () => {
           onClick={() => handleAdd()}
           type="button"
           disabled={formSubmitted}
-          className="btn btn-primary"
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
           }}

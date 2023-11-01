@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "./PersonalInfo.css";
 
+
 const PersonalInfo = () => {
   const [record, setRecord] = useState([]);
   var edit = false;

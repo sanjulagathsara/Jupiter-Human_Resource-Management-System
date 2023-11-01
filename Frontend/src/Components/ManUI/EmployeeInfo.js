@@ -6,6 +6,7 @@ import Pagination from "./pagination";
 import axios from "axios";
 import "./ManUI.css";
 
+
 const EmployeeInfo = () => {
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);

@@ -519,10 +519,8 @@ const EditEmployee = () => {
           onClick={() => AddCustomAttributes()}
           disabled={formSubmitted}
           type="button"
-          className="btn btn-primary"
+          className="btn"
           style={{
-            color: "white",
-            fontSize: "16px",
             marginRight: "50px",
             marginTop: "20px",
           }}
