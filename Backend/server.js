@@ -78,8 +78,8 @@ app.post("/api/SupUI/edited/leaveApplications", (req, res) => {
       data.Leave_Application_No,
       data.Employee_ID,
       data.LeaveType,
-      "2023-10-19",
-      "2023-10-21",
+      data.Start_Date.split("T")[0],
+      data.End_Date.split("T")[0],
       data.Approval_status,
     ],
     (err) => {

@@ -9,8 +9,8 @@ const LeaveApplication = () => {
   const [record, setRecord] = useState([]);
   const [status, setStatus] = useState("false");
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleAccept = (i) => {
-    // Get the specific record for the clicked button
     const updatedRecord = [...record];
     updatedRecord[i].Approval_status = "Accepted";
     if (status === "false") {
@@ -18,15 +18,12 @@ const LeaveApplication = () => {
     } else {
       setStatus("false");
     }
-
-    // Send the specific record to the backend
     axios
       .post("http://localhost:5001/api/SupUI/edited/leaveApplications", {
         status: "Accepted",
         record: updatedRecord[i],
       })
       .then((response) => {
-        // Handle the response from the server if needed
         console.log("Record accepted and sent to the server");
         console.log(record);
         setErrorMessage(response.data.message);
@@ -37,7 +34,6 @@ const LeaveApplication = () => {
   };
 
   const handleReject = (i) => {
-    // Get the specific record for the clicked button
     const updatedRecord = [...record];
     updatedRecord[i].Approval_status = "Rejected";
     if (status === "false") {
@@ -46,14 +42,12 @@ const LeaveApplication = () => {
       setStatus("false");
     }
 
-    // Send the specific record to the backend
     axios
       .post("http://localhost:5001/api/SupUI/edited/leaveApplications", {
         status: "Rejected",
         record: updatedRecord[i],
       })
       .then((response) => {
-        // Handle the response from the server if needed
         console.log("Record rejected and sent to the server");
         setErrorMessage(response.data.message);
       })
@@ -106,7 +100,7 @@ const LeaveApplication = () => {
             <th scope="col">Leave Type</th>
             <th scope="col">Start Date</th>
             <th scope="col">End Date</th>
-            <th scope="col">Remaining Relavent Type Leave count</th>
+            <th scope="col">Remaining Relavent Type Leave Count</th>
             <th scope="col">Accept / Reject</th>
           </tr>
         </thead>

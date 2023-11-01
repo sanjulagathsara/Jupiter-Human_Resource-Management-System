@@ -220,7 +220,6 @@ const AddEmployee = () => {
             />
           </label>
           <br />
-
           <label className="mb-3">
             Branch Name:
             <select
@@ -240,7 +239,6 @@ const AddEmployee = () => {
             </select>
           </label>
           <br />
-
           <label className="mb-3">
             Birthday:
             <input
@@ -258,7 +256,6 @@ const AddEmployee = () => {
             />
           </label>
           <br />
-
           <label className="mb-3">
             Contact Number:
             <input
@@ -272,7 +269,6 @@ const AddEmployee = () => {
             />
           </label>
           <br />
-
           <label className="mb-3">
             Gender:
             <select
@@ -300,7 +296,7 @@ const AddEmployee = () => {
               }
               style={{ marginLeft: "10px" }}
             >
-              <option value="">Select a supervisor</option>
+              <option value="">Select a Department</option>
               {departmentList.map((department, index) => (
                 <option key={index} value={department}>
                   {department}
@@ -309,7 +305,6 @@ const AddEmployee = () => {
             </select>
           </label>
           <br />
-
           <label className="mb-3">
             Marital Status:
             <select
@@ -339,7 +334,7 @@ const AddEmployee = () => {
               }}
               style={{ marginLeft: "10px" }}
             >
-              <option value="">Select Job Title ID</option>
+              <option value="">Select Job Title</option>
               {jobTitleList.map((jobTitle, index) => (
                 <option key={index} value={jobTitle}>
                   {jobTitle}
@@ -384,7 +379,6 @@ const AddEmployee = () => {
             </select>
           </label>
           <br />
-
           <label className="mb-3">
             Supervisor :
             <select
@@ -451,7 +445,6 @@ const AddEmployee = () => {
           })}
           <button
             onClick={() => AddCustomAttributes()}
-            disabled={formSubmitted}
             type="button"
             className="btn"
             style={{
@@ -462,9 +455,7 @@ const AddEmployee = () => {
           >
             Add Custom Attributes
           </button>
-
           <br />
-
           {dependents.map((dependant, idx) => {
             return (
               <div key={idx} style={{ marginTop: "20px" }}>
@@ -543,7 +534,6 @@ const AddEmployee = () => {
           <button
             onClick={() => handleAdd()}
             type="button"
-            disabled={formSubmitted}
             className="btn"
             style={{
               width: "250px",
@@ -554,6 +544,7 @@ const AddEmployee = () => {
             Add Dependants Details
           </button>
           <br />
+          <div style={{ color: "red", marginTop: "10px" }}>{errorMessage}</div>
           <button
             onClick={goBack}
             type="button"
@@ -565,7 +556,6 @@ const AddEmployee = () => {
           >
             Back
           </button>
-
           <button
             className="btn"
             type="submit"
@@ -580,6 +570,7 @@ const AddEmployee = () => {
             Submit
           </button>
           <button
+            desabled={formSubmitted}
             onClick={clearDetails}
             type="button"
             className="btn"
