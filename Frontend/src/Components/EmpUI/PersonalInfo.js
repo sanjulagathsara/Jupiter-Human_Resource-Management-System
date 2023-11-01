@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "./PersonalInfo.css";
-// import "./EmpUI/ManUI/ManUI.css";
 
 const PersonalInfo = () => {
   const [record, setRecord] = useState([]);
@@ -68,7 +67,7 @@ const PersonalInfo = () => {
   }, []);
 
   return (
-    <div class = "Instead_body_AE">
+    <div class = "Instead_body_PInfo">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link to="/login/Employee" className="navbar-brand">
