@@ -68,11 +68,11 @@ const ViewEmployee = () => {
   }, []);
 
   return (
-    <div class = "Instead_body_AE">
+    <div class="Instead_body_AE">
       <div className="d-flex flex-column align-items-center">
-        <h1 style={{ marginBottom: "20px", marginTop: "50px" }}><b>
-          Personal Informations
-        </b></h1>
+        <h1 style={{ marginBottom: "20px", marginTop: "50px" }}>
+          <b>Personal Information</b>
+        </h1>
         {record.map((record) => (
           <div
             style={{
@@ -146,13 +146,13 @@ const ViewEmployee = () => {
           </div>
         )}
 
-        <button
-          onClick={goBack} type="button" className="btn"
-        >
+        <button onClick={goBack} type="button" className="btn">
           Back
         </button>
-      </div><br/><br/>
-    </div> 
+      </div>
+      <br />
+      <br />
+    </div>
   );
 };
 
