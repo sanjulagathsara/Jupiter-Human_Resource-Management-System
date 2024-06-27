@@ -1,0 +1,111 @@
+.sparkle-button {
+  margin: 10px;
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sparkle-button:hover {
+  background-color: #0056b3;
+}
+
+.sparkle-button .sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #007BFF;
+  border-radius: 50%;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.about {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.about::before {
+  content: "";
+  background-image: url('https://i.postimg.cc/NG7nD3f6/pexels-fauxels-3183186.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 200%;
+  filter: blur(5px); /* Adjust the blur amount as needed */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.dashboard {
+  position: absolute;
+  width: 100%;
+  height: 120%
+}
+
+.dashboard::before {
+  content: "";
+  background-image: url('https://www.forbes.com/advisor/wp-content/uploads/2022/11/Image-12.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  filter: blur(15px); /* Adjust the blur amount as needed */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.jupiter {
+  font-size: 50px;
+}
+
+.subheading {
+  font-size: 36px;
+}
+
+ 
+/* Background for Edit Personal informations, Employee Info*/
+.Instead_body_Reset {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+}
+
+.Instead_body_Reset::before {
+  content: "";
+  background-image: url('https://i.postimg.cc/pdJ8Zv26/image.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100dvh;
+  filter: blur(10px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* Content in the website */
+.Content {
+  margin-top: 20%;
+  width: 400px;
+  height: 250px;
+  background-color: rgb(229, 226, 222);
+  backface-visibility: "0.7";
+  overflow: auto;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  flex-direction: column;
+}

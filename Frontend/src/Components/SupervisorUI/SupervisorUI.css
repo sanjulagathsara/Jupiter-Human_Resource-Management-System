@@ -1,0 +1,153 @@
+/* Image background  for SupervisorUI*/
+.Instead_body_SUI {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.Instead_body_SUI::before {
+    content: "";
+    background-image: url('https://i.postimg.cc/k48Hww14/image.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    filter: blur(2px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.jupiter {
+    font-size: 50px;
+}
+
+.S_main {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 50%;
+    margin-top: 10%;
+    flex-direction: column;
+}
+
+/* Image background  for SupervisorUI*/
+.Instead_body_LA {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.Instead_body_LA::before {
+    content: "";
+    background-image: url('https://i.postimg.cc/k48Hww14/image.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    filter: blur(10px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+  
+/* Style the "View" button */
+.btn-success {
+background-color: #27ae60;
+color: #fff;
+margin-top: auto;
+margin-bottom: auto;
+}
+
+.btn-success:hover {
+background-color: #187a3f;
+}
+
+/* Style the "Edit" button */
+.btn-warning {
+background-color: #f39c12;
+color: #fff;
+margin-top: auto;
+margin-bottom: auto;
+}
+
+.btn-warning:hover {
+background-color: #b38b08d9;
+}
+
+/* Style the "Back" button */
+.btn-primary {
+background-color: #b07f61a6;
+color: #fff;
+border: none;
+font-size: 16px;
+}
+
+.btn-primary:hover {
+background-color: #2980b9;
+}
+
+
+/* Styling for the table */
+table {
+width: auto;
+height: 1dvh;
+margin: 0 auto;
+border-collapse: collapse;
+background-color: rgb(217, 219, 197);
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for table headers */
+thead th {
+height: 50px;
+background-color: #a8956b;
+color: white;
+padding: 10px;
+}
+
+/* Styling for table rows with transparent background on hover and alternating row colors */
+tbody tr {
+height: 80px;
+}
+
+tbody tr:nth-child(odd) {
+background-color: rgba(0, 0, 0, 0.05); /* Light gray background for odd rows */
+}
+
+tbody tr:nth-child(even) {
+background-color: rgba(0, 0, 0, 0.1); /* Slightly darker gray background for even rows */
+}
+
+/* Vertically center the buttons within the table cells */
+tbody td {
+vertical-align: middle;
+}
+
+/* Styling for the buttons */
+/* Adjust the button styles as needed */
+button {
+background-color: #3498db;
+color: #fff;
+border: none;
+padding: 5px 10px;
+}
+
+button:hover {
+background-color: #2980b9;
+}
+
+/* Styling for table rows with transparent background on hover */
+.transparent-hover-row {
+background-color: transparent;
+transition: background-color 0.3s;
+}
+
+.transparent-hover-row:hover {
+background-color: rgba(232, 231, 228, 0.355);
+}
+
+
