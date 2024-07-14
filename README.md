@@ -1,6 +1,3 @@
-# Jupiter_HRM
- Jupiter Human Resource Management System
-
 # Jupiter Human Resource Management System
 
 Welcome to the Jupiter Human Resource Management System! This system is designed to streamline and automate various HR processes within your organization.
