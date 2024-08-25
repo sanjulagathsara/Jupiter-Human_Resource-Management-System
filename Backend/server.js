@@ -68,7 +68,7 @@ app.post("/api/SupUI/edited/leaveApplications", (req, res) => {
 
   const data = req.body.record;
   console.log(data);
-  // console.log("data", data);
+  console.log("data", data);
 
   const sql3 = "call Remaining_leave_count(?,?,?,?,?,?)";
   db.query(
